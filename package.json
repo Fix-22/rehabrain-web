@@ -1,0 +1,31 @@
+{
+  "name": "rehabrain-web",
+  "version": "0.1.0",
+  "description": "A free cognitive stimulation therapy (CST) web application made for people with neurodegenerative diseases.",
+  "main": "src/server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fix-22/rehabrain-web.git"
+  },
+  "keywords": [
+    "CST",
+    "rehabrain",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Simone Cecire",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Fix-22/rehabrain-web/issues"
+  },
+  "homepage": "https://github.com/Fix-22/rehabrain-web#readme",
+  "dependencies": {
+    "bulma": "^1.0.3"
+  }
+}
