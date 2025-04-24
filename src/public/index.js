@@ -8,7 +8,7 @@ generateNavigator(document.getElementById("pages"));
 
 const middleware = generateMiddleware();
 
-console.log(await middleware.login("ciaao", "cacca"));
+console.log(await middleware.login("cecire", "bacon"));
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

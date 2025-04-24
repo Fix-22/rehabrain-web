@@ -2,8 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
 const path = require("path");
+const database = require("./database");
+const crypto = require("crypto");
 
 const app = express();
+
+database.createTables();
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -18,11 +23,13 @@ app.post("/login", async (request, response) => {
     try {
         const loginData = request.body;
 
-        if (loginData.email == "ciao") {
+        const result = await database.login(loginData.email, crypto.createHash("sha256").update(loginData.password).digest("base64"));
+
+        if (result.length === 1) {
             response.json({result: true});
         }
         else {
-            response.json({result: false});
+            response.json({result: false})
         }
     }
     catch (e) {

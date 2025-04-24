@@ -1,0 +1,139 @@
+const fs = require("fs");
+const mysql = require("mysql2");
+
+const conf = JSON.parse(fs.readFileSync("conf.json"));
+conf.db.ssl.ca = fs.readFileSync("./ca.pem");
+
+const connection = mysql.createConnection(conf.db);
+
+const executeQuery = (sql) => {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function (err, result) {
+            if (err) {
+                console.error("Error: " + err + " on query: " + sql);
+                reject();
+            }
+            
+            console.log("Query done: " + sql);
+            resolve(result);
+        });
+    })
+};
+
+const executeStatement = (sql, params) => {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, params, function (err, result) {
+            if (err) {
+                console.error("Error: " + err + " on query: " + sql);
+                reject();
+            }
+            
+            console.log("Query done: " + sql);
+            resolve(result);
+        });
+    })
+};
+
+const database = {
+    createTables: async () => {
+        try {
+            await executeQuery(`
+                create table if not exists Categories(
+                    Name varchar(50) primary key
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists Difficulties(
+                    Difficulty varchar(50) primary key
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists Contents(
+                    Name varchar(150) primary key,
+                    LinkedImage varchar(200) not null,
+                    Color varchar(6),
+                    CategoryName varchar(50),
+                    Difficulty varchar(50),
+                    foreign key (CategoryName) references Categories(Name),
+                    foreign key (Difficulty) references Difficulties(Difficulty)
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists Activities(
+                    Name varchar(100) primary key,
+                    Description text(2000) not null,
+                    MaxMediumScore int(4)
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists ActivitiesWithDifficulties(
+                    ActivityName varchar(100),
+                    Difficulty varchar(50),
+                    foreign key (ActivityName) references Activities(Name),
+                    foreign key (Difficulty) references Difficulties(Difficulty),
+                    constraint pk_awd primary key (ActivityName, Difficulty)    
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists Users(
+                    Email varchar(100) primary key,
+                    Name varchar(100) not null,
+                    Surname varchar(100) not null,
+                    Password varchar(44) not null,
+                    isModerator bool not null,
+                    isAdministrator bool not null
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists Patients(
+                    ID int primary key auto_increment,
+                    Name varchar(100) not null,
+                    Surname varchar(100) not null,
+                    Age int(3) not null,
+                    Notes text(5000),
+                    Caregiver varchar(100) not null,
+                    foreign key (Caregiver) references Users(Email)
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists CurrentSession(
+                    PatientID int,
+                    ActivityName varchar(100),
+                    ActivityDifficulty varchar(50),
+                    foreign key (ActivityName) references Activities(Name),
+                    foreign key (ActivityDifficulty) references Difficulties(Difficulty),
+                    constraint pk_cs primary key (PatientID, ActivityName, ActivityDifficulty)
+                );    
+            `);
+            await executeQuery(`
+                create table if not exists SessionsScores(
+                    ID int primary key auto_increment,
+                    Score int(4) not null,
+                    PlayDate date not null,
+                    PatientID int not null,
+                    foreign key (PatientID) references Patients(ID)
+                );    
+            `);
+        }
+        catch (e) {
+            console.error("Error while creating tables: " + e);
+        }
+    },
+    login: async (email, password) => {
+        try {
+            console.log(password)
+            const result = await executeStatement(`
+                SELECT *
+                FROM Users
+                WHERE email = ? AND password = ?;
+            `, [email, password]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Error: " + e);
+        }
+    }
+};
+
+module.exports = database;
