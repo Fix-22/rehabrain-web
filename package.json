@@ -26,6 +26,10 @@
   },
   "homepage": "https://github.com/Fix-22/rehabrain-web#readme",
   "dependencies": {
-    "bulma": "^1.0.3"
+    "body-parser": "^2.2.0",
+    "bulma": "^1.0.3",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7"
   }
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RehaBrain</title>
+    <link rel="stylesheet" href="/bulma/css/bulma.min.css">
+	<script defer src="assets/fontawesome/js/all.min.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar is-transparent">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="#">
+				<img src="assets/favicon.ico" id="logo">
+			</a>
+			<div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+
+		<div id="navbarExampleTransparentExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a class="navbar-item title is-3" href="">Dashboard di nomeutente</a>
+			</div>
+
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="field is-grouped">
+						<p class="control">
+							<button class="button is-light js-modal-trigger" data-target="personalInfoModal">
+								<span class="icon">
+									<i class="fa-solid fa-user"></i>
+								</span>
+								<span>Informazioni personali</span>
+							</button>
+						</p>
+						<p class="control">
+							<button class="button is-danger">
+								<span class="icon">
+									<i class="fa-solid fa-door-open"></i>
+								</span>
+								<span>Esci</span>
+							</button>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+    <section class="section">
+		<div class="columns page" id="home">
+			<div class="column is-one-quarter" id="managerContainer">
+				<div class="column" id="patientsContainer"></div>
+				<div class="column" id="articleSidebarContainer"></div>
+				<div class="column" id="draftSidebarContainer"></div>
+				<div class="column" id="usersSidebarContainer"></div>
+			</div>
+			<div class="column is-half" id="activtiesListContainer"></div>
+            <div class="column is-one-quarter" id="currentSessionContainer"></div>
+		</div>
+        <div class="page" id="login">
+            <div id="loginFormContainer"></div>
+        </div>
+        <div class="page" id="register">
+            <div id="registerFormContainer"></div>
+        </div>
+	</section>
+
+    <footer class="footer">
+		<div class="content has-text-centered">
+			<p id="footerText"></p>
+		</div>
+	</footer>
+
+    <script>
+		const year = new Date().getFullYear();
+		document.getElementById("footerText").innerHTML = '© ' + year + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
+	</script>
+
+	<script type="module" src="index.js"></script>
+</body>
+</html>

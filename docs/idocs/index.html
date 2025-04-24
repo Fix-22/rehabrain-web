@@ -1,412 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-<link href="assets/images/favicon.png" rel="icon" />
-<title>Documentazione RehaBrain</title>
-<meta name="description" content="Your ThemeForest item Name and description">
-<meta name="author" content="harnishdesign.net">
 
-<!-- Stylesheet
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+  <link href="assets/images/favicon.png" rel="icon" />
+  <title>Documentazione RehaBrain</title>
+  <meta name="description" content="Your ThemeForest item Name and description">
+  <meta name="author" content="harnishdesign.net">
+
+  <!-- Stylesheet
 ============================== -->
-<!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
-<!-- Font Awesome Icon -->
-<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css" />
-<!-- Magnific Popup -->
-<link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css" />
-<!-- Highlight Syntax -->
-<link rel="stylesheet" type="text/css" href="assets/vendor/highlight.js/styles/github.css" />
-<!-- Custom Stylesheet -->
-<link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
+  <!-- Font Awesome Icon -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css" />
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css" />
+  <!-- Highlight Syntax -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/highlight.js/styles/github.css" />
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css" />
 </head>
 
 <body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
 
-<!-- Preloader -->
-<div class="preloader">
-  <div class="lds-ellipsis">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</div>
-<!-- Preloader End --> 
-
-<!-- Document Wrapper   
-=============================== -->
-<div id="main-wrapper"> 
-  
-
-  
-  <!-- Content
-  ============================ -->
-  <div id="content" role="main">
-    
-	<!-- Sidebar Navigation
-	============================ -->
-	<div class="idocs-navigation bg-dark docs-navigation-dark">
-      <ul class="nav flex-column ">
-        <li class="nav-item"><a class="nav-link active" href="#start">Inizio</a>          
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#architettura_informazione">Architettura informazione</a>          
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#infrastruttura">Infrastruttura</a>          
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#UML">UML</a>
-			<ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link" href="#umlcasiduso">Casi d'uso</a></li>
-            <li class="nav-item"><a class="nav-link" href="#umloggetti">Oggetti</a></li>
-            <li class="nav-item"><a class="nav-link" href="#umlstato">Stato</a></li>
-			<li class="nav-item"><a class="nav-link" href="#umlsequenza">Sequenza</a></li>
-           
-          </ul>
-		</li>
-        <li class="nav-item"><a class="nav-link" href="#contenuti">Contenuti</a>
-          
-        </li>
-		<li class="nav-item"><a class="nav-link" href="#wireframes">Wireframes</a></li>
-              
-		</li>
-         <li class="nav-item"><a class="nav-link" href="#progetto">Il progetto</a>
-           <ul class="nav flex-column">
-             <li class="nav-item"><a class="nav-link" href="#link">Link al progetto</a></li>
-             </ul>  
-         </li>
-      </ul>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-    
- 
-    <div class="idocs-content">
-      <div class="container"> 
-   
-        <section id="start">
-        <h1>Documentazione RehaBrain</h1>
-        <h2>RehaBrain</h2>
-        <p class="lead">RehaBrain è un’applicazione web per la CST (Cognitive Stimulation Therapy, terapia utilizzata per le persone con malattie neurodegenerative che consente di stimolarle cognitivamente, utilizzando attività simili a giochi e quiz, con l'obiettivo di rallentare il progresso di malattie come la demenza), creata per aiutare gli operatori ed i caregiver dei pazienti affetti da malattie neurodegenerative.</p>
-		<hr>
-		<div class="row">
-			<div class="col-sm-6 col-lg-4">
-				<ul class="list-unstyled">
-					<li><strong>Classe/Anno:</strong> 5CINF - 24/25</li>
-					<li><strong>Autore:</strong> Simone Cecire</li>
-				</ul>
-			</div>
-			<div class="col-sm-6 col-lg-4">
-				<ul class="list-unstyled">
-					<li><strong class="font-weight-700">Creato:</strong> 10 aprile 2025</li>
-					<li><strong>Ultima modifica:</strong> x aprile 2025</li>
-				</ul>
-			</div>
-		</div>
-        </section>
-        
-		<hr class="divider">
+  </div>
+  <!-- Preloader End -->
 
-        <section id="architettura_informazione">
-          <h2>Architettura informazione</h2>
-          <h3>Schema ER</h3>
-          <img src="/docs/database/ER/rehabrain_er.png">
-          <h3>Schema logico</h3>
-          <p>
-            Category(<u>Name</u>)<br>
-            Difficulty(Difficulty</u>)<br>
-            Content(<u>Name</u>, LinkedImage, Color, CategoryName(FK), Difficulty(FK))<br>
-            Activity(<u>Name</u>, Description, MaxMediumScore)<br>
-            ActivityWithDifficulty(<u>ActivityName(FK)</u>, <u>Difficulty(FK)</u>)<br>
-            User(<u>Email</u>, Name, Surname, Password, IsModerator, IsAdministrator)<br>
-            Patient(<u>ID</u>, Name, Surname, Age, Notes, Caregiver(FK))<br>
-            CurrentSession(<u>PatientID(FK)</u>, <u>ActivityWithDifficultyID(FK)</u>, <u>ActivityName(FK)</u>)<br>
-            SessionScore(<u>ID</u>, Score, Date, PatientID(FK))<br>
-          </p>
-          <h3>Vincoli</h3>
-          <p><table>
-            <tbody>
-            <tr>
-            <td width="128">
-            <p><strong>Relazione</strong></p>
-            </td>
-            <td width="128">
-            <p><strong>Attributi</strong></p>
-            </td>
-            <td width="128">
-            <p><strong>Vincoli</strong></p>
-            </td>
-            <td width="128">
-            <p><strong>Tipo</strong></p>
-            </td>
-            <td width="128">
-            <p><strong>Dimensione</strong></p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>Category</p>
-            </td>
-            <td width="128">
-            <p>Name</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>50</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>Difficulty</p>
-            </td>
-            <td width="128">
-            <p>Difficulty</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>50</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>Content</p>
-            </td>
-            <td width="128">
-            <p>Name</p>
-            <p>LinkedImage</p>
-            <p>Color</p>
-            <p>CategoryName</p>
-            <p>Difficulty</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            <p>Not null</p>
-            <p>/</p>
-            <p>FK</p>
-            <p>FK</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>150</p>
-            <p>200</p>
-            <p>6</p>
-            <p>50</p>
-            <p>50</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>Activity</p>
-            </td>
-            <td width="128">
-            <p>Name</p>
-            <p>Description</p>
-            <p>MaxMediumScore</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            <p>TEXT</p>
-            <p>INT</p>
-            </td>
-            <td width="128">
-            <p>100</p>
-            <p>2000</p>
-            <p>4</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>ActivityWithDifficulty</p>
-            </td>
-            <td width="128">
-            <p>ActivityName</p>
-            <p>Difficulty</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            <p>PK</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>100</p>
-            <p>50</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>User</p>
-            </td>
-            <td width="128">
-            <p>Email</p>
-            <p>Name</p>
-            <p>Surname</p>
-            <p>Password</p>
-            <p>IsModerator</p>
-            <p>IsAdministrator</p>
-            </td>
-            <td width="128">
-            <p>PK</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            </td>
-            <td width="128">
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>BOOL</p>
-            <p>BOOL</p>
-            </td>
-            <td width="128">
-            <p>100</p>
-            <p>100</p>
-            <p>100</p>
-            <p>20</p>
-            <p>/</p>
-            <p>/</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>Patient</p>
-            </td>
-            <td width="128">
-            <p>ID</p>
-            <p>Name</p>
-            <p>Surname</p>
-            <p>Age</p>
-            <p>Notes</p>
-            <p>Caregiver</p>
-            </td>
-            <td width="128">
-            <p>PK, autoincrement</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>FK, not null</p>
-            </td>
-            <td width="128">
-            <p>INT</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            <p>INT</p>
-            <p>TEXT</p>
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>/</p>
-            <p>100</p>
-            <p>100</p>
-            <p>3</p>
-            <p>5000</p>
-            <p>100</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>CurrentSession</p>
-            </td>
-            <td width="128">
-            <p>PatientID</p>
-            <p>ActivityWithDifficultyID</p>
-            <p>ActivityName</p>
-            </td>
-            <td width="128">
-            <p>PK, FK</p>
-            <p>PK, FK</p>
-            <p>PK, FK</p>
-            </td>
-            <td width="128">
-            <p>INT</p>
-            <p>VARCHAR</p>
-            <p>VARCHAR</p>
-            </td>
-            <td width="128">
-            <p>/</p>
-            <p>100</p>
-            <p>100</p>
-            </td>
-            </tr>
-            <tr>
-            <td width="128">
-            <p>SessionScore</p>
-            </td>
-            <td width="128">
-            <p>ID</p>
-            <p>Score</p>
-            <p>Date</p>
-            <p>PatientID</p>
-            </td>
-            <td width="128">
-            <p>PK, autoincrement</p>
-            <p>Not null</p>
-            <p>Not null</p>
-            <p>FK, not null</p>
-            </td>
-            <td width="128">
-            <p>INT</p>
-            <p>INT</p>
-            <p>DATE</p>
-            <p>INT</p>
-            </td>
-            <td width="128">
-            <p>/</p>
-            <p>4</p>
-            <p>/</p>
-            <p>/</p>
-            </td>
-            </tr>
-            </tbody>
-            </table></p>
-        </section>
+  <!-- Document Wrapper   
+=============================== -->
+  <div id="main-wrapper">
 
-    <hr class="divider">
 
-    <section id="infrastruttura">
-      <h2>Infrastruttura</h2>
-      <img src="/docs/infrastruttura/rehabrain_infrastruttura.png">
-    </section>
-        
-		<hr class="divider">
-        <section id="UML">
-              <h2>UML</h2>
-              <p class="lead">Di seguito i diagrammi UML.</p>
-        </section>
 
-        <section id="umlcasiduso">
-          <h2>Diagramma di Casi d'uso</h2>
-          <img src="/docs/UML/rehabrain_casiuso.png">
-          <h3>Utente non registrato</h3>
-          <p>Qualsiasi utente può utilizzare l’applicazione in maniera gratuita accedendo e “giocando” a tutte le attività presenti, con l’unica differenza di non poter salvare nessun dato relativo al proprio paziente.</p>
-          <p>All’apertura dell’applicazione all’utente viene presentata una schermata con un elenco di attività da scegliere (aggiungibili tramite l’apposito pulsante “+” e selezionando il corrispettivo livello di difficoltà con un selettore) tra quelle possibili (per il momento solo 5), con una barra di ricerca per facilitare l’utilizzo.
-            Alla destra dell’elenco è presente un box con l’elenco di attività scelte (in ordine di aggiunta) per la sessione di terapia attuale, dove sono presenti:
+    <!-- Content
+  ============================ -->
+    <div id="content" role="main">
+
+      <!-- Sidebar Navigation
+	============================ -->
+      <div class="idocs-navigation bg-dark docs-navigation-dark">
+        <ul class="nav flex-column ">
+          <li class="nav-item"><a class="nav-link active" href="#start">Inizio</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#architettura_informazione">Architettura informazione</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#infrastruttura">Infrastruttura</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#UML">UML</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#umlcasiduso">Casi d'uso</a></li>
+              <li class="nav-item"><a class="nav-link" href="#umloggetti">Oggetti</a></li>
+              <li class="nav-item"><a class="nav-link" href="#umlstato">Stato</a></li>
+              <li class="nav-item"><a class="nav-link" href="#umlsequenza">Sequenza</a></li>
+
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#contenuti">Contenuti</a>
+
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#wireframes">Wireframes</a></li>
+
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#progetto">Il progetto</a>
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="#link">Link al progetto</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="idocs-content">
+        <div class="container">
+
+          <section id="start">
+            <h1>Documentazione RehaBrain</h1>
+            <h2>RehaBrain</h2>
+            <p class="lead">RehaBrain è un’applicazione web per la CST (Cognitive Stimulation Therapy, terapia
+              utilizzata per le persone con malattie neurodegenerative che consente di stimolarle cognitivamente,
+              utilizzando attività simili a giochi e quiz, con l'obiettivo di rallentare il progresso di malattie come
+              la demenza), creata per aiutare gli operatori ed i caregiver dei pazienti affetti da malattie
+              neurodegenerative.</p>
+            <hr>
+            <div class="row">
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong>Classe/Anno:</strong> 5CINF - 24/25</li>
+                  <li><strong>Autore:</strong> Simone Cecire</li>
+                </ul>
+              </div>
+              <div class="col-sm-6 col-lg-4">
+                <ul class="list-unstyled">
+                  <li><strong class="font-weight-700">Creato:</strong> 10 aprile 2025</li>
+                  <li><strong>Ultima modifica:</strong> x aprile 2025</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <hr class="divider">
+
+          <section id="architettura_informazione">
+            <h2>Architettura informazione</h2>
+            <h3>Schema ER</h3>
+            <img src="/docs/database/ER/rehabrain_er.png">
+            <h3>Schema logico</h3>
+            <p>
+              Category(<u>Name</u>)<br>
+              Difficulty(Difficulty</u>)<br>
+              Content(<u>Name</u>, LinkedImage, Color, CategoryName(FK), Difficulty(FK))<br>
+              Activity(<u>Name</u>, Description, MaxMediumScore)<br>
+              ActivityWithDifficulty(<u>ActivityName(FK)</u>, <u>Difficulty(FK)</u>)<br>
+              User(<u>Email</u>, Name, Surname, Password, IsModerator, IsAdministrator)<br>
+              Patient(<u>ID</u>, Name, Surname, Age, Notes, Caregiver(FK))<br>
+              CurrentSession(<u>PatientID(FK)</u>, <u>ActivityWithDifficultyID(FK)</u>, <u>ActivityName(FK)</u>)<br>
+              SessionScore(<u>ID</u>, Score, Date, PatientID(FK))<br>
+            </p>
+            <h3>Vincoli</h3>
+            <p>
+            <table>
+              <tbody>
+                <tr>
+                  <td width="128">
+                    <p><strong>Relazione</strong></p>
+                  </td>
+                  <td width="128">
+                    <p><strong>Attributi</strong></p>
+                  </td>
+                  <td width="128">
+                    <p><strong>Vincoli</strong></p>
+                  </td>
+                  <td width="128">
+                    <p><strong>Tipo</strong></p>
+                  </td>
+                  <td width="128">
+                    <p><strong>Dimensione</strong></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>Category</p>
+                  </td>
+                  <td width="128">
+                    <p>Name</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>Difficulty</p>
+                  </td>
+                  <td width="128">
+                    <p>Difficulty</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>Content</p>
+                  </td>
+                  <td width="128">
+                    <p>Name</p>
+                    <p>LinkedImage</p>
+                    <p>Color</p>
+                    <p>CategoryName</p>
+                    <p>Difficulty</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                    <p>Not null</p>
+                    <p>/</p>
+                    <p>FK</p>
+                    <p>FK</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>150</p>
+                    <p>200</p>
+                    <p>6</p>
+                    <p>50</p>
+                    <p>50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>Activity</p>
+                  </td>
+                  <td width="128">
+                    <p>Name</p>
+                    <p>Description</p>
+                    <p>MaxMediumScore</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                    <p>TEXT</p>
+                    <p>INT</p>
+                  </td>
+                  <td width="128">
+                    <p>100</p>
+                    <p>2000</p>
+                    <p>4</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>ActivityWithDifficulty</p>
+                  </td>
+                  <td width="128">
+                    <p>ActivityName</p>
+                    <p>Difficulty</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                    <p>PK</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>100</p>
+                    <p>50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>User</p>
+                  </td>
+                  <td width="128">
+                    <p>Email</p>
+                    <p>Name</p>
+                    <p>Surname</p>
+                    <p>Password</p>
+                    <p>IsModerator</p>
+                    <p>IsAdministrator</p>
+                  </td>
+                  <td width="128">
+                    <p>PK</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                  </td>
+                  <td width="128">
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>BOOL</p>
+                    <p>BOOL</p>
+                  </td>
+                  <td width="128">
+                    <p>100</p>
+                    <p>100</p>
+                    <p>100</p>
+                    <p>20</p>
+                    <p>/</p>
+                    <p>/</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>Patient</p>
+                  </td>
+                  <td width="128">
+                    <p>ID</p>
+                    <p>Name</p>
+                    <p>Surname</p>
+                    <p>Age</p>
+                    <p>Notes</p>
+                    <p>Caregiver</p>
+                  </td>
+                  <td width="128">
+                    <p>PK, autoincrement</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>FK, not null</p>
+                  </td>
+                  <td width="128">
+                    <p>INT</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                    <p>INT</p>
+                    <p>TEXT</p>
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>/</p>
+                    <p>100</p>
+                    <p>100</p>
+                    <p>3</p>
+                    <p>5000</p>
+                    <p>100</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>CurrentSession</p>
+                  </td>
+                  <td width="128">
+                    <p>PatientID</p>
+                    <p>ActivityWithDifficultyID</p>
+                    <p>ActivityName</p>
+                  </td>
+                  <td width="128">
+                    <p>PK, FK</p>
+                    <p>PK, FK</p>
+                    <p>PK, FK</p>
+                  </td>
+                  <td width="128">
+                    <p>INT</p>
+                    <p>VARCHAR</p>
+                    <p>VARCHAR</p>
+                  </td>
+                  <td width="128">
+                    <p>/</p>
+                    <p>100</p>
+                    <p>100</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td width="128">
+                    <p>SessionScore</p>
+                  </td>
+                  <td width="128">
+                    <p>ID</p>
+                    <p>Score</p>
+                    <p>Date</p>
+                    <p>PatientID</p>
+                  </td>
+                  <td width="128">
+                    <p>PK, autoincrement</p>
+                    <p>Not null</p>
+                    <p>Not null</p>
+                    <p>FK, not null</p>
+                  </td>
+                  <td width="128">
+                    <p>INT</p>
+                    <p>INT</p>
+                    <p>DATE</p>
+                    <p>INT</p>
+                  </td>
+                  <td width="128">
+                    <p>/</p>
+                    <p>4</p>
+                    <p>/</p>
+                    <p>/</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </p>
+          </section>
+
+          <hr class="divider">
+
+          <section id="infrastruttura">
+            <h2>Infrastruttura</h2>
+            <img src="/docs/infrastruttura/rehabrain_infrastruttura.png">
+          </section>
+
+          <hr class="divider">
+          <section id="UML">
+            <h2>UML</h2>
+            <p class="lead">Di seguito i diagrammi UML.</p>
+          </section>
+
+          <section id="umlcasiduso">
+            <h2>Diagramma di Casi d'uso</h2>
+            <img src="/docs/UML/rehabrain_casiuso.png">
+            <h3>Utente non registrato</h3>
+            <p>Qualsiasi utente può utilizzare l’applicazione in maniera gratuita accedendo e “giocando” a tutte le
+              attività presenti, con l’unica differenza di non poter salvare nessun dato relativo al proprio paziente.
+            </p>
+            <p>All’apertura dell’applicazione all’utente viene presentata una schermata con un elenco di attività da
+              scegliere (aggiungibili tramite l’apposito pulsante “+” e selezionando il corrispettivo livello di
+              difficoltà con un selettore) tra quelle possibili (per il momento solo 5), con una barra di ricerca per
+              facilitare l’utilizzo.
+              Alla destra dell’elenco è presente un box con l’elenco di attività scelte (in ordine di aggiunta) per la
+              sessione di terapia attuale, dove sono presenti:
             <ul>
               <li>Il nome dell’attività</li>
               <li>Un pulsante per rimuoverla dalla sessione (-)</li>
@@ -414,177 +427,235 @@
               <li>Un pulsante per portarla giù di livello (v)</li>
               <li>Un input per inserire il numero di ripetizione per una determinata attività</li>
             </ul>
-          </p>
-          <p>Si possono aggiungere quante attività si vogliono, nell’ordine in cui si vuole.
-            Se si continua a premere il pulsante “+” per la stessa attività, essa viene aggiunta in coda per tutte le volte in cui il pulsante è stato premuto.
-            Ogni attività presenta un pulsante per avere maggiori informazioni su essa (?), quando viene premuto apre una modale con le informazioni testuali relative a tale attività.
             </p>
-          <p>
-            Quando viene fatta partire la sessione corrente di terapia tramite il tasto “avvia” la schermata e la URL cambiano, la barra di navigazione si modifica e viene inserito un pulsante per tornare alla home.
-            In base alla tipologia di attività appaiono i suoi gli elementi costitutivi, ma sono sempre presenti:
+            <p>Si possono aggiungere quante attività si vogliono, nell’ordine in cui si vuole.
+              Se si continua a premere il pulsante “+” per la stessa attività, essa viene aggiunta in coda per tutte le
+              volte in cui il pulsante è stato premuto.
+              Ogni attività presenta un pulsante per avere maggiori informazioni su essa (?), quando viene premuto apre
+              una modale con le informazioni testuali relative a tale attività.
+            </p>
+            <p>
+              Quando viene fatta partire la sessione corrente di terapia tramite il tasto “avvia” la schermata e la URL
+              cambiano, la barra di navigazione si modifica e viene inserito un pulsante per tornare alla home.
+              In base alla tipologia di attività appaiono i suoi gli elementi costitutivi, ma sono sempre presenti:
             <ul>
               <li>I pulsanti per andare avanti e indietro nelle attività (/)</li>
               <li>Un pulsante per riavviare e resettare l’attività</li>
               <li>Un pulsante per risolvere l’attività, qualora il paziente non riesca da solo</li>
               <li>Un pulsante per terminare la sessione</li>
             </ul>
-          </p>
-          <p>Alla fine della sessione, o quando viene premuto il tasto per terminarla, cambia la URL e appare una schermata dove è presente il punteggio della sessione.</p>
-          <p>Di seguito le informazioni per le attività specifiche.</p>
-          <h4>Abbinamento oggetto-parola</h4>
-          <p>In base al livello di difficoltà vengono presentati a schermo 3 (bassa), 5 (media) o 7 (alta) pulsanti con all’interno il disegno di un oggetto selezionato in modo randomico (uno solo è quello corretto).
-            Nella parte alta della pagina è presente la parola da indovinare.
-            Quando viene premuto un pulsante con una scelta non corretta viene mostrato all’utente un messaggio di errore e il pulsante viene disabilitato (per facilitare il paziente).
-            Quando viene premuto il pulsante corretto l’utente riceve un messaggio di successo e si può passare all’attività successiva.
-            Se viene premuto il pulsante per mostrare la soluzione dell’attività, il pulsante corretto viene evidenziato e gli altri vengono disabilitati.
             </p>
-          <h4>Riordinamento delle lettere in una parola</h4>
-          <p>In base al livello di difficoltà vengono presentate a schermo parole di lunghezza differente.
-            È presente un input per inserire la parola riordinata e un pulsante per inviare la risposta.
-            Se viene scritta una parola sbagliata viene mostrato un messaggio di errore, altrimenti viene mostrato un messaggio di successo.
-            Se viene premuto il tasto per mostrare la soluzione, la parola viene riordinata correttamente.
-          </p>
-          <h4>Ordinamento crescente/decrescente dei numeri</h4>
-          <p></p>
-          <h4>Indovinare il colore di una parola</h4>
-          <p>
-            In base al livello di difficoltà scelto vengono presentate a schermo numeri di grandezza diversa in base alla difficoltà (bassa 3 numeri di due cifre, media 4 numeri di 2 cifre, alta 5 numeri con numeri di 3 cifre) da riordinare in maniera crescente o decrescente (definito randomicamente).
-            Sono presenti un numero di input diverso in base alla difficoltà dove inserire i numeri in ordine e un pulsante per confermare le scelte.
-            Nel caso venga confermata una sequenza incorretta verrà presentato un messaggio di errore, se invece è corretta apparirà un messaggio di successo e sarà possibile andare avanti.
-            Se viene premuto il tasto per mostrare la soluzione, la sequenza viene riordinata correttamente.
+            <p>Alla fine della sessione, o quando viene premuto il tasto per terminarla, cambia la URL e appare una
+              schermata dove è presente il punteggio della sessione.</p>
+            <p>Di seguito le informazioni per le attività specifiche.</p>
+            <h4>Abbinamento oggetto-parola</h4>
+            <p>In base al livello di difficoltà vengono presentati a schermo 3 (bassa), 5 (media) o 7 (alta) pulsanti
+              con all’interno il disegno di un oggetto selezionato in modo randomico (uno solo è quello corretto).
+              Nella parte alta della pagina è presente la parola da indovinare.
+              Quando viene premuto un pulsante con una scelta non corretta viene mostrato all’utente un messaggio di
+              errore e il pulsante viene disabilitato (per facilitare il paziente).
+              Quando viene premuto il pulsante corretto l’utente riceve un messaggio di successo e si può passare
+              all’attività successiva.
+              Se viene premuto il pulsante per mostrare la soluzione dell’attività, il pulsante corretto viene
+              evidenziato e gli altri vengono disabilitati.
+            </p>
+            <h4>Riordinamento delle lettere in una parola</h4>
+            <p>In base al livello di difficoltà vengono presentate a schermo parole di lunghezza differente.
+              È presente un input per inserire la parola riordinata e un pulsante per inviare la risposta.
+              Se viene scritta una parola sbagliata viene mostrato un messaggio di errore, altrimenti viene mostrato un
+              messaggio di successo.
+              Se viene premuto il tasto per mostrare la soluzione, la parola viene riordinata correttamente.
+            </p>
+            <h4>Ordinamento crescente/decrescente dei numeri</h4>
+            <p></p>
+            <h4>Indovinare il colore di una parola</h4>
+            <p>
+              In base al livello di difficoltà scelto vengono presentate a schermo numeri di grandezza diversa in base
+              alla difficoltà (bassa 3 numeri di due cifre, media 4 numeri di 2 cifre, alta 5 numeri con numeri di 3
+              cifre) da riordinare in maniera crescente o decrescente (definito randomicamente).
+              Sono presenti un numero di input diverso in base alla difficoltà dove inserire i numeri in ordine e un
+              pulsante per confermare le scelte.
+              Nel caso venga confermata una sequenza incorretta verrà presentato un messaggio di errore, se invece è
+              corretta apparirà un messaggio di successo e sarà possibile andare avanti.
+              Se viene premuto il tasto per mostrare la soluzione, la sequenza viene riordinata correttamente.
 
-          </p>
-          <h4>Scrittura in forma numerica dell’ora presentata sotto forma di orologio analogico</h4>
-          <p>Viene mostrato un canvas con un orologio analogico che in base alla difficoltà mostrerà ore diverse ().
-            È presente un input dove inserire l’ora in formato numerico e un pulsante per confermare la scelta.
-            Nel caso venga confermata un’ora incorretta verrà presentato un messaggio di errore, se invece è corretta apparirà un messaggio di successo e sarà possibile andare avanti.
-            Se viene premuto il tasto per mostrare la soluzione, verrà mostrata l’ora, in formato numerico, corretta.
             </p>
-          <h3>Caregiver</h3>
-          <p>Tutti gli utenti che si registrato diventano caregiver. Ogni caregiver ha a disposizione le stesse attività presenti per gli utenti non registrati.
-            Un caregiver può creare e gestire più pazienti attraverso un menù posto sul lato di sinistra dello schermo.
-            Può creare i pazienti tramite un apposito pulsante, che apre una modale per l’inserimento dei dati personali del paziente.
-            Può ricercare i vari pazienti da lui creati tramite una barra di ricerca e può premere un pulsante che apre una modale per modificare le informazioni del paziente o eliminarlo.
-            Quando seleziona un paziente appaiono nella schermata la box di selezione delle attività e a destra di essa il menù per visualizzare l’elenco di attività della sessione corrente del paziente, dove sono presenti il tasto “avvia” e un tasto “salva” che permette di salvare all’interno dei dati del paziente quella specifica sessione per poterla ripetere anche in futuro.
-            Quando viene fatta partire una sessione le attività sono le stesse per tutti i tipi di utenti, ma alla fine oltre al punteggio sono presenti due tasti, uno per salvare il punteggio della sessione e uno per scartarlo.
+            <h4>Scrittura in forma numerica dell’ora presentata sotto forma di orologio analogico</h4>
+            <p>Viene mostrato un canvas con un orologio analogico che in base alla difficoltà mostrerà ore diverse ().
+              È presente un input dove inserire l’ora in formato numerico e un pulsante per confermare la scelta.
+              Nel caso venga confermata un’ora incorretta verrà presentato un messaggio di errore, se invece è corretta
+              apparirà un messaggio di successo e sarà possibile andare avanti.
+              Se viene premuto il tasto per mostrare la soluzione, verrà mostrata l’ora, in formato numerico, corretta.
             </p>
-          <h3>Moderatore</h3>
-          <p>Solo alcuni caregiver (scelti dall’amministratore del sistema) possono diventare moderatori. In questo caso appaiono, sul menù di sinistra, tre schede per selezionare il tipo di gestione attuale:
+            <h3>Caregiver</h3>
+            <p>Tutti gli utenti che si registrato diventano caregiver. Ogni caregiver ha a disposizione le stesse
+              attività presenti per gli utenti non registrati.
+              Un caregiver può creare e gestire più pazienti attraverso un menù posto sul lato di sinistra dello
+              schermo.
+              Può creare i pazienti tramite un apposito pulsante, che apre una modale per l’inserimento dei dati
+              personali del paziente.
+              Può ricercare i vari pazienti da lui creati tramite una barra di ricerca e può premere un pulsante che
+              apre una modale per modificare le informazioni del paziente o eliminarlo.
+              Quando seleziona un paziente appaiono nella schermata la box di selezione delle attività e a destra di
+              essa il menù per visualizzare l’elenco di attività della sessione corrente del paziente, dove sono
+              presenti il tasto “avvia” e un tasto “salva” che permette di salvare all’interno dei dati del paziente
+              quella specifica sessione per poterla ripetere anche in futuro.
+              Quando viene fatta partire una sessione le attività sono le stesse per tutti i tipi di utenti, ma alla
+              fine oltre al punteggio sono presenti due tasti, uno per salvare il punteggio della sessione e uno per
+              scartarlo.
+            </p>
+            <h3>Moderatore</h3>
+            <p>Solo alcuni caregiver (scelti dall’amministratore del sistema) possono diventare moderatori. In questo
+              caso appaiono, sul menù di sinistra, tre schede per selezionare il tipo di gestione attuale:
             <ol>
               <li>Una scheda per gestire i propri pazienti (come gli altri caregiver).</li>
-              <li>Una scheda per gestire gli altri caregiver, dove è presente la lista dei caregiver registrati (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un pulsante per visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli pazienti, che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la possibilità di eliminarlo.</li>
-              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il tipo di contenuti da gestire (parole o immagini) entrambi ricercabili (attraverso una barra di ricerca) e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è presente un pulsante per modificare il contenuto o eliminarlo.</li>
+              <li>Una scheda per gestire gli altri caregiver, dove è presente la lista dei caregiver registrati
+                (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un pulsante per
+                visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli pazienti,
+                che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la
+                possibilità di eliminarlo.</li>
+              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il
+                tipo di contenuti da gestire (parole o immagini) entrambi ricercabili (attraverso una barra di ricerca)
+                e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è presente
+                un pulsante per modificare il contenuto o eliminarlo.</li>
             </ol>
-          </p>
-          <h3>Amministratore</h3>
-          <p>
-            È presente solo un amministratore che può gestire i caregiver, i moderatori, i contenuti e le attività presenti nell’applicazione. L’amministratore ha, sul menù di sinistra, tre schede per selezionare il tipo di gestione attuale:
+            </p>
+            <h3>Amministratore</h3>
+            <p>
+              È presente solo un amministratore che può gestire i caregiver, i moderatori, i contenuti e le attività
+              presenti nell’applicazione. L’amministratore ha, sul menù di sinistra, tre schede per selezionare il tipo
+              di gestione attuale:
             <ol>
               <li>Una scheda per gestire i propri pazienti (come gli altri caregiver).</li>
-              <li>Una scheda per gestire gli altri utenti, dove è presente la lista dei caregiver e moderatori registrati (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un pulsante per visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli pazienti, che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la possibilità di eliminarlo o cambiarli il ruolo (in moderatore o caregiver).</li>
-              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il tipo di contenuti da gestire (parole, immagini o attività) entrambi ricercabili (attraverso una barra di ricerca) e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è presente un pulsante per modificare il contenuto o eliminarlo.</li>
+              <li>Una scheda per gestire gli altri utenti, dove è presente la lista dei caregiver e moderatori
+                registrati (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un
+                pulsante per visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli
+                pazienti, che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la
+                possibilità di eliminarlo o cambiarli il ruolo (in moderatore o caregiver).</li>
+              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il
+                tipo di contenuti da gestire (parole, immagini o attività) entrambi ricercabili (attraverso una barra di
+                ricerca) e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è
+                presente un pulsante per modificare il contenuto o eliminarlo.</li>
             </ol>
-          </p>
-          
-        </section>
+            </p>
 
-        <section id="umloggetti">
-          <h2>Diagrammi di oggetti</h2>
-          <p class="lead">Qui vanno inseriti il diagramma di oggetti (immagini)</p>          
+          </section>
 
-        </section>
+          <section id="umloggetti">
+            <h2>Diagrammi di oggetti</h2>
+            <p class="lead">Qui vanno inseriti il diagramma di oggetti (immagini)</p>
 
-        <section id="umlstato">
-          <h2>Diagrammi di Stato</h2>
-          <h3>Generale</h3>
-          <img src="/docs/UML/rehabrain_stato.png">
-          <h3>Utente non registrato</h3>
-          <img src="/docs/UML/rehabrain_stato_utente_non_registrato.png">
-          <h3>Caregiver</h3>
-          <img src="/docs/UML/rehabrain_stato_caregiver.png">
-          <h3>Moderatore</h3>
-          <img src="/docs/UML/rehabrain_stato_moderatore.png">
-          <h3>Amministratore</h3>
-          <img src="/docs/UML/rehabrain_stato_amministratore.png">          
-        </section>
+          </section>
 
-        <section id="umlsequenza">
-          <h2>Diagrammi di Sequenza</h2>
-          <h3>Utente non registrato</h3>
-          <img src="/docs/UML/rehabrain_sequenza_utente_non_registrato.png">
-          <h3>Caregiver</h3>
-          <img src="/docs/UML/rehabrain_sequenza_caregiver.png">
-          <h3>Moderatore</h3>
-          <img src="/docs/UML/rehabrain_sequenza_moderatore.png">
-          <h3>Amministratore</h3>
-          <img src="/docs/UML/rehabrain_sequenza_amministratore.png"> 
-        </section>
+          <section id="umlstato">
+            <h2>Diagrammi di Stato</h2>
+            <h3>Generale</h3>
+            <img src="/docs/UML/rehabrain_stato.png">
+            <h3>Utente non registrato</h3>
+            <img src="/docs/UML/rehabrain_stato_utente_non_registrato.png">
+            <h3>Caregiver</h3>
+            <img src="/docs/UML/rehabrain_stato_caregiver.png">
+            <h3>Moderatore</h3>
+            <img src="/docs/UML/rehabrain_stato_moderatore.png">
+            <h3>Amministratore</h3>
+            <img src="/docs/UML/rehabrain_stato_amministratore.png">
+          </section>
 
-         <hr class="divider">
+          <section id="umlsequenza">
+            <h2>Diagrammi di Sequenza</h2>
+            <h3>Utente non registrato</h3>
+            <img src="/docs/UML/rehabrain_sequenza_utente_non_registrato.png">
+            <h3>Caregiver</h3>
+            <img src="/docs/UML/rehabrain_sequenza_caregiver.png">
+            <h3>Moderatore</h3>
+            <img src="/docs/UML/rehabrain_sequenza_moderatore.png">
+            <h3>Amministratore</h3>
+            <img src="/docs/UML/rehabrain_sequenza_amministratore.png">
+          </section>
 
-        <section id="wireframes">
-          <h2>Wireframes</h2>
-          <p class="lead">I wireframes non ci stanno in una sola immagine, è consultabile il pdf in /docs/wireframes/rehabrain_wireframes.pdf <a href="/docs/wireframes/rehabrain_wireframes.pdf">qui</a></p>
-        </section>
-        <hr class="divider">
+          <hr class="divider">
+
+          <section id="wireframes">
+            <h2>Wireframes</h2>
+            <p class="lead">I wireframes non ci stanno in una sola immagine, è consultabile il pdf in
+              /docs/wireframes/rehabrain_wireframes.pdf <a href="/docs/wireframes/rehabrain_wireframes.pdf">qui</a></p>
+          </section>
+          <hr class="divider">
 
           <section id="progetto">
-          <h2>Il progetto</h2>
-            <p class="lead">RehaBrain è un’applicazione web per la CST (Cognitive Stimulation Therapy, terapia utilizzata per le persone con malattie neurodegenerative che consente di stimolarle cognitivamente, utilizzando attività simili a giochi e quiz, con l'obiettivo di rallentare il progresso di malattie come la demenza), creata per aiutare gli operatori ed i caregiver dei pazienti affetti da malattie neurodegenerative.
-            <p>  L’applicazione offre diverse attività di stimolazione cognitiva accessibili in maniera gratuita per tutti. </p>
-            <p>Sono, inizialmente, presenti 5 attività, ognuna con 3 livelli di difficoltà (basso, medio, alto, impostato in base al livello di degenerazione cognitiva del paziente):
-              <ol>
-                <li>Abbinamento oggetto-parola</li>
-                <li>Riordinamento delle lettere in una parola</li>
-                <li>Ordinamento crescente/decrescente dei numeri</li>
-                <li>Indovinare il colore di una parola (esempio: giallo, di che colore è scritta la parola?)</li>
-                <li>Scrittura in forma numerica dell’ora presentata sotto forma di orologio analogico</li>
-              </ol>
-              <p>L’applicazione permette ad un operatore o ad un caregiver di registrarsi tramite email e password e accedere ad una dashboard personalizzata dove sono creabili e consultabili i profili dei pazienti, i quali contengono le loro informazioni personali, appunti sul loro comportamento ed è possibile selezionare le attività (e la corrispettiva difficoltà per ognuna di esse) e l'ordine ed il numero di "partite" che si vogliono far fare al paziente, che vanno a comporre una "sessione di attività" personalizzata sul paziente scelto. Ogni attività (in base alle risposte giuste e sbagliate e al numero di tentativi) ha un punteggio, che va a comporre un "punteggio di sessione" e che viene salvato nel profilo del paziente, in modo da poter monitorare il progresso (o la degenerazione) del paziente nel tempo attraverso un grafico.
-              </p>
-              <p>Sono presenti account di tipo moderatore, con cui utenti specializzati possono aggiungere parole, immagini nuove sul database e possono gestire gli utenti registrati, esiste un unico account di tipo amministratore che gestisce i moderatori e le attività presenti nell’applicazione.
+            <h2>Il progetto</h2>
+            <p class="lead">RehaBrain è un’applicazione web per la CST (Cognitive Stimulation Therapy, terapia
+              utilizzata per le persone con malattie neurodegenerative che consente di stimolarle cognitivamente,
+              utilizzando attività simili a giochi e quiz, con l'obiettivo di rallentare il progresso di malattie come
+              la demenza), creata per aiutare gli operatori ed i caregiver dei pazienti affetti da malattie
+              neurodegenerative.
+            <p> L’applicazione offre diverse attività di stimolazione cognitiva accessibili in maniera gratuita per
+              tutti. </p>
+            <p>Sono, inizialmente, presenti 5 attività, ognuna con 3 livelli di difficoltà (basso, medio, alto,
+              impostato in base al livello di degenerazione cognitiva del paziente):
+            <ol>
+              <li>Abbinamento oggetto-parola</li>
+              <li>Riordinamento delle lettere in una parola</li>
+              <li>Ordinamento crescente/decrescente dei numeri</li>
+              <li>Indovinare il colore di una parola (esempio: giallo, di che colore è scritta la parola?)</li>
+              <li>Scrittura in forma numerica dell’ora presentata sotto forma di orologio analogico</li>
+            </ol>
+            <p>L’applicazione permette ad un operatore o ad un caregiver di registrarsi tramite email e password e
+              accedere ad una dashboard personalizzata dove sono creabili e consultabili i profili dei pazienti, i quali
+              contengono le loro informazioni personali, appunti sul loro comportamento ed è possibile selezionare le
+              attività (e la corrispettiva difficoltà per ognuna di esse) e l'ordine ed il numero di "partite" che si
+              vogliono far fare al paziente, che vanno a comporre una "sessione di attività" personalizzata sul paziente
+              scelto. Ogni attività (in base alle risposte giuste e sbagliate e al numero di tentativi) ha un punteggio,
+              che va a comporre un "punteggio di sessione" e che viene salvato nel profilo del paziente, in modo da
+              poter monitorare il progresso (o la degenerazione) del paziente nel tempo attraverso un grafico.
+            </p>
+            <p>Sono presenti account di tipo moderatore, con cui utenti specializzati possono aggiungere parole,
+              immagini nuove sul database e possono gestire gli utenti registrati, esiste un unico account di tipo
+              amministratore che gestisce i moderatori e le attività presenti nell’applicazione.
               L’applicazione è una single page web application.
-              </p>
-            </section>
-            <section id="link">
-                <h2>Link al progetto</h2>
+            </p>
+          </section>
+          <section id="link">
+            <h2>Link al progetto</h2>
             <a href="https://rehabrain.eu">Link al progetto</a>
           </section>
-        
+
+        </div>
       </div>
+
     </div>
-	
-  </div>
-  <!-- Content end --> 
-  
-  <!-- Footer
+    <!-- Content end -->
+
+    <!-- Footer
   ============================ -->
-  <footer id="footer" class="section bg-dark footer-text-light">
-    <div class="container">
-      
-      <p class="text-center">ITT e LSSA "Molinari" - Milano. Tutti i diritti riservati</p>
-	  
-    </div>
-  </footer>
-  <!-- Footer end -->
-  
-</div>
-<!-- Document Wrapper end --> 
+    <footer id="footer" class="section bg-dark footer-text-light">
+      <div class="container">
 
-<!-- Back To Top --> 
-<a id="back-to-top" data-toggle="tooltip" title="Torna su" href="javascript:void(0)"><i class="fa fa-chevron-up"></i></a> 
+        <p class="text-center">ITT e LSSA "Molinari" - Milano. Tutti i diritti riservati</p>
 
-<!-- JavaScript
+      </div>
+    </footer>
+    <!-- Footer end -->
+
+  </div>
+  <!-- Document Wrapper end -->
+
+  <!-- Back To Top -->
+  <a id="back-to-top" data-toggle="tooltip" title="Torna su" href="javascript:void(0)"><i
+      class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript
 ============================ -->
-<script src="assets/vendor/jquery/jquery.min.js"></script> 
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
-<!-- Highlight JS -->
-<script src="assets/vendor/highlight.js/highlight.min.js"></script> 
-<!-- Easing --> 
-<script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script> 
-<!-- Magnific Popup --> 
-<script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script> 
-<!-- Custom Script -->
-<script src="assets/js/theme.js"></script>
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Highlight JS -->
+  <script src="assets/vendor/highlight.js/highlight.min.js"></script>
+  <!-- Easing -->
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <!-- Magnific Popup -->
+  <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <!-- Custom Script -->
+  <script src="assets/js/theme.js"></script>
 </body>
+
 </html>
