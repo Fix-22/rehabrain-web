@@ -9,7 +9,6 @@ const app = express();
 
 database.createTables();
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
