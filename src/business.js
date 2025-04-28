@@ -37,7 +37,7 @@ const business = {
                 
                 const result = await database.register(userData);
 
-                if (result) {
+                if (result === 1) {
                     return true;
                 }
                 else {
@@ -118,7 +118,7 @@ const business = {
                 loginData.password = cipher.hashPassword(String(loginData.password));
             
                 const result = await database.getAllPatients(loginData.email, loginData.password);
-                console.log(result)
+
                 if (result.length > 0) {
                     return result;
                 }
@@ -127,15 +127,44 @@ const business = {
                 }
             }
             else {
-                return false;
+                return null;
             }
         }
         else {
             return null;
         }
     },
-    checkCreatePatient: async (patientData, email, password) => {
+    checkCreatePatient: async (inputData) => {
+        if (inputData && Object.keys(inputData).length === 3) {
+            if (String(inputData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(inputData.password) && inputData.patientData && Object.keys(inputData.patientData).length === 4) {
+                if (inputData.patientData.name && inputData.patientData.surname && inputData.patientData.age && inputData.patientData.notes) {
+                    inputData.email = String(inputData.email);
+                    inputData.password = cipher.hashPassword(String(inputData.password));
+                    inputData.patientData.name = String(inputData.patientData.name);
+                    inputData.patientData.surname = String(inputData.patientData.surname);
+                    inputData.patientData.age = 0 ? isNaN(parseInt(inputData.patientData.age)) : parseInt(inputData.patientData.age);
+                    inputData.patientData.notes = String(inputData.patientData.notes);
 
+                    const result = await database.createPatient(inputData.patientData, inputData.email, inputData.password);
+                    console.log(result)
+                    if (result === 1) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
     },
     checkEditPatient: async (patientData, email, password) => {
 

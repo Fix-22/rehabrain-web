@@ -116,6 +116,24 @@ const getAllPatients = async (request, response) => {
     }
 };
 
+const createPatient = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkCreatePatient(loginData);
+
+        if (result) {
+            response.json({result: true});
+        }
+        else {
+            response.json({result: false});
+        }
+    }
+    catch (e) {
+        console.error("Error while creating patient: " + e);
+        response.status(500).json({result: false});
+    }
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -147,17 +165,7 @@ app.post("/contents", async (request, response) => {
 
 app.post("/all-patients", getAllPatients);
 
-app.post("/create-patient", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
+app.post("/create-patient", createPatient);
 
 app.put("/edit-patient", async (request, response) => {
     try {

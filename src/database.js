@@ -130,7 +130,7 @@ const database = {
                 VALUES(?, ?, ?, ?, ?);
             `, [userData.email, userData.name, userData.surname, userData.password, false]);
             
-            return result;
+            return result.affectedRows;
         }
         catch (e) {
             console.error("Database error: " + e);
@@ -188,6 +188,20 @@ const database = {
             `, [email, password]);
             
             return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    createPatient: async (patientData, email, password) => {
+        try {
+            const result = await executeStatement(`
+                INSERT INTO Patients
+                (Name, Surname, Age, Notes, Caregiver)
+                VALUES(?, ?, ?, ?, (SELECT Email FROM Users WHERE Email = ? AND Password = ?));
+            `, [patientData.name, patientData.surname, patientData.age, patientData.notes, email, password]);
+            
+            return result.affectedRows;
         }
         catch (e) {
             console.error("Database error: " + e);
