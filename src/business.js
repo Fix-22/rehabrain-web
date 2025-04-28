@@ -85,7 +85,7 @@ const business = {
         }
     },
     getActivities: async () => {
-        const result = database.getActivities();
+        const result = await database.getActivities();
 
         if (result) {
             return result;

@@ -18,7 +18,7 @@ pubsub.subscribe("activitiesListaddButton-pressed", activity => {
     console.log(activity);
 });
 
-console.log(await middleware.deleteAccount("simone.cecire@gmail.com", "cecire"));
+console.log(await middleware.getActivities());
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

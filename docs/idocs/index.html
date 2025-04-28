@@ -66,8 +66,6 @@
 
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="#contenuti">Contenuti</a>
-
           </li>
           <li class="nav-item"><a class="nav-link" href="#wireframes">Wireframes</a></li>
 
@@ -103,7 +101,7 @@
               <div class="col-sm-6 col-lg-4">
                 <ul class="list-unstyled">
                   <li><strong class="font-weight-700">Creato:</strong> 10 aprile 2025</li>
-                  <li><strong>Ultima modifica:</strong> 26 aprile 2025</li>
+                  <li><strong>Ultima modifica:</strong> 28 aprile 2025</li>
                 </ul>
               </div>
             </div>
@@ -116,16 +114,16 @@
             <h3>Schema ER</h3>
             <img src="/docs/database/ER/rehabrain_er.png">
             <h3>Schema logico</h3>
+            <img src="/docs/database/schema_logico/rehabrain_schema_logico.png">
             <p>
-              Category(<u>Name</u>)<br>
-              Difficulty(Difficulty</u>)<br>
-              Content(<u>Name</u>, LinkedImage, Color, CategoryName(FK), Difficulty(FK))<br>
-              Activity(<u>Name</u>, Description, MaxMediumScore)<br>
-              ActivityWithDifficulty(<u>ActivityName(FK)</u>, <u>Difficulty(FK)</u>)<br>
-              User(<u>Email</u>, Name, Surname, Password, IsModerator, IsAdministrator)<br>
-              Patient(<u>ID</u>, Name, Surname, Age, Notes, Caregiver(FK))<br>
-              CurrentSession(<u>PatientID(FK)</u>, <u>ActivityWithDifficultyID(FK)</u>, <u>ActivityName(FK)</u>)<br>
-              SessionScore(<u>ID</u>, Score, Date, PatientID(FK))<br>
+              Categories(<u>Name</u>)<br>
+              Difficulties(<u>Difficulty</u>)<br>
+              Contents(<u>Name</u>, LinkedImage, Color, CategoryName(FK), Difficulty(FK))<br>
+              Activities(<u>ID</u>, Name, Description, MaxMediumScore, Difficulty(FK))<br>
+              Users(<u>Email</u>, Name, Surname, Password, IsAdministrator)<br>
+              Patients(<u>ID</u>, Name, Surname, Age, Notes, Caregiver(FK))<br>
+              CurrentSessions(<u>PatientID(FK)</u>, <u>ActivityID(FK)</u>)<br>
+              SessionsScores(<u>ID</u>, Score, Date, PatientID(FK))<br>
             </p>
             <h3>Vincoli</h3>
             <p>
@@ -150,7 +148,7 @@
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>Category</p>
+                    <p>Categories</p>
                   </td>
                   <td width="128">
                     <p>Name</p>
@@ -184,7 +182,7 @@
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>Content</p>
+                    <p>Contents</p>
                   </td>
                   <td width="128">
                     <p>Name</p>
@@ -217,60 +215,46 @@
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>Activity</p>
+                    <p>Activities</p>
                   </td>
                   <td width="128">
+                    <p>ID</p>
                     <p>Name</p>
                     <p>Description</p>
                     <p>MaxMediumScore</p>
-                  </td>
-                  <td width="128">
-                    <p>PK</p>
-                    <p>Not null</p>
-                    <p>Not null</p>
-                  </td>
-                  <td width="128">
-                    <p>VARCHAR</p>
-                    <p>TEXT</p>
-                    <p>INT</p>
-                  </td>
-                  <td width="128">
-                    <p>100</p>
-                    <p>2000</p>
-                    <p>4</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="128">
-                    <p>ActivityWithDifficulty</p>
-                  </td>
-                  <td width="128">
-                    <p>ActivityName</p>
                     <p>Difficulty</p>
                   </td>
                   <td width="128">
-                    <p>PK</p>
-                    <p>PK</p>
+                    <p>PK, autoincrement</p>
+                    <p>Not null</p>
+                    <p>/</p>
+                    <p>Not null</p>
+                    <p>FK, not null</p>
                   </td>
                   <td width="128">
+                    <p>INT</p>
                     <p>VARCHAR</p>
+                    <p>TEXT</p>
+                    <p>INT</p>
                     <p>VARCHAR</p>
                   </td>
                   <td width="128">
+                    <p>/</p>
                     <p>100</p>
+                    <p>2000</p>
+                    <p>4</p>
                     <p>50</p>
                   </td>
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>User</p>
+                    <p>Users</p>
                   </td>
                   <td width="128">
                     <p>Email</p>
                     <p>Name</p>
                     <p>Surname</p>
                     <p>Password</p>
-                    <p>IsModerator</p>
                     <p>IsAdministrator</p>
                   </td>
                   <td width="128">
@@ -279,14 +263,12 @@
                     <p>Not null</p>
                     <p>Not null</p>
                     <p>Not null</p>
-                    <p>Not null</p>
                   </td>
                   <td width="128">
                     <p>VARCHAR</p>
                     <p>VARCHAR</p>
                     <p>VARCHAR</p>
                     <p>VARCHAR</p>
-                    <p>BOOL</p>
                     <p>BOOL</p>
                   </td>
                   <td width="128">
@@ -295,12 +277,11 @@
                     <p>100</p>
                     <p>20</p>
                     <p>/</p>
-                    <p>/</p>
                   </td>
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>Patient</p>
+                    <p>Patients</p>
                   </td>
                   <td width="128">
                     <p>ID</p>
@@ -337,32 +318,28 @@
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>CurrentSession</p>
+                    <p>CurrentSessions</p>
                   </td>
                   <td width="128">
                     <p>PatientID</p>
-                    <p>ActivityWithDifficultyID</p>
-                    <p>ActivityName</p>
+                    <p>ActivityID</p>
                   </td>
                   <td width="128">
-                    <p>PK, FK</p>
                     <p>PK, FK</p>
                     <p>PK, FK</p>
                   </td>
                   <td width="128">
                     <p>INT</p>
-                    <p>VARCHAR</p>
-                    <p>VARCHAR</p>
+                    <p>INT</p>
                   </td>
                   <td width="128">
                     <p>/</p>
-                    <p>100</p>
-                    <p>100</p>
+                    <p>/</p>
                   </td>
                 </tr>
                 <tr>
                   <td width="128">
-                    <p>SessionScore</p>
+                    <p>SessionsScores</p>
                   </td>
                   <td width="128">
                     <p>ID</p>

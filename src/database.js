@@ -58,18 +58,12 @@ const database = {
             `);
             await executeQuery(`
                 create table if not exists Activities(
-                    Name varchar(100) primary key,
+                    ID int primary key auto_increment,
+                    Name varchar(100) not null,
                     Description text(2000) not null,
-                    MaxMediumScore int(4)
-                );    
-            `);
-            await executeQuery(`
-                create table if not exists ActivitiesWithDifficulties(
-                    ActivityName varchar(100),
+                    MaxMediumScore int(4),
                     Difficulty varchar(50),
-                    foreign key (ActivityName) references Activities(Name),
-                    foreign key (Difficulty) references Difficulties(Difficulty),
-                    constraint pk_awd primary key (ActivityName, Difficulty)    
+                    foreign key (Difficulty) references Difficulties(Difficulty)
                 );    
             `);
             await executeQuery(`
@@ -93,13 +87,12 @@ const database = {
                 );    
             `);
             await executeQuery(`
-                create table if not exists CurrentSession(
+                create table if not exists CurrentSessions(
                     PatientID int,
-                    ActivityName varchar(100),
-                    ActivityDifficulty varchar(50),
-                    foreign key (ActivityName) references Activities(Name),
-                    foreign key (ActivityDifficulty) references Difficulties(Difficulty),
-                    constraint pk_cs primary key (PatientID, ActivityName, ActivityDifficulty)
+                    ActivityID int,
+                    foreign key (PatientID) references Patients(ID),
+                    foreign key (ActivityID) references Activities(ID),
+                    constraint pk_cs primary key (PatientID, ActivityID)
                 );    
             `);
             await executeQuery(`
@@ -173,8 +166,8 @@ const database = {
     getActivities: async () => {
         try {
             const result = await executeQuery(`
-                SELECT ActivityName, Difficulty, Description
-                FROM ActivitiesWithDifficulty JOIN Activities ON ActivityName = Name;
+                SELECT Name, Description, MaxMediumScore, Difficulty
+                FROM Activities;
             `);
             
             return result;
