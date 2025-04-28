@@ -78,7 +78,6 @@ const database = {
                     Name varchar(100) not null,
                     Surname varchar(100) not null,
                     Password varchar(44) not null,
-                    isModerator bool not null,
                     isAdministrator bool not null
                 );    
             `);
@@ -122,7 +121,7 @@ const database = {
             const result = await executeStatement(`
                 SELECT *
                 FROM Users
-                WHERE email = ? AND password = ?;
+                WHERE Email = ? AND Password = ?;
             `, [email, password]);
             
             return result;
@@ -135,16 +134,55 @@ const database = {
         try {
             const result = await executeStatement(`
                 INSERT INTO Users
-                VALUES(?, ?, ?, ?, ?, ?);
-            `, [userData.email, userData.name, userData.surname, userData.password, false, false]);
+                VALUES(?, ?, ?, ?, ?);
+            `, [userData.email, userData.name, userData.surname, userData.password, false]);
             
             return result;
         }
         catch (e) {
             console.error("Database error: " + e);
-            return null;
         }
-    }
+    },
+    editAccount: async (personalData) => {
+        try {
+            const result = await executeStatement(`
+                UPDATE Users
+                SET Name = ?, Surname = ?
+                WHERE Email = ? AND Password = ?;
+            `, [personalData.name, personalData.surname, personalData.email, personalData.password]);
+            
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    deleteAccount: async (email, password) => {
+        try {
+            const result = await executeStatement(`
+                DELETE FROM Users
+                WHERE Email = ? AND Password = ?;
+            `, [email, password]);
+            
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    getActivities: async () => {
+        try {
+            const result = await executeQuery(`
+                SELECT ActivityName, Difficulty, Description
+                FROM ActivitiesWithDifficulty JOIN Activities ON ActivityName = Name;
+            `);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
 };
 
 module.exports = database;
