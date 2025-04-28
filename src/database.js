@@ -10,11 +10,10 @@ const executeQuery = (sql) => {
     return new Promise((resolve, reject) => {
         connection.query(sql, function (err, result) {
             if (err) {
-                console.error("Error: " + err + " on query: " + sql);
+                console.error("Database error: " + err + " on query: " + sql);
                 reject();
             }
             
-            console.log("Query done: " + sql);
             resolve(result);
         });
     })
@@ -24,11 +23,10 @@ const executeStatement = (sql, params) => {
     return new Promise((resolve, reject) => {
         connection.query(sql, params, function (err, result) {
             if (err) {
-                console.error("Error: " + err + " on query: " + sql);
+                console.error("Database error: " + err + " on query: " + sql);
                 reject();
             }
             
-            console.log("Query done: " + sql);
             resolve(result);
         });
     })
@@ -116,12 +114,11 @@ const database = {
             `);
         }
         catch (e) {
-            console.error("Error while creating tables: " + e);
+            console.error("Database error while creating tables: " + e);
         }
     },
     login: async (email, password) => {
         try {
-            console.log(password)
             const result = await executeStatement(`
                 SELECT *
                 FROM Users
@@ -131,7 +128,21 @@ const database = {
             return result;
         }
         catch (e) {
-            console.error("Error: " + e);
+            console.error("Database error: " + e);
+        }
+    },
+    register: async (userData) => {
+        try {
+            const result = await executeStatement(`
+                INSERT INTO Users
+                VALUES(?, ?, ?, ?, ?, ?);
+            `, [userData.email, userData.name, userData.surname, userData.password, false, false]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+            return null;
         }
     }
 };

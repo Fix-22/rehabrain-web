@@ -22,13 +22,19 @@ app.post("/login", async (request, response) => {
     try {
         const loginData = request.body;
 
-        const result = await database.login(loginData.email, crypto.createHash("sha256").update(loginData.password).digest("base64"));
+        if (loginData.email, loginData.password) {
+            const result = await database.login(loginData.email, crypto.createHash("sha256").update(loginData.password).digest("base64"));
 
-        if (result.length === 1) {
-            response.json({result: true});
+            if (result.length === 1) {
+                response.json({result: true});
+            }
+            else {
+                response.json({result: false})
+            }
         }
         else {
-            response.json({result: false})
+            console.error("Login error: " + e);
+            response.status(500).json({result: false});
         }
     }
     catch (e) {
@@ -39,9 +45,33 @@ app.post("/login", async (request, response) => {
 
 app.post("/register", async (request, response) => {
     try {
-        const registerData = request.body;
+        const userData = request.body.userData;
 
-        
+        if (userData && Object.keys(userData).length === 4) {
+            if (String(userData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(userData.password) && String(userData.name) && String(userData.surname)) {
+                userData.email = String(userData.email);
+                userData.password = crypto.createHash("sha256").update(String(userData.password)).digest("base64");
+                userData.name = String(userData.name);
+                userData.surname = String(userData.surname);
+                
+                const result = await database.register(userData);
+
+                if (result) {
+                    response.json({result: true});
+                }
+                else {
+                    response.status(500).json({result: false});
+                }
+            }
+            else {
+                console.error("Register error: invalid data inside userData");
+                response.status(500).json({result: false});
+            }
+        }
+        else {
+            console.error("Register error: invalid length of userData");
+            response.status(500).json({result: false});
+        }
     }
     catch (e) {
         console.error("Register error: " + e);

@@ -8,7 +8,7 @@ generateNavigator(document.getElementById("pages"));
 
 const middleware = generateMiddleware();
 
-console.log(await middleware.login("cecire", "bacon"));
+console.log(await middleware.register({email: "johndoe@gmail.it", password: "1234", name: "john", surname: "doe"}));
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {
