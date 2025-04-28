@@ -5,11 +5,19 @@ database.createTables();
 
 const business = {
     checkLogin: async (loginData) => {
-        if (loginData.email, loginData.password) {
-            const result = await database.login(loginData.email, cipher.hashPassword(loginData.password));
+        if (loginData && Object.keys(loginData).length === 2) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                
+                const result = await database.login(loginData.email, loginData.password);
 
-            if (result.length === 1) {
-                return true;
+                if (result.length === 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             else {
                 return false;
@@ -37,11 +45,11 @@ const business = {
                 }
             }
             else {
-                console.error("Register error: invalid data inside userData");
+                return false;
             }
         }
         else {
-            console.error("Register error: invalid length of userData");
+            return false;
         }
     },
     checkEditAccount: async (personalData) => {
@@ -62,19 +70,27 @@ const business = {
                 }
             }
             else {
-                console.error("Edit account error: invalid data inside personalData");
+                return false;
             }
         }
         else {
-            console.error("Edit account error: invalid length of personalData");
+            return false;
         }
     },
     checkDeleteAccount: async (loginData) => {
-        if (loginData.email, loginData.password) {
-            const result = await database.deleteAccount(loginData.email, cipher.hashPassword(loginData.password));
+        if (loginData && Object.keys(loginData).length === 2) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                
+                const result = await database.deleteAccount(loginData.email, loginData.password);
 
-            if (result === 1) {
-                return true;
+                if (result === 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             else {
                 return false;
@@ -94,11 +110,29 @@ const business = {
             return null;
         }
     },
-    checkGetContents: async (category, difficulty) => {
-
-    },
-    checkGetAllPatients: async (email, password) => {
-
+    checkGetContents: () => {},
+    checkGetAllPatients: async (loginData) => {
+        if (loginData && Object.keys(loginData).length === 2) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+            
+                const result = await database.getAllPatients(loginData.email, loginData.password);
+                console.log(result)
+                if (result.length > 0) {
+                    return result;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return null;
+        }
     },
     checkCreatePatient: async (patientData, email, password) => {
 

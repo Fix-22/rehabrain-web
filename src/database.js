@@ -176,6 +176,23 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    getContents: async (category, difficulty) => {
+
+    },
+    getAllPatients: async (email, password) => {
+        try {
+            const result = await executeStatement(`
+                SELECT Patients.Name, Patients.Surname, Age, Notes
+                FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                WHERE Users.Email = ? and Users.Password = ?;
+            `, [email, password]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
 };
 
 module.exports = database;

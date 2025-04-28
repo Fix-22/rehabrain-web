@@ -96,6 +96,26 @@ const getActivities = async (request, response) => {
     }
 };
 
+
+
+const getAllPatients = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkGetAllPatients(loginData);
+
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            response.json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Error while getting patients: " + e);
+        response.status(500).json({result: null});
+    }
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -125,16 +145,7 @@ app.post("/contents", async (request, response) => {
     }
 });
 
-app.post("/all-patients", async (request, response) => {
-    try {
-        const loginData = request.body;
-
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
+app.post("/all-patients", getAllPatients);
 
 app.post("/create-patient", async (request, response) => {
     try {
