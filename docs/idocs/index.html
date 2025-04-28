@@ -504,41 +504,6 @@
               fine oltre al punteggio sono presenti due tasti, uno per salvare il punteggio della sessione e uno per
               scartarlo.
             </p>
-            <h3>Moderatore</h3>
-            <p>Solo alcuni caregiver (scelti dall’amministratore del sistema) possono diventare moderatori. In questo
-              caso appaiono, sul menù di sinistra, tre schede per selezionare il tipo di gestione attuale:
-            <ol>
-              <li>Una scheda per gestire i propri pazienti (come gli altri caregiver).</li>
-              <li>Una scheda per gestire gli altri caregiver, dove è presente la lista dei caregiver registrati
-                (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un pulsante per
-                visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli pazienti,
-                che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la
-                possibilità di eliminarlo.</li>
-              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il
-                tipo di contenuti da gestire (parole o immagini) entrambi ricercabili (attraverso una barra di ricerca)
-                e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è presente
-                un pulsante per modificare il contenuto o eliminarlo.</li>
-            </ol>
-            </p>
-            <h3>Amministratore</h3>
-            <p>
-              È presente solo un amministratore che può gestire i caregiver, i moderatori, i contenuti e le attività
-              presenti nell’applicazione. L’amministratore ha, sul menù di sinistra, tre schede per selezionare il tipo
-              di gestione attuale:
-            <ol>
-              <li>Una scheda per gestire i propri pazienti (come gli altri caregiver).</li>
-              <li>Una scheda per gestire gli altri utenti, dove è presente la lista dei caregiver e moderatori
-                registrati (ricercabili tramite una barra di ricerca). Di fianco ad ognuno dei nomi è presente un
-                pulsante per visualizzare le informazioni personali dell’utente (tranne la password e i dati dei singoli
-                pazienti, che rimarranno privati), che aprirà una modale con all’interno tutti i dati dei pazienti e la
-                possibilità di eliminarlo o cambiarli il ruolo (in moderatore o caregiver).</li>
-              <li>Una scheda per gestire i contenuti presenti, dove sono presenti ulteriori 2 tab per selezionare il
-                tipo di contenuti da gestire (parole, immagini o attività) entrambi ricercabili (attraverso una barra di
-                ricerca) e con un tasto “+” che apre una modale per aggiungere i contenuti. Di fianco al nome di essi è
-                presente un pulsante per modificare il contenuto o eliminarlo.</li>
-            </ol>
-            </p>
-
           </section>
 
           <section id="umloggetti">
@@ -552,16 +517,10 @@
 
           <section id="umlstato">
             <h2>Diagrammi di Stato</h2>
-            <h3>Generale</h3>
-            <img src="/docs/UML/rehabrain_stato.png">
             <h3>Utente non registrato</h3>
             <img src="/docs/UML/rehabrain_stato_utente_non_registrato.png">
             <h3>Caregiver</h3>
             <img src="/docs/UML/rehabrain_stato_caregiver.png">
-            <h3>Moderatore</h3>
-            <img src="/docs/UML/rehabrain_stato_moderatore.png">
-            <h3>Amministratore</h3>
-            <img src="/docs/UML/rehabrain_stato_amministratore.png">
           </section>
 
           <section id="umlsequenza">
@@ -570,10 +529,6 @@
             <img src="/docs/UML/rehabrain_sequenza_utente_non_registrato.png">
             <h3>Caregiver</h3>
             <img src="/docs/UML/rehabrain_sequenza_caregiver.png">
-            <h3>Moderatore</h3>
-            <img src="/docs/UML/rehabrain_sequenza_moderatore.png">
-            <h3>Amministratore</h3>
-            <img src="/docs/UML/rehabrain_sequenza_amministratore.png">
           </section>
 
           <hr class="divider">
@@ -612,11 +567,7 @@
               scelto. Ogni attività (in base alle risposte giuste e sbagliate e al numero di tentativi) ha un punteggio,
               che va a comporre un "punteggio di sessione" e che viene salvato nel profilo del paziente, in modo da
               poter monitorare il progresso (o la degenerazione) del paziente nel tempo attraverso un grafico.
-            </p>
-            <p>Sono presenti account di tipo moderatore, con cui utenti specializzati possono aggiungere parole,
-              immagini nuove sul database e possono gestire gli utenti registrati, esiste un unico account di tipo
-              amministratore che gestisce i moderatori e le attività presenti nell’applicazione.
-              L’applicazione è una single page web application.
+              L'applicazione è una SPA.
             </p>
           </section>
           <section id="link">

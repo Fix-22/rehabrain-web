@@ -2,12 +2,27 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
 const path = require("path");
-const database = require("./database");
 const crypto = require("crypto");
+const business = require("./business");
 
 const app = express();
 
-database.createTables();
+const login = async (request, response) => {
+    try {
+        const loginData = request.body;
+
+        if (business.checkLogin(loginData)) {
+            response.json({result: true});
+        }
+        else {
+            response.json({result: false});
+        }
+    }
+    catch (e) {
+        console.error("Login error: " + e);
+        response.status(500).json({result: false});
+    }
+};
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -18,30 +33,7 @@ app.use("/bulma", express.static(path.join(__dirname, "../node_modules/bulma")))
 app.use("/assets", express.static(path.join(__dirname, "assets")))
 app.use("/", express.static(path.join(__dirname, "public")));
 
-app.post("/login", async (request, response) => {
-    try {
-        const loginData = request.body;
-
-        if (loginData.email, loginData.password) {
-            const result = await database.login(loginData.email, crypto.createHash("sha256").update(loginData.password).digest("base64"));
-
-            if (result.length === 1) {
-                response.json({result: true});
-            }
-            else {
-                response.json({result: false})
-            }
-        }
-        else {
-            console.error("Login error: " + e);
-            response.status(500).json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Login error: " + e);
-        response.status(500).json({result: false});
-    }
-});
+app.post("/login", login);
 
 app.post("/register", async (request, response) => {
     try {
@@ -113,52 +105,6 @@ app.get("/activities", async (request, response) => {
     }
 });
 
-app.post("/create-activity", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.put("/edit-activity", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.post("/delete-activity", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.get("/get-activity/:id", async (request, response) => {
-    try {
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
-
 app.post("/contents", async (request, response) => {
     try {
         
@@ -217,101 +163,6 @@ app.post("/delete-patient", async (request, response) => {
 });
 
 app.post("/get-patient", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
-
-app.post("/all-contents", async (request, response) => {
-    try {
-        const loginData = request.body;
-
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
-
-app.post("/create-content", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.put("/edit-content", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.post("/delete-content", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.post("/get-content", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
-
-app.put("/edit-user", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.post("/delete-user", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: false});
-    }
-});
-
-app.post("/get-user", async (request, response) => {
     try {
         const patientData = request.body;
 

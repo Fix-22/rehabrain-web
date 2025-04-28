@@ -1,6 +1,7 @@
 import { generatePubSub } from "/scripts/pubsub/pubsub.js";
 import { generateNavigator } from "/scripts/navigator/navigator.js";
 import { generateMiddleware } from "/scripts/middleware/middleware.js";
+import { generateActivitiesList } from "/scripts/GUI/activitiesList/activitiesList.js";
 
 const pubsub = generatePubSub();
 
@@ -8,7 +9,14 @@ generateNavigator(document.getElementById("pages"));
 
 const middleware = generateMiddleware();
 
-console.log(await middleware.register({email: "johndoe@gmail.it", password: "1234", name: "john", surname: "doe"}));
+const activitiesListContainer = document.getElementById("activtiesListContainer");
+
+const activitiesList = generateActivitiesList(activitiesListContainer, pubsub);
+activitiesList.build("activitiesList", [{title: "prova", hasDifficulty: true}, {title: "prov2a", hasDifficulty: false}]);
+activitiesList.render();
+pubsub.subscribe("activitiesListaddButton-pressed", activity => {
+    console.log(activity);
+});
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {
@@ -68,4 +76,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
