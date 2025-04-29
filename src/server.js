@@ -170,6 +170,24 @@ const deletePatient = async (request, response) => {
     }
 };
 
+const getPatient = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkGetPatient(loginData);
+
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            response.json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Error while getting patient: " + e);
+        response.status(500).json({result: null});
+    }
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -207,17 +225,7 @@ app.put("/edit-patient", editPatient);
 
 app.post("/delete-patient", deletePatient);
 
-app.post("/get-patient", async (request, response) => {
-    try {
-        const patientData = request.body;
-
-        
-    }
-    catch (e) {
-        console.error("Server error: " + e);
-        response.status(500).json({result: null});
-    }
-});
+app.post("/get-patient", getPatient);
 
 const server = http.createServer(app);
 const port = 5600;

@@ -234,6 +234,20 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    getPatient: async (patientId, email, password) => {
+        try {
+            const result = await executeStatement(`
+                SELECT Patients.ID, Patients.Name, Patients.Surname, Age, Notes
+                FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                WHERE ID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
+            `, [patientId, email, password]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    }
 };
 
 module.exports = database;
