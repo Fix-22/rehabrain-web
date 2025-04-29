@@ -4,6 +4,7 @@ import { generateMiddleware } from "/scripts/middleware/middleware.js";
 import { generateActivitiesList } from "/scripts/view/activitiesList/activitiesList.js";
 import { generateActivitiesManager } from "/scripts/presentation/activitiesManager/activitiesManager.js";
 import { generateSearchbar } from "/scripts/view/searchbar/searchbar.js";
+import { generateCurrentSession } from "/scripts/view/currentSession/currentSession.js";
 
 const pubsub = generatePubSub();
 
@@ -20,16 +21,22 @@ const activitiesManager = generateActivitiesManager(middleware);
 // activities
 const activitiesSearchbarContainer = document.getElementById("activitiesSearchbarContainer");
 const activitiesSearchbar = generateSearchbar(activitiesSearchbarContainer, pubsub);
-activitiesSearchbar.build("activitiesSearchbar", "Cerca attività");
+activitiesSearchbar.build("activitiesSearchbar", "Cerca attività da aggiungere");
 activitiesSearchbar.render();
 
 const activitiesListContainer = document.getElementById("activtiesListContainer");
 const activitiesList = generateActivitiesList(activitiesManager, activitiesListContainer, pubsub);
 await activitiesList.build("activitiesList", "activitiesSearchbar");
 activitiesList.render();
-pubsub.subscribe("activitiesListaddButton-pressed", activity => {
-    console.log(activity);
-});
+
+const currentSessionSearchbarContainer = document.getElementById("currentSessionSearchbarContainer");
+const currentSessionSearchbar = generateSearchbar(currentSessionSearchbarContainer, pubsub);
+currentSessionSearchbar.build("currentSessionSearchbar", "Cerca attività");
+currentSessionSearchbar.render();
+
+const currentSessionContainer = document.getElementById("currentSessionContainer");
+const currentSession = generateCurrentSession(activitiesManager, currentSessionContainer, pubsub);
+currentSession.build("currentSession", "currentSessionSearchbar", "activitiesList");
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

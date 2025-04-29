@@ -6,6 +6,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
             id = inputId;
             searchBarId = inputSearchBarId;
             activities = await presenter.getActivities();
+            console.log(activities)
 
             pubsub.subscribe(searchBarId + "-onsearch", search => {
                 activitiesList.search(search);
@@ -28,7 +29,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
             let current;
             activities.forEach(e => {
                 if (current !== e.name) {
-                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="low">Bassa</option><option value="medium">Media</option><option value="hard">Alta</option></select></div>' : "Nessuna difficoltà presente") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Button"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
+                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="Low">Bassa</option><option value="Medium">Media</option><option value="Hard">Alta</option></select></div>' : "Nessuna difficoltà presente") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Button"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
                 }
                 current = e.name;
             });
@@ -36,11 +37,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
 
             document.querySelectorAll(".addButton").forEach(e => {
                 e.onclick = () => {
-                    let difficulty = null;
-                    if (document.getElementById(e.id.replace("Button", "Difficulty"))) {
-                        difficulty = document.getElementById(e.id.replace("Button", "Difficulty")).value;
-                    }
-                    pubsub.publish(id + "addButton-pressed", {title: e.id.replace("Button", ""), difficulty: difficulty});
+                    pubsub.publish(id + "-addButton-onclcik", activities.find(d => d.name === e.id.replace("Button", "")  && d.difficulty === document.getElementById(e.id.replace("Button", "Difficulty")).value));
                 };
             });
         },
@@ -70,7 +67,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
                     if (document.getElementById(e.id.replace("Button", "Difficulty"))) {
                         difficulty = document.getElementById(e.id.replace("Button", "Difficulty")).value;
                     }
-                    pubsub.publish(id + "addButton-pressed", {title: e.id.replace("Button", ""), difficulty: difficulty});
+                    pubsub.publish(id + "-addButton-onclcik", {title: e.id.replace("Button", ""), difficulty: difficulty});
                 };
             });
         },
