@@ -221,6 +221,19 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    deletePatient: async (patientId, email, password) => {
+        try {
+            const result = await executeStatement(`
+                DELETE FROM Patients
+                WHERE ID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
+            `, [patientId, email, password]);
+            
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
 };
 
 module.exports = database;

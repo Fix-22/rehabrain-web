@@ -200,8 +200,31 @@ const business = {
             return false;
         }
     },
-    checkDeletePatient: async (patientId, email, password) => {
+    checkDeletePatient: async (inputData) => {
+        if (inputData && Object.keys(inputData).length === 3) {
+            if (inputData.patientId && inputData.email && inputData.password) {
+                console.log(inputData);
+                
+                inputData.patientId = 0 ? isNaN(parseInt(inputData.patientId)) : parseInt(inputData.patientId);
+                inputData.email = String(inputData.email);
+                inputData.password = cipher.hashPassword(String(inputData.password));
+                
+                const result = await database.deletePatient(inputData.patientId, inputData.email, inputData.password);
 
+                if (result === 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
     },
     checkGetPatient: async (patientId, email, password) => {
 

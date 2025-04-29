@@ -22,7 +22,7 @@ const ps = await middleware.getAllPatients("prova@gmail.com", "2006");
 console.log(ps);
 ps[2].Surname = "a"
 
-console.log(await middleware.editPatient(ps[2], "prova@gmail.com", "2006"))
+console.log(await middleware.deletePatient(ps[2].ID, "prova@gmail.com", "2006"))
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {
