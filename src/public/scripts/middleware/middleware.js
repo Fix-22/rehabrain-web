@@ -92,6 +92,28 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
+
+        // contents
+        getContents: async (category, difficulty) => {
+            try {
+                const response = await fetch("/contents", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        category: category,
+                        difficulty: difficulty
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
         // caregiver
         getAllPatients: async (email, password) => {
             try {
@@ -202,16 +224,15 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
-
-        // moderatore
-        getAllContents: async (email, password) => {
+        saveSession: async (sessionData, email, password) => {
             try {
-                const response = await fetch("/all-contents", {
+                const response = await fetch("/save-session", {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     method: "POST",
                     body: JSON.stringify({
+                        sessionData: sessionData,
                         email: email,
                         password: password
                     })
@@ -223,7 +244,6 @@ export const generateMiddleware = () => {
             catch (e) {
                 console.error("Server error: " + e);
             }
-        },
-        
+        }
     };
 };

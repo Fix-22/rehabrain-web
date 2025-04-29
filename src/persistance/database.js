@@ -177,7 +177,18 @@ const database = {
         }
     },
     getContents: async (category, difficulty) => {
-
+        try {
+            const result = await executeStatement(`
+                SELECT *
+                FROM Contents
+                WHERE CategoryName = ? AND Difficulty = ?;
+            `, [category, difficulty]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
     },
     getAllPatients: async (email, password) => {
         try {
@@ -247,7 +258,24 @@ const database = {
         catch (e) {
             console.error("Database error: " + e);
         }
-    }
+    },
+    saveSession: async (sessionData, email, password) => {
+        try {
+            const result = await executeStatement(`
+                INSERT INTO SessionsScores
+                (Score, PlayDate, PatientID)
+                VALUES(?, ?, (SELECT Patients.ID
+                              FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                              WHERE Email = ? AND Password = ? AND Patients.ID = ?)
+                );
+            `, [sessionData.score, sessionData.playDate, email, password, sessionData.patientId]);
+            
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
 };
 
 module.exports = database;

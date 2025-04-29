@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
 const path = require("path");
-const business = require("./business");
+const business = require("./business/business");
 
 const app = express();
 
@@ -96,7 +96,24 @@ const getActivities = async (request, response) => {
     }
 };
 
+const getContents = async (request, response) => {
+    try {
+        const inputData = request.body;
+        const result = await business.checkGetContents(inputData);
 
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            console.error("Error while sending contents: " + e);
+            response.status(500).json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Error while sending contents: " + e);
+        response.status(500).json({result: null});
+    }
+};
 
 const getAllPatients = async (request, response) => {
     try {
@@ -188,6 +205,24 @@ const getPatient = async (request, response) => {
     }
 };
 
+const saveSession = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkSaveSession(loginData);
+
+        if (result) {
+            response.json({result: true});
+        }
+        else {
+            response.json({result: false});
+        }
+    }
+    catch (e) {
+        console.error("Error while saving session: " + e);
+        response.status(500).json({result: false});
+    }
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -207,15 +242,7 @@ app.post("/delete-account", deleteAccount);
 
 app.get("/activities", getActivities);
 
-app.post("/contents", async (request, response) => {
-    try {
-        
-    }
-    catch (e) {
-        console.error("Register error: " + e);
-        response.status(500).json({result: false});
-    }
-});
+app.post("/contents", getContents);
 
 app.post("/all-patients", getAllPatients);
 
@@ -226,6 +253,8 @@ app.put("/edit-patient", editPatient);
 app.post("/delete-patient", deletePatient);
 
 app.post("/get-patient", getPatient);
+
+app.post("/save-session", saveSession);
 
 const server = http.createServer(app);
 const port = 5600;

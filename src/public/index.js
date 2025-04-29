@@ -18,7 +18,7 @@ pubsub.subscribe("activitiesListaddButton-pressed", activity => {
     console.log(activity);
 });
 
-console.log(await middleware.createPatient({name:"ciccio", surname:"pizza", age: 89, notes:""},"a@gmail.com", "1234"))
+console.log(await middleware.saveSession({score: 12123, playDate:"2012-12-14", patientId: 2}, "prova@gmail.com", "2006"))
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

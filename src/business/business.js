@@ -1,4 +1,4 @@
-const database = require("./database");
+const database = require("../persistance/database");
 const cipher = require("./cipher");
 
 database.createTables();
@@ -110,7 +110,29 @@ const business = {
             return null;
         }
     },
-    checkGetContents: () => {},
+    checkGetContents: async (inputData) => {
+        if (inputData && Object.keys(inputData).length === 2) {
+            if (String(inputData.category) && String(inputData.difficulty)) {
+                inputData.category = String(inputData.category);
+                inputData.difficulty = String(inputData.difficulty);
+
+                const result = await database.getContents(inputData.category, inputData.difficulty);
+
+                if (result.length > 0) {
+                    return result;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+    },
     checkGetAllPatients: async (loginData) => {
         if (loginData && Object.keys(loginData).length === 2) {
             if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password)) {
@@ -245,6 +267,32 @@ const business = {
         }
         else {
             return null;
+        }
+    },
+    checkSaveSession: async (loginData) => {
+        if (loginData && Object.keys(loginData).length === 3) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.sessionData.patientId) && String(loginData.sessionData.playDate) && parseInt(loginData.sessionData.score)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                loginData.sessionData.score = 0 ? isNaN(parseInt(loginData.sessionData.score)) : parseInt(loginData.sessionData.score);
+                loginData.sessionData.playDate = String(loginData.sessionData.playDate);
+                loginData.sessionData.patientId = 0 ? isNaN(parseInt(loginData.sessionData.patientId)) : parseInt(loginData.sessionData.patientId);
+                
+                const result = await database.saveSession(loginData.sessionData, loginData.email, loginData.password);
+
+                if (result === 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
         }
     },
 };
