@@ -136,13 +136,18 @@ export const generateMiddleware = () => {
         },
         editPatient: async (patientData, email, password) => {
             try {
+                let newPatientData = {};
+                Object.keys(patientData).forEach(k => {
+                    newPatientData[k.toLowerCase()] = patientData[k];
+                });
+
                 const response = await fetch("/edit-patient", {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     method: "PUT",
                     body: JSON.stringify({
-                        patientData: patientData,
+                        patientData: newPatientData,
                         email: email,
                         password: password
                     })
@@ -219,153 +224,6 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
-        createContent: async (contentData, email, password) => {
-            try {
-                const response = await fetch("/create-content", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        contentData: contentData,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-        editContent: async (contentData, email, password) => {
-            try {
-                const response = await fetch("/edit-content", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "PUT",
-                    body: JSON.stringify({
-                        contentData: contentData,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-        deleteContent: async (contentId, email, password) => {
-            try {
-                const response = await fetch("/delete-content", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        contentId: contentId,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-        getContent: async (contentId, email, password) => {
-            try {
-                const response = await fetch("/get-content", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        contentId: contentId,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-
-        editUser: async (userData, email, password) => {
-            try {
-                const response = await fetch("/edit-user", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "PUT",
-                    body: JSON.stringify({
-                        userData: userData,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-        deleteUser: async (userEmail, email, password) => {
-            try {
-                const response = await fetch("/delete-user", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        userEmail: userEmail,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
-        getUser: async (userEmail, email, password) => {
-            try {
-                const response = await fetch("/get-user", {
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        userEmail: userEmail,
-                        email: email,
-                        password: password
-                    })
-                });
-                const result = await response.json();
-                
-                return result.result;
-            }
-            catch (e) {
-                console.error("Server error: " + e);
-            }
-        },
+        
     };
 };

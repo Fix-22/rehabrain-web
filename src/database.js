@@ -182,7 +182,7 @@ const database = {
     getAllPatients: async (email, password) => {
         try {
             const result = await executeStatement(`
-                SELECT Patients.Name, Patients.Surname, Age, Notes
+                SELECT Patients.ID, Patients.Name, Patients.Surname, Age, Notes
                 FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
                 WHERE Users.Email = ? and Users.Password = ?;
             `, [email, password]);
@@ -201,6 +201,20 @@ const database = {
                 VALUES(?, ?, ?, ?, (SELECT Email FROM Users WHERE Email = ? AND Password = ?));
             `, [patientData.name, patientData.surname, patientData.age, patientData.notes, email, password]);
             
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    editPatient: async (patientData, email, password) => {
+        try {
+            const result = await executeStatement(`
+                UPDATE Patients
+                SET Name = ?, Surname = ?, Age = ?, Notes = ?
+                WHERE ID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
+            `, [patientData.name, patientData.surname, patientData.age, patientData.notes, patientData.id, email, password]);
+
             return result.affectedRows;
         }
         catch (e) {
