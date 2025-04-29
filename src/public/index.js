@@ -1,24 +1,35 @@
 import { generatePubSub } from "/scripts/pubsub/pubsub.js";
-import { generateNavigator } from "/scripts/navigator/navigator.js";
+import { generateNavigator } from "/scripts/view/navigator/navigator.js";
 import { generateMiddleware } from "/scripts/middleware/middleware.js";
-import { generateActivitiesList } from "/scripts/GUI/activitiesList/activitiesList.js";
+import { generateActivitiesList } from "/scripts/view/activitiesList/activitiesList.js";
+import { generateActivitiesManager } from "/scripts/presentation/activitiesManager/activitiesManager.js";
+import { generateSearchbar } from "/scripts/view/searchbar/searchbar.js";
 
 const pubsub = generatePubSub();
 
 generateNavigator(document.getElementById("pages"));
 
+// MODEL (middleware che prende i dati dal model decentrato)
 const middleware = generateMiddleware();
 
-const activitiesListContainer = document.getElementById("activtiesListContainer");
+// PRESENTERS
+const activitiesManager = generateActivitiesManager(middleware);
 
-const activitiesList = generateActivitiesList(activitiesListContainer, pubsub);
-activitiesList.build("activitiesList", [{title: "prova", hasDifficulty: true}, {title: "prov2a", hasDifficulty: false}]);
+// VIEWS
+
+// activities
+const activitiesSearchbarContainer = document.getElementById("activitiesSearchbarContainer");
+const activitiesSearchbar = generateSearchbar(activitiesSearchbarContainer, pubsub);
+activitiesSearchbar.build("activitiesSearchbar", "Cerca attività");
+activitiesSearchbar.render();
+
+const activitiesListContainer = document.getElementById("activtiesListContainer");
+const activitiesList = generateActivitiesList(activitiesManager, activitiesListContainer, pubsub);
+await activitiesList.build("activitiesList", "activitiesSearchbar");
 activitiesList.render();
 pubsub.subscribe("activitiesListaddButton-pressed", activity => {
     console.log(activity);
 });
-
-console.log(await middleware.saveSession({score: 12123, playDate:"2012-12-14", patientId: 2}, "prova@gmail.com", "2006"))
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {
