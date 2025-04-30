@@ -205,10 +205,10 @@ const getPatient = async (request, response) => {
     }
 };
 
-const saveSession = async (request, response) => {
+const saveSessionScore = async (request, response) => {
     try {
         const loginData = request.body;
-        const result = await business.checkSaveSession(loginData);
+        const result = await business.checksaveSessionScore(loginData);
 
         if (result) {
             response.json({result: true});
@@ -220,6 +220,42 @@ const saveSession = async (request, response) => {
     catch (e) {
         console.error("Error while saving session: " + e);
         response.status(500).json({result: false});
+    }
+};
+
+const saveCurrentSession = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkSaveCurrentSession(loginData);
+
+        if (result) {
+            response.json({result: true});
+        }
+        else {
+            response.json({result: false});
+        }
+    }
+    catch (e) {
+        console.error("Error while saving current session: " + e);
+        response.status(500).json({result: false});
+    }
+};
+
+const getCurrentSession = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkGetCurrentSession(loginData);
+
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            response.json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Error while getting current session: " + e);
+        response.status(500).json({result: null});
     }
 };
 
@@ -254,7 +290,11 @@ app.post("/delete-patient", deletePatient);
 
 app.post("/get-patient", getPatient);
 
-app.post("/save-session", saveSession);
+app.post("/save-session-score", saveSessionScore);
+
+app.post("/save-current-session", saveCurrentSession);
+
+app.post("/get-current-session", getCurrentSession);
 
 const server = http.createServer(app);
 const port = 5600;

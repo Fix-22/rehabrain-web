@@ -5,6 +5,7 @@ import { generateActivitiesList } from "/scripts/view/activitiesList/activitiesL
 import { generateActivitiesManager } from "/scripts/presentation/activitiesManager/activitiesManager.js";
 import { generateSearchbar } from "/scripts/view/searchbar/searchbar.js";
 import { generateCurrentSession } from "/scripts/view/currentSession/currentSession.js";
+import { generateSessionManager } from "/scripts/presentation/sessionManager/sessionManager.js";
 
 const pubsub = generatePubSub();
 
@@ -15,6 +16,8 @@ const middleware = generateMiddleware();
 
 // PRESENTERS
 const activitiesManager = generateActivitiesManager(middleware);
+const sessionManager = generateSessionManager(middleware, pubsub);
+await sessionManager.build();
 
 // VIEWS
 
@@ -35,8 +38,10 @@ currentSessionSearchbar.build("currentSessionSearchbar", "Cerca attività");
 currentSessionSearchbar.render();
 
 const currentSessionContainer = document.getElementById("currentSessionContainer");
-const currentSession = generateCurrentSession(activitiesManager, currentSessionContainer, pubsub);
-currentSession.build("currentSession", "currentSessionSearchbar", "activitiesList");
+const currentSession = generateCurrentSession(sessionManager, currentSessionContainer, pubsub);
+await currentSession.build("currentSession", "currentSessionSearchbar", "activitiesList", true);
+currentSession.render();
+pubsub.subscribe("currentSessionStart-onclick", session => console.log(session))
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

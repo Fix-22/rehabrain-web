@@ -7,7 +7,8 @@ export const generateActivitiesManager = (model) => {
                 Object.keys(dict).forEach(k => {
                     dict[k.toLowerCase()] = dict[k];
                     delete dict[k];
-                })
+                });
+                dict.times = 1;
             });
 
             return result;

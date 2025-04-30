@@ -224,15 +224,58 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
-        saveSession: async (sessionData, email, password) => {
+        saveSessionScore: async (sessionData, email, password) => {
             try {
-                const response = await fetch("/save-session", {
+                const response = await fetch("/save-session-score", {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     method: "POST",
                     body: JSON.stringify({
                         sessionData: sessionData,
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
+        saveCurrentSession: async (session, patientId, email, password) => {
+            try {
+                const response = await fetch("/save-current-session", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        session: session,
+                        patientId: patientId,
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
+        getCurrentSession: async (patientId, email, password) => {
+            try {
+                const response = await fetch("/get-current-session", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        patientId: patientId,
                         email: email,
                         password: password
                     })

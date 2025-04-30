@@ -269,7 +269,7 @@ const business = {
             return null;
         }
     },
-    checkSaveSession: async (loginData) => {
+    checkSaveSessionScore: async (loginData) => {
         if (loginData && Object.keys(loginData).length === 3) {
             if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.sessionData.patientId) && String(loginData.sessionData.playDate) && parseInt(loginData.sessionData.score)) {
                 loginData.email = String(loginData.email);
@@ -278,7 +278,7 @@ const business = {
                 loginData.sessionData.playDate = String(loginData.sessionData.playDate);
                 loginData.sessionData.patientId = 0 ? isNaN(parseInt(loginData.sessionData.patientId)) : parseInt(loginData.sessionData.patientId);
                 
-                const result = await database.saveSession(loginData.sessionData, loginData.email, loginData.password);
+                const result = await database.saveSessionScore(loginData.sessionData, loginData.email, loginData.password);
 
                 if (result === 1) {
                     return true;
@@ -293,6 +293,60 @@ const business = {
         }
         else {
             return false;
+        }
+    },
+    checkSaveCurrentSession: async (loginData) => {
+        if (loginData && Object.keys(loginData).length === 4) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && loginData.session && parseInt(loginData.patientId)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
+                loginData.session.forEach(e => {
+                    if (!e.name || !e.maxmediumscore || e.times < 1) {
+                        return false;
+                    }
+                });
+
+                loginData.session.forEach(async e => {
+                    const result = await database.saveCurrentSession(e, loginData.patientId, loginData.email, loginData.password);
+
+                    if (result !== 1) {
+                        return false;
+                    }
+                });
+
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    },
+    checkGetCurrentSession: async (loginData) => {
+        if (loginData && Object.keys(loginData).length === 3) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.patientId)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
+
+                const result = await database.getCurrentSession(loginData.patientId, loginData.email, loginData.password);
+
+                if (result) {
+                    return result;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            return null;
         }
     },
 };

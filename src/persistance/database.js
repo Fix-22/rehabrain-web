@@ -166,7 +166,7 @@ const database = {
     getActivities: async () => {
         try {
             const result = await executeQuery(`
-                SELECT Name, Description, MaxMediumScore, Difficulty
+                SELECT *
                 FROM Activities;
             `);
             
@@ -259,7 +259,7 @@ const database = {
             console.error("Database error: " + e);
         }
     },
-    saveSession: async (sessionData, email, password) => {
+    saveSessionScore: async (sessionData, email, password) => {
         try {
             const result = await executeStatement(`
                 INSERT INTO SessionsScores
@@ -276,6 +276,43 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    saveCurrentSession: async (activity, patientId, email, password) => {
+        try {
+            // ripulisce la sessione corrente
+            await executeStatement(`
+                DELETE FROM CurrentSessions
+                WHERE PatientID = ?;
+            `, [patientId]);
+
+            const result = await executeStatement(`
+                INSERT INTO CurrentSessions
+                (ActivityID, Times, PatientID)
+                VALUES(?, ?, (SELECT Patients.ID
+                              FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                              WHERE Email = ? AND Password = ? AND Patients.ID = ?)
+                );
+            `, [activity.id, activity.times, email, password, patientId]);
+            
+            return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    getCurrentSession: async (patientId, email, password) => {
+        try {
+            const result = await executeStatement(`
+                SELECT Activities.ID, Activities.Name, Activities.Description, Activities.MaxMediumScore, Activities.Difficulty, Times
+                FROM CurrentSessions JOIN Activities ON CurrentSessions.ActivityID = Activities.ID JOIN Patients ON CurrentSessions.PatientID = Patients.ID
+                WHERE PatientID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
+            `, [patientId, email, password]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    }
 };
 
 module.exports = database;

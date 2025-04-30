@@ -12,7 +12,7 @@
     <nav class="navbar is-transparent">
 		<div class="navbar-brand">
 			<a class="navbar-item" href="#">
-				<img src="assets/favicon.ico" id="logo">
+				<img src="" id="logo">
 			</a>
 			<div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
 				<span></span>
@@ -24,7 +24,7 @@
 
 		<div id="navbarExampleTransparentExample" class="navbar-menu">
 			<div class="navbar-start">
-				<a class="navbar-item title is-3" href="">Dashboard di nomeutente</a>
+				<a class="navbar-item title is-3" href="">RehaBrain</a>
 			</div>
 
 			<div class="navbar-end">
@@ -45,19 +45,22 @@
 	</nav>
 
     <section class="section" id="pages">
-		<div class="columns page" id="home">
-			<div class="column is-one-quarter" id="managerContainer">
+		<div class="content columns page" id="home">
+			<div class="column is-one-third" id="managerContainer">
 				<div class="column" id="patientsContainer"></div>
 				<div class="column" id="articleSidebarContainer"></div>
 				<div class="column" id="draftSidebarContainer"></div>
 				<div class="column" id="usersSidebarContainer"></div>
 			</div>
-			<div class="column is-half">
-				<div id="activitiesSearchbarContainer"></div>
-				<div id="activtiesListContainer"></div>
+			<div class="column is-one-third">
+				<h1>Elenco attività</h1>
+				<div class="container mb-4" id="activitiesSearchbarContainer"></div>
+				<div class="container" id="activtiesListContainer"></div>
 			</div>
-            <div class="column is-one-quarter">
-				<div id="currentSessionSearchbarContainer"></div>
+            <div class="column is-one-third">
+				<h1>Sessione corrente</h1>
+				<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
+				<div class="container" id="currentSessionContainer"></div>
 			</div>
 		</div>
         <div class="page" id="login">
