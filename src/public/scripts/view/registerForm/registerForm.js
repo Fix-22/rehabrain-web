@@ -1,13 +1,29 @@
-export const generateLoginForm = (presenter, parentElement, pubsub) => {
+export const generateRegisterForm = (presenter, parentElement, pubsub) => {
     let id;
 
-    const loginForm = {
+    const registerForm = {
         build: (inputId) => {
             id = inputId;
         },
         render: () => {
             const html = `<div class="column is-half content" id="$ID">
-                            <h1>Entra nell'area personale</h1>
+                            <h1>Registrati a RehaBrain</h1>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                <input class="input" type="email" placeholder="Nome" id="$IDName">
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                <input class="input" type="email" placeholder="Cognome" id="$IDSurname">
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </span>
+                                </p>
+                            </div>
                             <div class="field">
                                 <p class="control has-icons-left">
                                 <input class="input" type="email" placeholder="Email" id="$IDEmail">
@@ -28,20 +44,20 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
                                 <p class="control">
                                     <button type="button" class="button is-link" id="$IDSend">
                                         <span class="icon">
-                                            <i class="fa-solid fa-right-to-bracket"></i>
+                                            <i class="fa-solid fa-user-plus"></i>
                                         </span>
                                         <span>Entra</span>
                                     </button>
                                 </p>
                             </div>
-                            <p>Non sei registrato?</p>
+                            <p>Sei già registrato?</p>
                             <div class="field">
                                 <p class="control">
-                                    <a class="button is-link" href="#register">
+                                    <a class="button is-link" href="#login">
                                         <span class="icon">
-                                            <i class="fa-solid fa-user-plus"></i>
+                                            <i class="fa-solid fa-right-to-bracket"></i>
                                         </span>
-                                        <span>Registrati</span>
+                                        <span>Entra</span>
                                     </a>
                                 </p>
                             </div>
@@ -50,22 +66,24 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
             parentElement.innerHTML = html;
 
             document.getElementById(id + "Send").onclick = async () => {
+                const name = document.getElementById(id + "Name").value;
+                const surname = document.getElementById(id + "Surname").value;
                 const email = document.getElementById(id + "Email").value;
                 const password = document.getElementById(id + "Password").value;
                 
-                if (email && password && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                    const result = await presenter.login(email, password);
+                if (name && surname && email && password && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                    const result = await presenter.register(name, surname, email, password);
 
                     if (result) {
                         pubsub.publish("view-login-success", {email: email, password: password});
                         location.href = "#home";
                     }
                     else {
-                        loginForm.displayError("Autenticazione fallita, dati errati.");
+                        registerForm.displayError("Registrazione fallita, dati errati.");
                     }
                 }
                 else {
-                    loginForm.displayError("Autenticazione impossibile, dati non inseriti correttamente.");
+                    registerForm.displayError("Registrazione impossibile, dati non inseriti correttamente.");
                 }
             };
         },
@@ -83,5 +101,5 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
         }
     };
 
-    return loginForm;
+    return registerForm;
 };

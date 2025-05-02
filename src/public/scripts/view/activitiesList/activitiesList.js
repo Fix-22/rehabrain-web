@@ -29,7 +29,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
             
             activities.forEach(e => {
                 if (current !== e.name) {
-                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="Low">Bassa</option><option value="Medium">Media</option><option value="Hard">Alta</option></select></div>' : "Nessuna difficoltà presente") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Add"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
+                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="Low">Bassa</option><option value="Medium">Media</option><option value="Hard">Alta</option></select></div>' : "Nessuna") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Add"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
                 }
                 current = e.name;
             });
@@ -55,7 +55,7 @@ export const generateActivitiesList = (presenter, parentElement, pubsub) => {
             let current;
             activities.forEach(e => {
                 if (current !== e.name && e.name.toLowerCase().includes(search.toLowerCase())) {
-                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="low">Bassa</option><option value="medium">Media</option><option value="hard">Alta</option></select></div>' : "Nessuna difficoltà presente") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Add"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
+                    html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? '<div class="select"><select id="' + e.name + 'Difficulty"><option value="low">Bassa</option><option value="medium">Media</option><option value="hard">Alta</option></select></div>' : "Nessuna") + '</td><td><button class="button is-link addButton" id="' + e.name + 'Add"><span class="icon is-small"><i class="fa-solid fa-plus"></i></span></button></td></tr>';
                 }
                 current = e.name;
             });

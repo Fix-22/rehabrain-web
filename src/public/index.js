@@ -8,6 +8,7 @@ import { generateCurrentSession } from "/scripts/view/currentSession/currentSess
 import { generateSessionManager } from "/scripts/presentation/sessionManager/sessionManager.js";
 import { generateAuthenticator } from "/scripts/presentation/authenticator/authenticator.js";
 import { generateLoginForm } from "/scripts/view/loginForm/loginForm.js";
+import { generateRegisterForm } from "/scripts/view/registerForm/registerForm.js";
 
 const pubsub = generatePubSub();
 
@@ -29,6 +30,11 @@ const loginFormContainer = document.getElementById("loginFormContainer");
 const loginForm = generateLoginForm(authenticator, loginFormContainer, pubsub);
 loginForm.build("loginForm")
 loginForm.render();
+
+const registerFormContainer = document.getElementById("registerFormContainer");
+const registerForm = generateRegisterForm(authenticator, registerFormContainer, pubsub);
+registerForm.build("registerForm")
+registerForm.render();
 
 // activities
 const activitiesSearchbarContainer = document.getElementById("activitiesSearchbarContainer");
