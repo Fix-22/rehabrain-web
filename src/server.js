@@ -241,6 +241,24 @@ const saveCurrentSession = async (request, response) => {
     }
 };
 
+const clearCurrentSession = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkClearCurrentSession(loginData);
+
+        if (result) {
+            response.json({result: true});
+        }
+        else {
+            response.json({result: false});
+        }
+    }
+    catch (e) {
+        console.error("Error while saving current session: " + e);
+        response.status(500).json({result: false});
+    }
+};
+
 const getCurrentSession = async (request, response) => {
     try {
         const loginData = request.body;
@@ -293,6 +311,8 @@ app.post("/get-patient", getPatient);
 app.post("/save-session-score", saveSessionScore);
 
 app.post("/save-current-session", saveCurrentSession);
+
+app.post("/clear-current-session", clearCurrentSession);
 
 app.post("/get-current-session", getCurrentSession);
 

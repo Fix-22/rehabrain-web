@@ -51,6 +51,10 @@ export const generateSessionManager = (model, pubsub) => {
             }
             return false;
         },
+        checkClearCurrentSession: async () => {
+            const result = await model.clearCurrentSession(1, "prova@gmail.com", "2006");
+            return result;
+        },
         checkGetCurrentSession: async () => {
             const result = await model.getCurrentSession(1, "prova@gmail.com", "2006");
 
@@ -60,6 +64,7 @@ export const generateSessionManager = (model, pubsub) => {
                     delete dict[k];
                 });
             });
+            result.sort((a, b) => a.position - b.position);
 
             return result;
         }

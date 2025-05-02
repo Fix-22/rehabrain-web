@@ -60,6 +60,12 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                                                                 <i class="fa-solid fa-floppy-disk"></i>
                                                             </span>
                                                             <span>Salva</span>
+                                                        </button>
+                                                        <button class="button is-danger" id="$IDClear">
+                                                            <span class="icon">
+                                                                <i class="fa-solid fa-eraser"></i>
+                                                            </span>
+                                                            <span>Cancella</span>
                                                         </button>` : "</div>") +
                             `<div class="notification is-danger is-hidden" id="$IDError"></div>
                             <div class="notification is-success is-light is-hidden" id="$IDSuccess"></div>
@@ -89,10 +95,6 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 e.onclick = () => {
                     session.splice(session.findIndex(d => d.difficulty ? (d.name === e.id.replace(d.difficulty.charAt(0).toUpperCase() + d.difficulty.substring(1) + "Delete", "")) : (d.name === e.id.replace("Delete", ""))), 1);
                     currentSession.render();
-
-                    if (session.length === 0) {
-
-                    }
                 };
             });
 
@@ -141,6 +143,20 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                         currentSession.displayError("Impossibile avviare la sessione, i dati inseriti sotto non sono validi.");
                     }
                 };
+                document.getElementById(id + "Clear").onclick = async () => {
+                    pubsub.publish(id + "Clear-onclick", session);
+
+                    if (await presenter.checkClearCurrentSession()) {
+                        session = await presenter.checkGetCurrentSession();
+                        currentSession.render();
+                        currentSession.displayError("");
+                        currentSession.displaySuccess("Sessione cancellata.");
+                    }
+                    else {
+                        currentSession.displaySuccess("");
+                        currentSession.displayError("Impossibile cancellare la sessione.");
+                    }
+                };
             }
         },
         search: (search) => {
@@ -155,6 +171,12 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                                                                 <i class="fa-solid fa-floppy-disk"></i>
                                                             </span>
                                                             <span>Salva</span>
+                                                        </button>
+                                                        <button class="button is-danger" id="$IDClear">
+                                                            <span class="icon">
+                                                                <i class="fa-solid fa-eraser"></i>
+                                                            </span>
+                                                            <span>Cancella</span>
                                                         </button>` : "</div>") +
                             `<div class="notification is-danger is-hidden" id="$IDError"></div>
                             <div class="notification is-success is-light is-hidden" id="$IDSuccess"></div>
@@ -223,7 +245,6 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
             if (isDashboard) {
                 document.getElementById(id + "Save").onclick = async () => {
                     pubsub.publish(id + "Save-onclick", session);
-                    console.log(session)
 
                     if (await presenter.checkSaveCurrentSession(session)) {
                         currentSession.displayError("");
@@ -232,6 +253,20 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                     else {
                         currentSession.displaySuccess("");
                         currentSession.displayError("Impossibile avviare la sessione, i dati inseriti sotto non sono validi.");
+                    }
+                };
+                document.getElementById(id + "Clear").onclick = async () => {
+                    pubsub.publish(id + "Clear-onclick", session);
+
+                    if (await presenter.checkClearCurrentSession()) {
+                        session = await presenter.checkGetCurrentSession();
+                        currentSession.render();
+                        currentSession.displayError("");
+                        currentSession.displaySuccess("Sessione cancellata.");
+                    }
+                    else {
+                        currentSession.displaySuccess("");
+                        currentSession.displayError("Impossibile cancellare la sessione.");
                     }
                 };
             }

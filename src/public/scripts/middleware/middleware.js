@@ -267,6 +267,27 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
+        clearCurrentSession: async (patientId, email, password) => {
+            try {
+                const response = await fetch("/clear-current-session", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        patientId: patientId,
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
         getCurrentSession: async (patientId, email, password) => {
             try {
                 const response = await fetch("/get-current-session", {

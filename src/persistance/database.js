@@ -276,24 +276,33 @@ const database = {
             console.error("Database error: " + e);
         }
     },
-    saveCurrentSession: async (activity, patientId, email, password) => {
+    saveCurrentSession: async (activity, position, patientId, email, password) => {
         try {
-            // ripulisce la sessione corrente
-            await executeStatement(`
-                DELETE FROM CurrentSessions
-                WHERE PatientID = ?;
-            `, [patientId]);
+            await database.clearCurrentSession(patientId, email, password);
 
             const result = await executeStatement(`
                 INSERT INTO CurrentSessions
-                (ActivityID, Times, PatientID)
-                VALUES(?, ?, (SELECT Patients.ID
+                (ActivityID, Times, Position, PatientID)
+                VALUES(?, ?, ?, (SELECT Patients.ID
                               FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
                               WHERE Email = ? AND Password = ? AND Patients.ID = ?)
                 );
-            `, [activity.id, activity.times, email, password, patientId]);
+            `, [activity.id, activity.times, position, email, password, patientId]);
             
             return result.affectedRows;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
+    clearCurrentSession: async (patientId, email, password) => {
+        try {
+            await executeStatement(`
+                DELETE FROM CurrentSessions
+                WHERE PatientID = (SELECT Patients.ID
+                                   FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                                   WHERE Email = ? AND Password = ? AND Patients.ID = ?);
+            `, [email, password, patientId]);
         }
         catch (e) {
             console.error("Database error: " + e);
@@ -302,7 +311,7 @@ const database = {
     getCurrentSession: async (patientId, email, password) => {
         try {
             const result = await executeStatement(`
-                SELECT Activities.ID, Activities.Name, Activities.Description, Activities.MaxMediumScore, Activities.Difficulty, Times
+                SELECT Activities.ID, Activities.Name, Activities.Description, Activities.MaxMediumScore, Activities.Difficulty, Times, Position
                 FROM CurrentSessions JOIN Activities ON CurrentSessions.ActivityID = Activities.ID JOIN Patients ON CurrentSessions.PatientID = Patients.ID
                 WHERE PatientID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
             `, [patientId, email, password]);
