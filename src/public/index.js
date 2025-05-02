@@ -9,10 +9,11 @@ import { generateSessionManager } from "/scripts/presentation/sessionManager/ses
 import { generateAuthenticator } from "/scripts/presentation/authenticator/authenticator.js";
 import { generateLoginForm } from "/scripts/view/loginForm/loginForm.js";
 import { generateRegisterForm } from "/scripts/view/registerForm/registerForm.js";
+import { generateNavbar } from "/scripts/view/navbar/navbar.js";
 
 const pubsub = generatePubSub();
 
-generateNavigator(document.getElementById("pages"));
+generateNavigator(document.getElementById("pages"), pubsub);
 
 // MODEL (middleware che prende i dati dal model decentrato)
 const middleware = generateMiddleware();
@@ -24,6 +25,49 @@ await sessionManager.build();
 const authenticator = generateAuthenticator(middleware, pubsub);
 
 // VIEWS
+
+const matchPage = () => {
+    const url = new URL(document.location.href);
+    const pageName = url.hash.replace("#", "");
+
+    switch (pageName) {
+        case "":
+        case "home":
+        case "register":
+        case "login":
+            navbar.render([
+                {
+                    class: "is-link",
+                    link: "#dashboard",
+                    icon: '<i class="fa-solid fa-puzzle-piece"></i>',
+                    text: "Dashboard"
+                }
+            ]);
+            break;
+
+        case "dashboard":
+            navbar.render([
+                {
+                    class: "is-link",
+                    link: "#home",
+                    icon: '<i class="fa-solid fa-house"></i>',
+                    text: "Home"
+                },
+                {
+                    class: "is-link",
+                    link: "#login",
+                    icon: '<i class="fa-solid fa-right-to-bracket"></i>',
+                    text: "Entra"
+                }
+            ]);
+            break;
+    }
+};
+
+// navbar
+const navbarContainer = document.getElementById("navbarContainer");
+const navbar = generateNavbar(navbarContainer, pubsub);
+matchPage();
 
 // authentication
 const loginFormContainer = document.getElementById("loginFormContainer");
@@ -57,8 +101,13 @@ const currentSession = generateCurrentSession(sessionManager, currentSessionCont
 await currentSession.build("currentSession", "currentSessionSearchbar", false);
 currentSession.render();
 
+// gestione testo footer
+document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
+
+window.addEventListener("popstate", matchPage);
+
 // gestione eventi per Bulma
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
     // Functions to open and close a modal
     function openModal(el) {
         el.classList.add("is-active");
@@ -75,7 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
+    console.log(navbarBurgers);
+    
     // Add a click event on each of them
     navbarBurgers.forEach(el => {
         el.addEventListener('click', () => {
@@ -113,7 +163,4 @@ document.addEventListener("DOMContentLoaded", () => {
             closeAllModals();
         }
     });
-});
-
-// gestione testo footer
-document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
+})();

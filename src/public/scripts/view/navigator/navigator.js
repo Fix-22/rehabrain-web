@@ -1,4 +1,4 @@
-export const generateNavigator = (parentElement) => {
+export const generateNavigator = (parentElement, pubsub) => {
     const pages = Array.from(parentElement.querySelectorAll(".page"));
 
     const hide = (element) => {

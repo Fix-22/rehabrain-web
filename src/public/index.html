@@ -11,10 +11,12 @@
 <body>
     <nav class="navbar is-transparent">
 		<div class="navbar-brand">
-			<a class="navbar-item" href="#">
-				<img src="" id="logo">
+			<a class="navbar-item" href="#home">
+				<span class="icon is-large">
+					<i class="fa-solid fa-brain fa-2x has-text-link"></i>
+				</span>
 			</a>
-			<div class="navbar-burger js-burger" data-target="navbarExampleTransparentExample">
+			<div class="navbar-burger js-burger" data-target="navbarCropped">
 				<span></span>
 				<span></span>
 				<span></span>
@@ -22,43 +24,44 @@
 			</div>
 		</div>
 
-		<div id="navbarExampleTransparentExample" class="navbar-menu">
+		<div class="navbar-menu" id="navbarCropped">
 			<div class="navbar-start">
-				<a class="navbar-item title is-3" href="">RehaBrain</a>
+				<a class="navbar-item title is-3" href="#home">RehaBrain</a>
 			</div>
 
 			<div class="navbar-end">
 				<div class="navbar-item">
-					<div class="field is-grouped">
-						<p class="control">
-							<button class="button is-light js-modal-trigger" data-target="personalInfoModal">
-								<span class="icon">
-									<i class="fa-solid fa-user"></i>
-								</span>
-								<span>Informazioni personali</span>
-							</button>
-						</p>
-					</div>
+					<div class="field is-grouped" id="navbarContainer"></div>
 				</div>
 			</div>
 		</div>
 	</nav>
 
     <section class="section" id="pages">
-		<div class="content columns page" id="home">
-			<div class="column is-one-third" id="managerContainer">
-				<h1>Pazienti</h1>
-				<div class="column" id="patientsContainer"></div>
-			</div>
-			<div class="column is-one-third">
-				<h1>Elenco attività</h1>
-				<div class="container mb-4" id="activitiesSearchbarContainer"></div>
-				<div class="container" id="activtiesListContainer"></div>
-			</div>
-            <div class="column is-one-third">
-				<h1>Sessione corrente</h1>
-				<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
-				<div class="container" id="currentSessionContainer"></div>
+		<div class="page" id="home">
+			<p class="title">RehaBrain</p>
+			<p class="subtitle">Sfotware gratuito per la stimolazione cognitiva (CST)</p>
+			<p>RehaBrain nasce dall'idea di</p>
+		</div>
+		<div class="content page" id="dashboard">
+			<h1>Dashboard</h1>
+			<p>La dashboard ti permette di inserire le attività da utilizzare in una sessione di stimolazione.<br>Puoi scegliere quante inserirne, in che ordine e a che livello di difficoltà mostrarle al paziente.</p>
+			<p>Registrandoti potrai salvare in maniera permanente le sessioni per ciascun paziente.</p>
+			<div class="columns">
+				<div class="column is-hidden" id="managerContainer">
+					<h2>Gestisci</h2>
+					<div class="column" id="patientsContainer"></div>
+				</div>
+				<div class="column is-auto">
+					<h2>Elenco attività</h2>
+					<div class="container mb-4" id="activitiesSearchbarContainer"></div>
+					<div class="container" id="activtiesListContainer"></div>
+				</div>
+				<div class="column is-one-third">
+					<h2>Sessione corrente</h2>
+					<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
+					<div class="container" id="currentSessionContainer"></div>
+				</div>
 			</div>
 		</div>
         <div class="page" id="login">

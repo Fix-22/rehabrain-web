@@ -46,7 +46,7 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                                         <span class="icon">
                                             <i class="fa-solid fa-user-plus"></i>
                                         </span>
-                                        <span>Entra</span>
+                                        <span>Registrati</span>
                                     </button>
                                 </p>
                             </div>
