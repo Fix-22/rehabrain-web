@@ -1,5 +1,5 @@
 export const generateCurrentSession = (presenter, parentElement, pubsub) => {
-    let id, searchBarId, activitiesListId, isDashboard, session;
+    let id, searchBarId, isDashboard, session;
 
     const moveUp = (session, element) => {
         const idx = session.indexOf(element);
@@ -22,9 +22,8 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
     };
 
     const currentSession = {
-        build: async (inputId, inputSearchBarId, inputActivitiesListId, inputIsDashboard) => {
+        build: async (inputId, inputSearchBarId, inputIsDashboard) => {
             id = inputId;
-            activitiesListId = inputActivitiesListId;
             searchBarId = inputSearchBarId;
             isDashboard = inputIsDashboard;
             session = isDashboard ? await presenter.checkGetCurrentSession() : [];
@@ -36,7 +35,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 currentSession.reset();
             });
 
-            pubsub.subscribe(activitiesListId + "-addButton-onclcik", activity => {
+            pubsub.subscribe("activitiesList-addButton-onclcik", activity => {
                 const foundActivity = session.find(a => a.name === activity.name && a.difficulty === activity.difficulty);
 
                 if (foundActivity) {
@@ -45,6 +44,12 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 else {
                     session.push(JSON.parse(JSON.stringify(activity))); // per fare una deep copy ed inserirlo nell'array, in modo da non andare ad aumentare il numero di ripetizioni di base per ogni attività
                 }
+                currentSession.render();
+            });
+
+            pubsub.subscribe("loginForm-login-success", async credentials => {
+                isDashboard = true;
+                session = isDashboard ? await presenter.checkGetCurrentSession() : [];
                 currentSession.render();
             });
         },

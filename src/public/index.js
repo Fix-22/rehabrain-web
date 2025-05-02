@@ -6,6 +6,8 @@ import { generateActivitiesManager } from "/scripts/presentation/activitiesManag
 import { generateSearchbar } from "/scripts/view/searchbar/searchbar.js";
 import { generateCurrentSession } from "/scripts/view/currentSession/currentSession.js";
 import { generateSessionManager } from "/scripts/presentation/sessionManager/sessionManager.js";
+import { generateAuthenticator } from "/scripts/presentation/authenticator/authenticator.js";
+import { generateLoginForm } from "/scripts/view/loginForm/loginForm.js";
 
 const pubsub = generatePubSub();
 
@@ -18,8 +20,15 @@ const middleware = generateMiddleware();
 const activitiesManager = generateActivitiesManager(middleware);
 const sessionManager = generateSessionManager(middleware, pubsub);
 await sessionManager.build();
+const authenticator = generateAuthenticator(middleware, pubsub);
 
 // VIEWS
+
+// authentication
+const loginFormContainer = document.getElementById("loginFormContainer");
+const loginForm = generateLoginForm(authenticator, loginFormContainer, pubsub);
+loginForm.build("loginForm")
+loginForm.render();
 
 // activities
 const activitiesSearchbarContainer = document.getElementById("activitiesSearchbarContainer");
@@ -39,9 +48,8 @@ currentSessionSearchbar.render();
 
 const currentSessionContainer = document.getElementById("currentSessionContainer");
 const currentSession = generateCurrentSession(sessionManager, currentSessionContainer, pubsub);
-await currentSession.build("currentSession", "currentSessionSearchbar", "activitiesList", true);
+await currentSession.build("currentSession", "currentSessionSearchbar", false);
 currentSession.render();
-pubsub.subscribe("currentSessionStart-onclick", session => console.log(session))
 
 // gestione eventi per Bulma
 document.addEventListener("DOMContentLoaded", () => {

@@ -45,26 +45,28 @@ export const generateSessionManager = (model, pubsub) => {
                     return false;
                 }
                 else {
-                    const result = await model.saveCurrentSession(session,  1, "prova@gmail.com", "2006");
+                    const result = await model.saveCurrentSession(session,  1, email, password);
                     return result;
                 }
             }
             return false;
         },
         checkClearCurrentSession: async () => {
-            const result = await model.clearCurrentSession(1, "prova@gmail.com", "2006");
+            const result = await model.clearCurrentSession(1, email, password);
             return result;
         },
         checkGetCurrentSession: async () => {
-            const result = await model.getCurrentSession(1, "prova@gmail.com", "2006");
+            const result = await model.getCurrentSession(1, email, password);
 
-            result.forEach(dict => {
-                Object.keys(dict).forEach(k => {
-                    dict[k.toLowerCase()] = dict[k];
-                    delete dict[k];
+            if (result) {
+                result.forEach(dict => {
+                    Object.keys(dict).forEach(k => {
+                        dict[k.toLowerCase()] = dict[k];
+                        delete dict[k];
+                    });
                 });
-            });
-            result.sort((a, b) => a.position - b.position);
+                result.sort((a, b) => a.position - b.position);
+            }
 
             return result;
         }
