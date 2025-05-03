@@ -16,7 +16,7 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
                             <ul class="menu-list">`.replace("$ID", id);
             
             patients.forEach(e => {
-                html += '<li><a id="patient"' + e.id + ' class="patientElement has-text-link"><span class="icon-text"><span class="mr-6 pr-6">' + e.name + " " + e.surname + '</span><span class="icon clickableIcon ml-6 pl-6" id="' + e.id +'Info"><i class="fa-solid fa-circle-info"></i></span></span></a></li>'
+                html += '<li><a id="patient' + e.id + '" class="patientElement has-text-link"><span class="icon-text"><span class="mr-6 pr-6">' + e.name + " " + e.surname + '</span><span class="icon clickableIcon ml-6 pl-6" id="' + e.id +'Info"><i class="fa-solid fa-circle-info"></i></span></span></a></li>'
             });
             html += "</ul></aside>";
             parentElement.innerHTML = html;
@@ -29,7 +29,8 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
                             e2.classList.add("has-text-light");
                             e2.classList.remove("has-text-link");
 
-                            presenter.selectPatient(e2.id.replace("patient", ""));
+                            presenter.selectPatient(parseInt(e2.id.replace("patient", "")));
+                            pubsub.publish("patientsList-onpatientselect", e2.id.replace("patient", ""));
                         }
                         else {
                             e2.classList.remove("is-active");

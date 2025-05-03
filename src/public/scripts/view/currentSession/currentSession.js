@@ -49,8 +49,12 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
 
             pubsub.subscribe("view-login-success", async credentials => {
                 isDashboard = true;
-                //session = isDashboard ? await presenter.checkGetCurrentSession() : [];
-                //currentSession.render();
+            });
+
+            pubsub.subscribe("patientsList-onpatientselect", async patientId => {
+                session = isDashboard ? await presenter.checkGetCurrentSession() : [];
+                console.log(session);
+                currentSession.render();
             });
         },
         render: () => {

@@ -8,8 +8,9 @@ export const generateSessionManager = (model, pubsub) => {
                 password = credentials.password;
             });
 
-            pubsub.subscribe("patientsManager-onpatientselect", patient => {alert(9)
-                patientId = patient.id;
+            pubsub.subscribe("patientsManager-onpatientselect", inputPatienId => {
+                patientId = inputPatienId;
+                console.log(patientId)
             });
         },
         checkStartSession: (session) => {

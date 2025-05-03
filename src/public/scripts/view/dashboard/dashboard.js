@@ -12,6 +12,12 @@ export const generateDashboard = (pubsub) => {
                 info.classList.remove("is-hidden");
                 activities.classList.remove("is-hidden");
             });
+
+            pubsub.subscribe("patientsList-onpatientselect", patientId => {
+                sidebar.classList.remove("is-hidden");
+                info.classList.add("is-hidden");
+                activities.classList.remove("is-hidden");
+            });
         }
     };
 }

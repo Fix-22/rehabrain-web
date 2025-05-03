@@ -33,7 +33,7 @@ export const generatePatientsManager = (model, pubsub) => {
         },
         selectPatient: (id) => {
             if (patients.find(e => e.id === id)) {
-                pubsub.subscribe("patientsManager-onpatientselect", id);
+                pubsub.publish("patientsManager-onpatientselect", id);
             }
         }
     };
