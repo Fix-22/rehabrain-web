@@ -49,8 +49,8 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
 
             pubsub.subscribe("view-login-success", async credentials => {
                 isDashboard = true;
-                session = isDashboard ? await presenter.checkGetCurrentSession() : [];
-                currentSession.render();
+                //session = isDashboard ? await presenter.checkGetCurrentSession() : [];
+                //currentSession.render();
             });
         },
         render: () => {

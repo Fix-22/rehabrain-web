@@ -8,7 +8,7 @@ export const generateSessionManager = (model, pubsub) => {
                 password = credentials.password;
             });
 
-            pubsub.subscribe("patientsManager-onpatientselect", patient => {
+            pubsub.subscribe("patientsManager-onpatientselect", patient => {alert(9)
                 patientId = patient.id;
             });
         },
@@ -45,18 +45,18 @@ export const generateSessionManager = (model, pubsub) => {
                     return false;
                 }
                 else {
-                    const result = await model.saveCurrentSession(session,  1, email, password);
+                    const result = await model.saveCurrentSession(session,  patientId, email, password);
                     return result;
                 }
             }
             return false;
         },
         checkClearCurrentSession: async () => {
-            const result = await model.clearCurrentSession(1, email, password);
+            const result = await model.clearCurrentSession(patientId, email, password);
             return result;
         },
         checkGetCurrentSession: async () => {
-            const result = await model.getCurrentSession(1, email, password);
+            const result = await model.getCurrentSession(patientId, email, password);
 
             if (result) {
                 result.forEach(dict => {

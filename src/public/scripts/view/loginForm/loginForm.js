@@ -58,7 +58,7 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
 
                     if (result) {
                         pubsub.publish("view-login-success", {email: email, password: password});
-                        location.href = "#home";
+                        location.href = "#dashboard";
                     }
                     else {
                         loginForm.displayError("Autenticazione fallita, dati errati.");

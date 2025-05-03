@@ -37,31 +37,40 @@
 			</div>
 		</div>
 	</nav>
+	
 
     <section class="section" id="pages">
 		<div class="page" id="home">
 			<p class="title">RehaBrain</p>
-			<p class="subtitle">Sfotware gratuito per la stimolazione cognitiva (CST)</p>
+			<p class="subtitle">Software gratuito per la stimolazione cognitiva (CST)</p>
 			<p>RehaBrain nasce dall'idea di</p>
 		</div>
-		<div class="content page" id="dashboard">
-			<h1>Dashboard</h1>
-			<p>La dashboard ti permette di inserire le attività da utilizzare in una sessione di stimolazione.<br>Puoi scegliere quante inserirne, in che ordine e a che livello di difficoltà mostrarle al paziente.</p>
-			<p>Registrandoti potrai salvare in maniera permanente le sessioni per ciascun paziente.</p>
+		<div class="page" id="dashboard">
 			<div class="columns">
-				<div class="column is-hidden" id="managerContainer">
-					<h2>Gestisci</h2>
-					<div class="column" id="patientsContainer"></div>
+				<div class="column is-one-quarter is-hidden" id="sidebar">
+					<div class="container mb-4" id="patientssSearchbarContainer"></div>
+					<div class="container" id="patientsListContainer"></div>
 				</div>
 				<div class="column is-auto">
-					<h2>Elenco attività</h2>
-					<div class="container mb-4" id="activitiesSearchbarContainer"></div>
-					<div class="container" id="activtiesListContainer"></div>
-				</div>
-				<div class="column is-one-third">
-					<h2>Sessione corrente</h2>
-					<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
-					<div class="container" id="currentSessionContainer"></div>
+					<div class="mb-4" id="info">
+						<p class="title">Dashboard</p>
+						<div class="block">
+							<p>La dashboard ti permette di inserire le attività da utilizzare in una sessione di stimolazione.<br>Puoi scegliere quante inserirne, in che ordine e a che livello di difficoltà mostrarle al paziente.</p>
+							<p>Registrandoti potrai salvare in maniera permanente le sessioni per ciascun paziente.</p>
+						</div>
+					</div>
+					<div class="columns" id="activities">
+						<div class="column is-auto">
+							<p class="title">Elenco attività</p>
+							<div class="container mb-4" id="activitiesSearchbarContainer"></div>
+							<div class="container" id="activtiesListContainer"></div>
+						</div>
+						<div class="column is-auto">
+							<p class="title">Sessione corrente</p>
+							<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
+							<div class="container" id="currentSessionContainer"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

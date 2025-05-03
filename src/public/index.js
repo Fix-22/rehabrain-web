@@ -10,6 +10,9 @@ import { generateAuthenticator } from "/scripts/presentation/authenticator/authe
 import { generateLoginForm } from "/scripts/view/loginForm/loginForm.js";
 import { generateRegisterForm } from "/scripts/view/registerForm/registerForm.js";
 import { generateNavbar } from "/scripts/view/navbar/navbar.js";
+import { generatePatientsList } from "/scripts/view/patientsList/patientsList.js";
+import { generatePatientsManager } from "/scripts/presentation/patientsManager/patientsManager.js";
+import { generateDashboard } from "/scripts/view/dashboard/dashboard.js";
 
 const pubsub = generatePubSub();
 
@@ -23,6 +26,8 @@ const activitiesManager = generateActivitiesManager(middleware);
 const sessionManager = generateSessionManager(middleware, pubsub);
 await sessionManager.build();
 const authenticator = generateAuthenticator(middleware, pubsub);
+const patientsManager = generatePatientsManager(middleware, pubsub);
+patientsManager.build();
 
 // VIEWS
 
@@ -69,6 +74,10 @@ const navbarContainer = document.getElementById("navbarContainer");
 const navbar = generateNavbar(navbarContainer, pubsub);
 matchPage();
 
+// dashboard
+const dashboard = generateDashboard(pubsub);
+dashboard.build(document.getElementById("sidebar"), document.getElementById("info"), document.getElementById("activities"));
+
 // authentication
 const loginFormContainer = document.getElementById("loginFormContainer");
 const loginForm = generateLoginForm(authenticator, loginFormContainer, pubsub);
@@ -100,6 +109,12 @@ const currentSessionContainer = document.getElementById("currentSessionContainer
 const currentSession = generateCurrentSession(sessionManager, currentSessionContainer, pubsub);
 await currentSession.build("currentSession", "currentSessionSearchbar", false);
 currentSession.render();
+
+// patients
+const patientsListContainer = document.getElementById("patientsListContainer");
+const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
+patientsList.build("patientsList");
+patientsList.render()
 
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
