@@ -3,6 +3,12 @@ export const generateSessionManager = (model, pubsub) => {
 
     return {
         build: () => {
+            if (sessionStorage.getItem("credentials")) {
+                const credentials = JSON.parse(sessionStorage.getItem("credentials"));
+                email = credentials.email;
+                password = credentials.password;
+            }
+
             pubsub.subscribe("authenticator-login-success", credentials => {
                 email = credentials.email;
                 password = credentials.password;
@@ -58,7 +64,7 @@ export const generateSessionManager = (model, pubsub) => {
         },
         checkGetCurrentSession: async () => {
             const result = await model.getCurrentSession(patientId, email, password);
-
+            console.log(2)
             if (result) {
                 result.forEach(dict => {
                     Object.keys(dict).forEach(k => {

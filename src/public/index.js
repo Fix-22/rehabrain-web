@@ -51,20 +51,44 @@ const matchPage = () => {
             break;
 
         case "dashboard":
-            navbar.render([
-                {
-                    class: "is-link",
-                    link: "#home",
-                    icon: '<i class="fa-solid fa-house"></i>',
-                    text: "Home"
-                },
-                {
-                    class: "is-link",
-                    link: "#login",
-                    icon: '<i class="fa-solid fa-right-to-bracket"></i>',
-                    text: "Entra"
-                }
-            ]);
+            if (authenticator.isLogged()) {
+                navbar.render([
+                    {
+                        class: "is-link",
+                        link: "#home",
+                        icon: '<i class="fa-solid fa-house"></i>',
+                        text: "Home"
+                    },
+                    {
+                        class: "is-light",
+                        icon: '<i class="fa-solid fa-circle-user"></i>',
+                        text: "Informazioni personali",
+                        dataTarget: ""
+                    },
+                    {
+                        class: "is-danger",
+                        icon: '<i class="fa-solid fa-door-open"></i>',
+                        text: "Esci",
+                        dataTarget: ""
+                    }
+                ]);
+            }
+            else {
+                navbar.render([
+                    {
+                        class: "is-link",
+                        link: "#home",
+                        icon: '<i class="fa-solid fa-house"></i>',
+                        text: "Home"
+                    },
+                    {
+                        class: "is-link",
+                        link: "#login",
+                        icon: '<i class="fa-solid fa-right-to-bracket"></i>',
+                        text: "Entra"
+                    }
+                ]);
+            }
             break;
     }
 };
@@ -113,7 +137,7 @@ currentSession.render();
 // patients
 const patientsListContainer = document.getElementById("patientsListContainer");
 const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
-patientsList.build("patientsList");
+await patientsList.build("patientsList");
 patientsList.render()
 
 // gestione testo footer
@@ -139,7 +163,6 @@ window.addEventListener("popstate", matchPage);
     }
 
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    console.log(navbarBurgers);
     
     // Add a click event on each of them
     navbarBurgers.forEach(el => {

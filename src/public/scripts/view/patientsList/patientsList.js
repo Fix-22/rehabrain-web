@@ -2,8 +2,13 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
     let id, patients = [];
 
     const patientsList = {
-        build: (inputId) => {
+        build: async (inputId) => {
             id = inputId;
+
+            if (sessionStorage.getItem("isLogged")) {
+                patients = await presenter.checkGetAllPatients();
+                patientsList.render();
+            }
 
             pubsub.subscribe("view-login-success", async credentials => {
                 patients = await presenter.checkGetAllPatients();

@@ -1,5 +1,5 @@
 export const generateCurrentSession = (presenter, parentElement, pubsub) => {
-    let id, searchBarId, isDashboard, session;
+    let id, searchBarId, isLogged, session;
 
     const moveUp = (session, element) => {
         const idx = session.indexOf(element);
@@ -22,11 +22,11 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
     };
 
     const currentSession = {
-        build: async (inputId, inputSearchBarId, inputIsDashboard) => {
+        build: async (inputId, inputSearchBarId) => {
             id = inputId;
             searchBarId = inputSearchBarId;
-            isDashboard = inputIsDashboard;
-            session = isDashboard ? await presenter.checkGetCurrentSession() : [];
+            isLogged = isLogged = sessionStorage.getItem("credentials") ? true : false;
+            session = [];
 
             pubsub.subscribe(searchBarId + "-onsearch", search => {
                 currentSession.search(search);
@@ -48,12 +48,11 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
             });
 
             pubsub.subscribe("view-login-success", async credentials => {
-                isDashboard = true;
+                isLogged = true;
             });
 
             pubsub.subscribe("patientsList-onpatientselect", async patientId => {
-                session = isDashboard ? await presenter.checkGetCurrentSession() : [];
-                console.log(session);
+                session = isLogged ? await presenter.checkGetCurrentSession() : [];
                 currentSession.render();
             });
         },
@@ -64,7 +63,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
 									<i class="fa-solid fa-play"></i>
 								</span>
 								<span>Avvia</span>
-                            </button>` + (isDashboard ? `<button class="button is-primary" id="$IDSave">
+                            </button>` + (isLogged ? `<button class="button is-primary" id="$IDSave">
                                                             <span class="icon">
                                                                 <i class="fa-solid fa-floppy-disk"></i>
                                                             </span>
@@ -139,7 +138,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 }
             };
 
-            if (isDashboard) {
+            if (isLogged) {
                 document.getElementById(id + "Save").onclick = async () => {
                     pubsub.publish(id + "Save-onclick", session);
 
@@ -175,7 +174,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
 									<i class="fa-solid fa-play"></i>
 								</span>
 								<span>Avvia</span>
-                            </button>` + (isDashboard ? `<button class="button is-primary" id="$IDSave">
+                            </button>` + (isLogged ? `<button class="button is-primary" id="$IDSave">
                                                             <span class="icon">
                                                                 <i class="fa-solid fa-floppy-disk"></i>
                                                             </span>
@@ -251,7 +250,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 }
             };
 
-            if (isDashboard) {
+            if (isLogged) {
                 document.getElementById(id + "Save").onclick = async () => {
                     pubsub.publish(id + "Save-onclick", session);
 
@@ -307,8 +306,8 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 successDisplayer.classList.add("is-hidden");
             }
         },
-        setIsDashboard: (inputIsDashboard) => {
-            isDashboard = inputIsDashboard;
+        setisLogged: (inputisLogged) => {
+            isLogged = inputisLogged;
         }
     };
 

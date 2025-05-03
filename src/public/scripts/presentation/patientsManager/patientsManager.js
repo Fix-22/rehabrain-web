@@ -3,6 +3,12 @@ export const generatePatientsManager = (model, pubsub) => {
 
     const patientsManager = {
         build: () => {
+            if (sessionStorage.getItem("credentials")) {
+                const credentials = JSON.parse(sessionStorage.getItem("credentials"));
+                email = credentials.email;
+                password = credentials.password;
+            }
+
             pubsub.subscribe("authenticator-login-success", credentials => {
                 email = credentials.email;
                 password = credentials.password;
