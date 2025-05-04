@@ -78,6 +78,24 @@ const deleteAccount = async (request, response) => {
     }
 };
 
+const getAccount = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkGetAccount(loginData);
+
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            response.json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Account get error: " + e);
+        response.status(500).json({result: null});
+    }
+};
+
 const getActivities = async (request, response) => {
     try {
         const result = await business.getActivities();
@@ -293,6 +311,8 @@ app.post("/register", register);
 app.put("/edit-account", editAccount);
 
 app.post("/delete-account", deleteAccount);
+
+app.post("/get-account", getAccount);
 
 app.get("/activities", getActivities);
 

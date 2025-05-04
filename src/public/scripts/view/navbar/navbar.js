@@ -34,7 +34,7 @@ export const generateNavbar = (parentElment, pubsub) => {
 						</p>`
                         :
                         `<p class="control">
-							<button class="button ` + e.class + `" ` + (e.dataTarget ? `data-target="` + e.dataTarget : "") + `">
+							<button class="button ` + e.class + (e.dataTarget ? ` js-modal-trigger" data-target="` + e.dataTarget + '"' : '"') + `>
 								<span class="icon">` +
 									e.icon +
 								`</span>

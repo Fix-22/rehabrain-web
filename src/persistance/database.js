@@ -163,6 +163,20 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    getAccount: async (email, password) => {
+        try {
+            const result = await executeStatement(`
+                SELECT Email, Name, Surname
+                FROM Users
+                WHERE Email = ? AND Password = ?;
+            `, [email, password]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
     getActivities: async () => {
         try {
             const result = await executeQuery(`

@@ -100,6 +100,29 @@ const business = {
             return false;
         }
     },
+    checkGetAccount: async (loginData) => {
+        if (loginData && Object.keys(loginData).length === 2) {
+            if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password)) {
+                loginData.email = String(loginData.email);
+                loginData.password = cipher.hashPassword(String(loginData.password));
+                
+                const result = await database.getAccount(loginData.email, loginData.password);
+
+                if (result) {
+                    return result;
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+    },
     getActivities: async () => {
         const result = await database.getActivities();
 

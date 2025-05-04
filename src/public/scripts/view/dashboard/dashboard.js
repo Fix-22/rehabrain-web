@@ -1,7 +1,7 @@
 export const generateDashboard = (pubsub) => {
     return {
         build: (sidebar, info, activities) => {
-            if (sessionStorage.getItem("isLogged")) {
+            if (sessionStorage.getItem("credentials")) {
                 sidebar.classList.remove("is-hidden");
                 info.classList.add("is-hidden");
                 activities.classList.add("is-hidden");

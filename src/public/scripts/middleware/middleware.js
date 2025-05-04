@@ -79,6 +79,26 @@ export const generateMiddleware = () => {
                 console.error("Deletion error: " + e);
             }
         },
+        getAccount: async (email, password) => {
+            try {
+                const response = await fetch("/get-account", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Get account error: " + e);
+            }
+        },
 
         // activities
         getActivities: async () => {

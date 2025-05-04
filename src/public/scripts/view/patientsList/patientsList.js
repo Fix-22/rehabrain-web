@@ -5,7 +5,7 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
         build: async (inputId) => {
             id = inputId;
 
-            if (sessionStorage.getItem("isLogged")) {
+            if (sessionStorage.getItem("credentials")) {
                 patients = await presenter.checkGetAllPatients();
                 patientsList.render();
             }

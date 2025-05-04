@@ -13,6 +13,9 @@ import { generateNavbar } from "/scripts/view/navbar/navbar.js";
 import { generatePatientsList } from "/scripts/view/patientsList/patientsList.js";
 import { generatePatientsManager } from "/scripts/presentation/patientsManager/patientsManager.js";
 import { generateDashboard } from "/scripts/view/dashboard/dashboard.js";
+import { generatePersonalInfoModal } from "/scripts/view/personalInfoModal/personalInfoModal.js";
+import { generateUsersManager } from "/scripts/presentation/usersManager/usersManager.js";
+import { generateBulmaEventsHandler } from "/scripts/view/bulmaEventsHandler/bulmaEventsHandler.js";
 
 const pubsub = generatePubSub();
 
@@ -28,6 +31,8 @@ await sessionManager.build();
 const authenticator = generateAuthenticator(middleware, pubsub);
 const patientsManager = generatePatientsManager(middleware, pubsub);
 patientsManager.build();
+const usersManager = generateUsersManager(middleware, pubsub);
+usersManager.build();
 
 // VIEWS
 
@@ -63,7 +68,7 @@ const matchPage = () => {
                         class: "is-light",
                         icon: '<i class="fa-solid fa-circle-user"></i>',
                         text: "Informazioni personali",
-                        dataTarget: ""
+                        dataTarget: "personalInfoModal"
                     },
                     {
                         class: "is-danger",
@@ -140,65 +145,21 @@ const patientsList = generatePatientsList(patientsManager, patientsListContainer
 await patientsList.build("patientsList");
 patientsList.render()
 
+// modali
+const personalInfoModalContainer = document.getElementById("personalInfoModalContainer");
+const personalInfoModal = generatePersonalInfoModal(usersManager, personalInfoModalContainer, pubsub); 
+await personalInfoModal.build("personalInfoModal");
+personalInfoModal.render();
+
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
 window.addEventListener("popstate", matchPage);
 
-// gestione eventi per Bulma
-(() => {
-    // Functions to open and close a modal
-    function openModal(el) {
-        el.classList.add("is-active");
-    }
+// gestione eventi Bulma
+const bulmaEventsHandler = generateBulmaEventsHandler(pubsub);
+bulmaEventsHandler.build();
+bulmaEventsHandler.mapNavbar();
+bulmaEventsHandler.mapModals();
 
-    function closeModal(el) {
-        el.classList.remove("is-active");
-    }
-
-    function closeAllModals() {
-        (document.querySelectorAll(".modal") || []).forEach((modal) => {
-            closeModal(modal);
-        });
-    }
-
-    const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    
-    // Add a click event on each of them
-    navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-            // Get the target from the "data-target" attribute
-            const target = document.getElementById(el.dataset.target);
-
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            el.classList.toggle('is-active');
-            target.classList.toggle('is-active');
-        });
-    });
-
-    // Add a click event on buttons to open a specific modal
-    (document.querySelectorAll(".js-modal-trigger") || []).forEach((trigger) => {
-        const modal = trigger.dataset.target;
-        const target = document.getElementById(modal);
-
-        trigger.addEventListener("click", () => {
-            openModal(target);
-        });
-    });
-
-    // Add a click event on various child elements to close the parent modal
-    (document.querySelectorAll(".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button, .modal-card-body .button") || []).forEach((close) => {
-        const target = close.closest(".modal");
-
-        close.addEventListener("click", () => {
-            closeModal(target);
-        });
-    });
-
-    // Add a keyboard event to close all modals
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            closeAllModals();
-        }
-    });
-})();
+window.addEventListener("popstate", bulmaEventsHandler.mapModals);
