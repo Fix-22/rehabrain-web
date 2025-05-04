@@ -23,11 +23,11 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
         },
         render: () => {
             let html = (`<div class="modal" id="$ID">
-                            <div class="modal-background"></div>
+                            <div class="modal-background close"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head">
                                     <p class="modal-card-title">Informazioni personali</p>
-                                    <button class="delete" aria-label="close"></button>
+                                    <button class="delete close" aria-label="close"></button>
                                 </header>
                                 <section class="modal-card-body">
                                     <div class="field">
@@ -114,10 +114,16 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                 }
             };
 
-            document.getElementById(id + "Close").onclick = () => {
-                personalInfoModal.render();
-                pubsub.publish("modal-close");
-            };
+            document.querySelectorAll(".close").forEach(e => {
+                e.onclick = async () => {
+                    const user = await presenter.getAccount();
+                    name = user.name;
+                    surname = user.surname;
+                    email = user.email;
+                    personalInfoModal.render();
+                    pubsub.publish("modal-close");
+                };
+            });
         },
         displayError: (error) => {
             const errorDisplayer = document.getElementById(id + "Error");
