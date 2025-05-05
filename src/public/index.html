@@ -6,6 +6,7 @@
     <title>RehaBrain</title>
     <link rel="stylesheet" href="/bulma/css/bulma.min.css">
 	<script defer src="assets/fontawesome/js/all.min.js"></script>
+	<script src="/chart.js/dist/chart.umd.js"></script>
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" type="image/x-icon" href="assets/icon.svg">
 </head>
@@ -36,8 +37,7 @@
 				</div>
 			</div>
 		</div>
-	</nav>
-	
+	</nav>	
 
     <section class="section" id="pages">
 		<div class="page" id="home">
@@ -48,6 +48,7 @@
 		<div class="page" id="dashboard">
 			<div class="columns">
 				<div class="column is-one-quarter is-hidden" id="sidebar">
+					<p class="title">Pazienti</p>
 					<div class="container mb-4" id="patientssSearchbarContainer"></div>
 					<div class="container" id="patientsListContainer"></div>
 				</div>
@@ -83,6 +84,7 @@
 	</section>
 
 	<div id="personalInfoModalContainer"></div>
+	<div id="patientInfoModalContainer"></div>
 
     <footer class="footer">
 		<div class="content has-text-centered">

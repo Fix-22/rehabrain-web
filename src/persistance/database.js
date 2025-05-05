@@ -290,6 +290,22 @@ const database = {
             console.error("Database error: " + e);
         }
     },
+    getSessionsScores: async (patientId, email, password) => {
+        try {
+            const result = await executeStatement(`
+                SELECT *
+                FROM SessionsScores
+                WHERE PatientID = (SELECT Patients.ID
+                                   FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                                   WHERE Email = ? AND Password = ? AND Patients.ID = ?);
+            `, [email, password, patientId]);
+            
+            return result;
+        }
+        catch (e) {
+            console.error("Database error: " + e);
+        }
+    },
     saveCurrentSession: async (activity, position, patientId, email, password) => {
         try {
             await database.clearCurrentSession(patientId, email, password);

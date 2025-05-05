@@ -28,6 +28,7 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "bulma": "^1.0.3",
+    "chart.js": "^4.4.9",
     "express": "^5.1.0",
     "http": "^0.0.1-security",
     "mysql2": "^3.14.0",

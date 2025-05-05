@@ -16,7 +16,6 @@ export const generateSessionManager = (model, pubsub) => {
 
             pubsub.subscribe("patientsManager-onpatientselect", inputPatienId => {
                 patientId = inputPatienId;
-                console.log(patientId)
             });
         },
         checkStartSession: (session) => {
@@ -63,19 +62,27 @@ export const generateSessionManager = (model, pubsub) => {
             return result;
         },
         checkGetCurrentSession: async () => {
-            const result = await model.getCurrentSession(patientId, email, password);
-            console.log(2)
-            if (result) {
-                result.forEach(dict => {
-                    Object.keys(dict).forEach(k => {
-                        dict[k.toLowerCase()] = dict[k];
-                        delete dict[k];
-                    });
-                });
-                result.sort((a, b) => a.position - b.position);
-            }
+            if (parseInt(patientId) && email && password) {
+                const result = await model.getCurrentSession(patientId, email, password);
 
-            return result;
+                if (result) {
+                    result.forEach(dict => {
+                        Object.keys(dict).forEach(k => {
+                            dict[k.toLowerCase()] = dict[k];
+                            delete dict[k];
+                        });
+                    });
+                    result.sort((a, b) => a.position - b.position);
+
+                    return result;
+                }
+                else {
+                    return [];
+                }
+            }
+            else {
+                return [];
+            }
         }
     };
 }

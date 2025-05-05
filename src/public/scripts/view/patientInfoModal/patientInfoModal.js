@@ -1,79 +1,104 @@
-export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
-    let id, name, surname, email;
+export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
+    let id, patient, sessionsScores;
 
-    const personalInfoModal = {
-        build: async (inputId) => {
+    const patientlInfoModal = {
+        build: (inputId) => {
             id = inputId;
+            patient = null;
+            sessionsScores = [];
 
-            if (sessionStorage.getItem("credentials")) {
-                const user = await presenter.getAccount();
-                name = user.name;
-                surname = user.surname;
-                email = user.email;
-                personalInfoModal.render();
-            }
+            pubsub.subscribe("patientsList-onpatientselect", async id => {
+                patient = await presenter.getPatient();
+                sessionsScores = await presenter.getSessionsScores();
+                console.log(sessionsScores)
+                patientlInfoModal.render();
 
-            pubsub.subscribe("view-login-success", async credentials => {
-                const user = await presenter.getAccount();
-                name = user.name;
-                surname = user.surname;
-                email = user.email;
-                personalInfoModal.render();
-            });
+                const x = sessionsScores.map(e => {
+                    const date = new Date(e.playdate);
+                    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+                });
+                const y = sessionsScores.map(e => e.score);
 
-            pubsub.subscribe("view-logout-success", () => {
-                name = null;
-                surname = null;
-                email = null;
-                personalInfoModal.render();
+                new Chart("history", {
+                    type: "line",
+                    data: {
+                        labels: x,
+                        datasets: [{
+                            label: "Progresso",
+                            backgroundColor:"rgba(0,0,255,1.0)",
+                            borderColor: "rgba(0,0,255,0.1)",
+                            data: y
+                        }]
+                    }
+                });
             });
         },
         render: () => {
+            let tableHtml = patient ? `<table class="table is-fullwidth">
+                                        <thead>
+                                            <th>Data</th>
+                                            <th>Punteggio</th>
+                                            <th>Gestisci</th>
+                                        </thead>
+                                        <tbody>` : "";
+            
+            sessionsScores.forEach(e => {
+                const date = new Date(e.playdate);
+                tableHtml += "<tr><td>" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + "</td><td>" + e.score + '</td><td><button type="button" class="button is-danger" id="' + e.id + 'Delete"><span class="icon"><i class="fa-solid fa-trash-can"></i></span></button></tr>';
+            });
+            tableHtml += patient ? "</tbody></table>" : "";
+
             let html = (`<div class="modal" id="$ID">
                             <div class="modal-background close"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head">
-                                    <p class="modal-card-title">Informazioni personali</p>
+                                    <p class="modal-card-title">Informazioni paziente ` + (patient ? "(" + patient.name + " " + patient.surname + ")" : "") + `</p>
                                     <button class="delete close" aria-label="close"></button>
                                 </header>
                                 <section class="modal-card-body">
                                     <label class="label">Nome</label>
                                     <div class="field">
                                         <p class="control has-icons-left">
-                                            <input class="input" type="email" placeholder="Nome" id="$IDName" value="` + name + `">
+                                            <input class="input" type="email" placeholder="Nome" id="$IDName" value="` + (patient ? patient.name : "") + `">
                                             <span class="icon is-small is-left">
-                                                <i class="fa-solid fa-address-card"></i>
+                                                <i class="fa-solid fa-hospital-user"></i>
                                             </span>
                                         </p>
                                     </div>
                                     <label class="label">Cognome</label>
                                     <div class="field">
                                         <p class="control has-icons-left">
-                                            <input class="input" type="email" placeholder="Cognome" id="$IDSurname" value="` + surname + `">
+                                            <input class="input" type="email" placeholder="Cognome" id="$IDSurname" value="` + (patient ? patient.surname : "") + `">
                                             <span class="icon is-small is-left">
-                                                <i class="fa-solid fa-address-card"></i>
+                                                <i class="fa-solid fa-hospital-user"></i>
                                             </span>
                                         </p>
                                     </div>
-                                    <label class="label">Email</label>
+                                    <label class="label">Età</label>
                                     <div class="field">
                                         <p class="control has-icons-left">
-                                            <input class="input" type="email" placeholder="Email" id="$IDEmail" disabled value="` + email + `">
+                                            <input class="input" type="number" placeholder="Age" id="$IDAge" value="` + (patient ? patient.age : "") + `">
                                             <span class="icon is-small is-left">
-                                                <i class="fas fa-envelope"></i>
+                                                <i class="fa-solid fa-hospital-user"></i>
                                             </span>
                                         </p>
+                                    </div>
+                                    <label class="label">Note</label>
+                                    <div class="field">
+                                        <textarea class="textarea" placeholder="Note" id="$IDNotes" rows="10">` + (patient ? patient.notes : "") + `</textarea>
                                     </div>
                                     <div class="field has-text-centered">
                                         <p class="control">
-                                            <button type="button" class="button is-danger" id="$IDDeleteAccount">
+                                            <button type="button" class="button is-danger" id="$IDDeletePatient">
                                                 <span class="icon">
                                                     <i class="fa-solid fa-user-xmark"></i>
                                                 </span>
-                                                <span>Elimina account</span>
+                                                <span>Elimina paziente</span>
                                             </button>
                                         </p>
                                     </div>
+                                    $TABLE
+                                    <canvas id="history" style="width:100%;max-width:700px"></canvas>
                                     <div class="notification is-danger is-hidden" id="$IDError"></div>
                                     <div class="notification is-success is-hidden" id="$IDSuccess"></div>
                                 </section>
@@ -94,13 +119,13 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                                     </div>
                                 </footer>
                             </div>
-                        </div>`).replaceAll("$ID", id);
+                        </div>`).replaceAll("$ID", id).replace("$TABLE", tableHtml);
             
             parentElement.innerHTML = html;
 
             pubsub.publish("modal-render");
             
-            document.getElementById(id + "DeleteAccount").onclick = async () => {
+            document.getElementById(id + "DeletePatient").onclick = async () => {
                 const result = await presenter.deleteAccount();
                 
                 if (result) {
@@ -137,27 +162,7 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                 }
             };
 
-            document.querySelectorAll(".close").forEach(e => {
-                e.onclick = async () => {
-                    const user = await presenter.getAccount();
-                    name = user.name;
-                    surname = user.surname;
-                    email = user.email;
-                    personalInfoModal.render();
-                    pubsub.publish("modal-close");
-                };
-            });
-
-            document.addEventListener("keydown", async (event) => {
-                if (event.key === "Escape") {
-                    const user = await presenter.getAccount();
-                    name = user.name;
-                    surname = user.surname;
-                    email = user.email;
-                    personalInfoModal.render();
-                    pubsub.publish("modal-close");
-                }
-            });
+    
         },
         displayError: (error) => {
             const errorDisplayer = document.getElementById(id + "Error");
@@ -185,5 +190,5 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
         }
     };
 
-    return personalInfoModal;
+    return patientlInfoModal;
 };

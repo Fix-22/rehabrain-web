@@ -226,7 +226,7 @@ const getPatient = async (request, response) => {
 const saveSessionScore = async (request, response) => {
     try {
         const loginData = request.body;
-        const result = await business.checksaveSessionScore(loginData);
+        const result = await business.checkSaveSessionScore(loginData);
 
         if (result) {
             response.json({result: true});
@@ -240,6 +240,25 @@ const saveSessionScore = async (request, response) => {
         response.status(500).json({result: false});
     }
 };
+
+const getSessionsScores = async (request, response) => {
+    try {
+        const loginData = request.body;
+        const result = await business.checkGetSessionsScores(loginData);
+
+        if (result) {
+            response.json({result: result});
+        }
+        else {
+            response.json({result: null});
+        }
+    }
+    catch (e) {
+        console.error("Error while geting sessions: " + e);
+        response.status(500).json({result: null});
+    }
+};
+
 
 const saveCurrentSession = async (request, response) => {
     try {
@@ -301,6 +320,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use("/bulma", express.static(path.join(__dirname, "../node_modules/bulma"))); // permette accesso a Bulma all"applicazione lato client
+app.use("/chart.js", express.static(path.join(__dirname, "../node_modules/chart.js"))); // permette accesso a Bulma all"applicazione lato client
 app.use("/assets", express.static(path.join(__dirname, "assets")))
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -329,6 +349,8 @@ app.post("/delete-patient", deletePatient);
 app.post("/get-patient", getPatient);
 
 app.post("/save-session-score", saveSessionScore);
+
+app.post("/get-sessions-scores", getSessionsScores);
 
 app.post("/save-current-session", saveCurrentSession);
 

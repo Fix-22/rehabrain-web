@@ -265,6 +265,27 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
+        getSessionsScores: async (patientId, email, password) => {
+            try {
+                const response = await fetch("/get-sessions-scores", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        patientId: patientId,
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
         saveCurrentSession: async (session, patientId, email, password) => {
             try {
                 const response = await fetch("/save-current-session", {

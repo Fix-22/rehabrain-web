@@ -16,6 +16,8 @@ import { generateDashboard } from "/scripts/view/dashboard/dashboard.js";
 import { generatePersonalInfoModal } from "/scripts/view/personalInfoModal/personalInfoModal.js";
 import { generateUsersManager } from "/scripts/presentation/usersManager/usersManager.js";
 import { generateBulmaEventsHandler } from "/scripts/view/bulmaEventsHandler/bulmaEventsHandler.js";
+import { generatePatientInfoModal } from "/scripts/view/patientInfoModal/patientInfoModal.js";
+import { generatePatientInfoManager } from "/scripts/presentation/patientInfoManager/patientInfoManager.js";
 
 const pubsub = generatePubSub();
 
@@ -34,6 +36,8 @@ const patientsManager = generatePatientsManager(middleware, pubsub);
 patientsManager.build();
 const usersManager = generateUsersManager(middleware, pubsub);
 usersManager.build();
+const patientInfoManager = generatePatientInfoManager(middleware, pubsub);
+patientInfoManager.build();
 
 // VIEWS
 
@@ -158,6 +162,11 @@ const personalInfoModalContainer = document.getElementById("personalInfoModalCon
 const personalInfoModal = generatePersonalInfoModal(usersManager, personalInfoModalContainer, pubsub); 
 await personalInfoModal.build("personalInfoModal");
 personalInfoModal.render();
+
+const patientInfoModalContainer = document.getElementById("patientInfoModalContainer");
+const patientInfoModal = generatePatientInfoModal(patientInfoManager, patientInfoModalContainer, pubsub); 
+patientInfoModal.build("patientInfoModal");
+patientInfoModal.render();
 
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
