@@ -14,6 +14,11 @@ export const generateUsersManager = (model, pubsub) => {
                 password = credentials.password;
             });
         },
+        logout: () => {
+            email = null;
+            password = null;
+            pubsub.publish("usersManager-logout-success");
+        },
         getAccount: async () => {
             if (email && password) {
                 const result = await model.getAccount(email, password);
@@ -34,6 +39,19 @@ export const generateUsersManager = (model, pubsub) => {
         editAccount: async (newName, newSurname) => {
             if (newName && newSurname && email && password) {
                 const result = model.editAccount({name: newName, surname: newSurname, email: email, password: password});
+                return result;
+            }
+            else {
+                return false;
+            }
+        },
+        deleteAccount: async () => {
+            if (email && password) {
+                const result = await model.deleteAccount(email, password);
+
+                if (result) {
+                    
+                }
                 return result;
             }
             else {

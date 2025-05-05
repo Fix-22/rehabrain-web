@@ -29,6 +29,7 @@ const activitiesManager = generateActivitiesManager(middleware);
 const sessionManager = generateSessionManager(middleware, pubsub);
 await sessionManager.build();
 const authenticator = generateAuthenticator(middleware, pubsub);
+authenticator.build();
 const patientsManager = generatePatientsManager(middleware, pubsub);
 patientsManager.build();
 const usersManager = generateUsersManager(middleware, pubsub);
@@ -71,6 +72,7 @@ const matchPage = () => {
                         dataTarget: "personalInfoModal"
                     },
                     {
+                        id: "logoutButton",
                         class: "is-danger",
                         icon: '<i class="fa-solid fa-door-open"></i>',
                         text: "Esci",
@@ -102,6 +104,12 @@ const matchPage = () => {
 const navbarContainer = document.getElementById("navbarContainer");
 const navbar = generateNavbar(navbarContainer, pubsub);
 matchPage();
+pubsub.subscribe("navbarButton-onclick", id => {
+    if (id === "logoutButton") {
+        usersManager.logout();
+        pubsub.publish("view-logout-success");
+    }
+});
 
 // dashboard
 const dashboard = generateDashboard(pubsub);
@@ -154,6 +162,7 @@ personalInfoModal.render();
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
+pubsub.subscribe("usersManager-logout-success", matchPage);
 window.addEventListener("popstate", matchPage);
 
 // gestione eventi Bulma

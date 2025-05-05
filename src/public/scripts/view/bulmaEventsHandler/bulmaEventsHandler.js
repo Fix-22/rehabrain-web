@@ -1,6 +1,9 @@
 export const generateBulmaEventsHandler = (pubsub) => {
     const bulmaEventsHandler = {
         build: () => {
+            pubsub.subscribe("modal-render", () => { // ogni volta che viene generata una modale viene rifatto il mapping per gestire i pulsanti per fare il toggole delle modali
+                bulmaEventsHandler.mapModals();
+            });
             pubsub.subscribe("modal-close", () => { // ogni volta che viene chiusa una modale viene rifatto il mapping per gestire i pulsanti per fare il toggole delle modali
                 bulmaEventsHandler.mapModals();
             });
@@ -40,7 +43,7 @@ export const generateBulmaEventsHandler = (pubsub) => {
             (document.querySelectorAll(".js-modal-trigger") || []).forEach((trigger) => {
                 const modal = trigger.dataset.target;
                 const target = document.getElementById(modal);
-
+                
                 trigger.addEventListener("click", () => {
                     openModal(target);
                 });

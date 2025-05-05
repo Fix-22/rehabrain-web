@@ -34,7 +34,7 @@ export const generateNavbar = (parentElment, pubsub) => {
 						</p>`
                         :
                         `<p class="control">
-							<button class="button ` + e.class + (e.dataTarget ? ` js-modal-trigger" data-target="` + e.dataTarget + '"' : '"') + `>
+							<button ` + (e.id ? 'id="' + e.id + '" ' : " ") + `class="button navbarButton ` + e.class + (e.dataTarget ? ` js-modal-trigger" data-target="` + e.dataTarget + '"' : '"') + `>
 								<span class="icon">` +
 									e.icon +
 								`</span>
@@ -44,6 +44,14 @@ export const generateNavbar = (parentElment, pubsub) => {
             });
 
             parentElment.innerHTML = html;
+
+            document.querySelectorAll(".navbarButton").forEach(e => {
+                if (e.id) {
+                    e.onclick = () => {
+                        pubsub.publish("navbarButton-onclick", e.id);
+                    }
+                }
+            });
         }
     };
 

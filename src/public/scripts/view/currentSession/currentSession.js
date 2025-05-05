@@ -47,8 +47,14 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 currentSession.render();
             });
 
-            pubsub.subscribe("view-login-success", async credentials => {
+            pubsub.subscribe("view-login-success", credentials => {
                 isLogged = true;
+            });
+
+            pubsub.subscribe("view-logout-success", () => {
+                isLogged = false;
+                session = [];
+                currentSession.render();
             });
 
             pubsub.subscribe("patientsList-onpatientselect", async patientId => {
@@ -97,6 +103,7 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
                 html += "<tr><td>" + e.name + "</td><td>" + (e.difficulty ? difficulties[e.difficulty] : "Nessuna") + '</td><td><div class="field has-addons"><p class="control"><button class="button is-danger deleteButton" id="' + e.name + (e.difficulty ? e.difficulty : "") + 'Delete"><span class="icon is-small"><i class="fa-solid fa-trash-can"></i></span></button></p><p class="control"><button class="button is-link upButton" id="' + e.name + (e.difficulty ? e.difficulty : "") + 'Up"><span class="icon is-small"><i class="fa-solid fa-up-long"></i></span></button></p><p class="control"><button class="button is-link downButton" id="' + e.name + (e.difficulty ? e.difficulty : "") + 'Down"><span class="icon is-small"><i class="fa-solid fa-down-long"></i></span></button></p></td><td><input type="number" class="input is-link timesInput" id="' + e.name + (e.difficulty ? e.difficulty : "") + 'Times" value=' + e.times + '></td></tr>';
 
             });
+            html += "</tbody></table>";
             parentElement.innerHTML = html;
 
             document.querySelectorAll(".deleteButton").forEach(e => {

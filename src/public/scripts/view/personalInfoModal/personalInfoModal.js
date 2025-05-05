@@ -87,9 +87,22 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                         </div>`).replaceAll("$ID", id);
             
             parentElement.innerHTML = html;
+
+            pubsub.publish("modal-render");
             
-            document.getElementById(id + "DeleteAccount").onclick = () => {
+            document.getElementById(id + "DeleteAccount").onclick = async () => {
+                const result = await presenter.deleteAccount();
                 
+                if (result) {
+                    name = null;
+                    surname = null;
+                    email = null;
+                    pubsub.publish("view-logout-success");
+                }
+                else {
+                    personalInfoModal.displayError("Eliminazione account fallita, i dati sono errati.");
+                    personalInfoModal.displaySuccess("");
+                }
             };
 
             document.getElementById(id + "Save").onclick = async () => {
@@ -123,6 +136,17 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                     personalInfoModal.render();
                     pubsub.publish("modal-close");
                 };
+            });
+
+            document.addEventListener("keydown", async (event) => {
+                if (event.key === "Escape") {
+                    const user = await presenter.getAccount();
+                    name = user.name;
+                    surname = user.surname;
+                    email = user.email;
+                    personalInfoModal.render();
+                    pubsub.publish("modal-close");
+                }
             });
         },
         displayError: (error) => {
