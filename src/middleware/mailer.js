@@ -9,7 +9,7 @@ const generateMailer = () => {
             name = inputName;
             email = transport.auth.user;
         },
-        sendMail: async (to, subject, text, html) => {
+        sendEmail: async (to, subject, text, html) => {
             const result = await transporter.sendMail({
                 from: name + " <" + email + ">",
                 to: to,

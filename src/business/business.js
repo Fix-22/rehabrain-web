@@ -24,16 +24,20 @@ const generateBusiness = (database, cipher, mailer) => {
             }
         },
         checkRegister: async (userData) => {
-            if (userData && Object.keys(userData).length === 4) {
-                if (String(userData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(userData.password) && String(userData.name) && String(userData.surname)) {
+            if (userData && Object.keys(userData).length === 3) {
+                if (String(userData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(userData.name) && String(userData.surname)) {
                     userData.email = String(userData.email);
-                    userData.password = cipher.hashPassword(String(userData.password));
                     userData.name = String(userData.name);
                     userData.surname = String(userData.surname);
+
+                    const password = cipher.generatePassword(15);
+                    userData.password = cipher.hashPassword(password);
                     
                     const result = await database.register(userData);
 
                     if (result === 1) {
+                        mailer.sendEmail(userData.email, "Benvenuto in RehaBrain", "Benvenuto su RehaBrain.", "<p>Benvenuto su RehaBrain.<br>Ecco la tua password: " + password + "</p>")
+
                         return true;
                     }
                     else {

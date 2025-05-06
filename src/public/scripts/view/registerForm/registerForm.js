@@ -32,14 +32,6 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                                 </span>
                                 </p>
                             </div>
-                            <div class="field">
-                                <p class="control has-icons-left">
-                                <input class="input" type="password" placeholder="Password" id="$IDPassword">
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-lock"></i>
-                                </span>
-                                </p>
-                            </div>
                             <div class="field has-text-centered">
                                 <p class="control">
                                     <button type="button" class="button is-link" id="$IDSend">
@@ -69,10 +61,9 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                 const name = document.getElementById(id + "Name").value;
                 const surname = document.getElementById(id + "Surname").value;
                 const email = document.getElementById(id + "Email").value;
-                const password = document.getElementById(id + "Password").value;
                 
-                if (name && surname && email && password && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                    const result = await presenter.register(name, surname, email, password);
+                if (name && surname && email && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                    const result = await presenter.register(name, surname, email);
 
                     if (result) {
                         pubsub.publish("view-login-success", {email: email, password: password});
