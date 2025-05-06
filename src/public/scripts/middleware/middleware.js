@@ -178,18 +178,13 @@ export const generateMiddleware = () => {
         },
         editPatient: async (patientData, email, password) => {
             try {
-                let newPatientData = {};
-                Object.keys(patientData).forEach(k => {
-                    newPatientData[k.toLowerCase()] = patientData[k];
-                });
-
                 const response = await fetch("/edit-patient", {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     method: "PUT",
                     body: JSON.stringify({
-                        patientData: newPatientData,
+                        patientData: patientData,
                         email: email,
                         password: password
                     })

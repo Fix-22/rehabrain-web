@@ -15,7 +15,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
 
                 const x = sessionsScores.map(e => {
                     const date = new Date(e.playdate);
-                    return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+                    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
                 });
                 const y = sessionsScores.map(e => e.score);
 
@@ -25,7 +25,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                         labels: x,
                         datasets: [{
                             label: "Progresso",
-                            backgroundColor:"rgba(0,0,255,1.0)",
+                            backgroundColor:"rgba(0,209,178,1.0)",
                             borderColor: "rgba(0,0,255,0.1)",
                             data: y
                         }]
@@ -44,7 +44,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
             
             sessionsScores.forEach(e => {
                 const date = new Date(e.playdate);
-                tableHtml += "<tr><td>" + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + "</td><td>" + e.score + '</td><td><button type="button" class="button is-danger" id="' + e.id + 'Delete"><span class="icon"><i class="fa-solid fa-trash-can"></i></span></button></tr>';
+                tableHtml += "<tr><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td><td>" + e.score + '</td><td><button type="button" class="button is-danger" id="' + e.id + 'Delete"><span class="icon"><i class="fa-solid fa-trash-can"></i></span></button></tr>';
             });
             tableHtml += patient ? "</tbody></table>" : "";
 
@@ -104,7 +104,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                                 </section>
                                 <footer class="modal-card-foot">
                                     <div class="buttons">
-                                        <button type="button" class="button is-success" id="$IDSave">
+                                        <button type="button" class="button is-primary" id="$IDSave">
                                             <span class="icon">
                                                 <i class="fa-solid fa-floppy-disk"></i>
                                             </span>
@@ -126,39 +126,38 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
             pubsub.publish("modal-render");
             
             document.getElementById(id + "DeletePatient").onclick = async () => {
-                const result = await presenter.deleteAccount();
+                const result = await presenter.deletePatient();
                 
                 if (result) {
-                    name = null;
-                    surname = null;
-                    email = null;
-                    pubsub.publish("view-logout-success");
+                    patient = null;
                 }
                 else {
-                    personalInfoModal.displayError("Eliminazione account fallita, i dati sono errati.");
-                    personalInfoModal.displaySuccess("");
+                    patientlInfoModal.displayError("Eliminazione account fallita, i dati sono errati.");
+                    patientlInfoModal.displaySuccess("");
                 }
             };
 
             document.getElementById(id + "Save").onclick = async () => {
                 const name = document.getElementById(id + "Name").value;
                 const surname = document.getElementById(id + "Surname").value;
+                const age = document.getElementById(id + "Age").value;
+                const notes = document.getElementById(id + "Notes").value;
 
-                if (name && surname) {
-                    const result = await presenter.editAccount(name, surname);
+                if (name && surname && age && notes) {
+                    const result = await presenter.editPatient({name: name, surname: surname, age: age, notes: notes});
 
                     if (result) {
-                        personalInfoModal.displayError("");
-                        personalInfoModal.displaySuccess("Account aggiornato.");
+                        patientlInfoModal.displayError("");
+                        patientlInfoModal.displaySuccess("Paziente aggiornato.");
                     }
                     else {
-                        personalInfoModal.displayError("Aggiornamento account fallito, i dati sono errati.");
-                        personalInfoModal.displaySuccess("");
+                        patientlInfoModal.displayError("Aggiornamento paziente fallito, i dati sono errati.");
+                        patientlInfoModal.displaySuccess("");
                     }
                 }
                 else {
-                    personalInfoModal.displayError("Impossibile aggiornare l'account, i dati non sono validi.");
-                    personalInfoModal.displaySuccess("");
+                    patientlInfoModal.displayError("Impossibile aggiornare il paziente, i dati non sono validi.");
+                    patientlInfoModal.displaySuccess("");
                 }
             };
 

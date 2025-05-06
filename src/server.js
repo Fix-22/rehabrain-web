@@ -2,317 +2,30 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
 const path = require("path");
-const business = require("./business/business");
+const fs = require("fs");
+
+const conf = JSON.parse(fs.readFileSync("conf.json"));
+conf.db.ssl.ca = fs.readFileSync("./ca.pem");
+
+const generateDatabase = require("./persistance/database");
+const database = generateDatabase();
+database.build(conf.db);
+database.createTables();
+
+const generateCipher = require("./business/cipher");
+const cipher = generateCipher();
+
+const generateMailer = require("./middleware/mailer");
+const mailer = generateMailer();
+mailer.build(conf.email, "RehaBrain", "info@rehabrain.eu");
+
+const generateBusiness = require("./business/business");
+const business = generateBusiness(database, cipher, mailer);
+
+const generateMiddleware = require("./middleware/middleware");
+const middleware = generateMiddleware(business);
 
 const app = express();
-
-const login = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkLogin(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Login error: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const register = async (request, response) => {
-    try {
-        const userData = request.body.userData;
-        const result = await business.checkRegister(userData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Register error: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const editAccount = async (request, response) => {
-    try {
-        const personalData = request.body.personalData;
-        const result = await business.checkEditAccount(personalData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Edit account error: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const deleteAccount = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkDeleteAccount(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Login error: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const getAccount = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkGetAccount(loginData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            response.json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Account get error: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-const getActivities = async (request, response) => {
-    try {
-        const result = await business.getActivities();
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            console.error("Error while sending activities: " + e);
-            response.status(500).json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while sending activities: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-const getContents = async (request, response) => {
-    try {
-        const inputData = request.body;
-        const result = await business.checkGetContents(inputData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            console.error("Error while sending contents: " + e);
-            response.status(500).json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while sending contents: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-const getAllPatients = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkGetAllPatients(loginData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            response.json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while getting patients: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-const createPatient = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkCreatePatient(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while creating patient: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const editPatient = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkEditPatient(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while editing patient: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const deletePatient = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkDeletePatient(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while editing patient: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const getPatient = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkGetPatient(loginData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            response.json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while getting patient: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-const saveSessionScore = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkSaveSessionScore(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while saving session: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const getSessionsScores = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkGetSessionsScores(loginData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            response.json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while geting sessions: " + e);
-        response.status(500).json({result: null});
-    }
-};
-
-
-const saveCurrentSession = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkSaveCurrentSession(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while saving current session: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const clearCurrentSession = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkClearCurrentSession(loginData);
-
-        if (result) {
-            response.json({result: true});
-        }
-        else {
-            response.json({result: false});
-        }
-    }
-    catch (e) {
-        console.error("Error while saving current session: " + e);
-        response.status(500).json({result: false});
-    }
-};
-
-const getCurrentSession = async (request, response) => {
-    try {
-        const loginData = request.body;
-        const result = await business.checkGetCurrentSession(loginData);
-
-        if (result) {
-            response.json({result: result});
-        }
-        else {
-            response.json({result: null});
-        }
-    }
-    catch (e) {
-        console.error("Error while getting current session: " + e);
-        response.status(500).json({result: null});
-    }
-};
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -324,39 +37,39 @@ app.use("/chart.js", express.static(path.join(__dirname, "../node_modules/chart.
 app.use("/assets", express.static(path.join(__dirname, "assets")))
 app.use("/", express.static(path.join(__dirname, "public")));
 
-app.post("/login", login);
+app.post("/login", middleware.login);
 
-app.post("/register", register);
+app.post("/register", middleware.register);
 
-app.put("/edit-account", editAccount);
+app.put("/edit-account", middleware.editAccount);
 
-app.post("/delete-account", deleteAccount);
+app.post("/delete-account", middleware.deleteAccount);
 
-app.post("/get-account", getAccount);
+app.post("/get-account", middleware.getAccount);
 
-app.get("/activities", getActivities);
+app.get("/activities", middleware.getActivities);
 
-app.post("/contents", getContents);
+app.post("/contents", middleware.getContents);
 
-app.post("/all-patients", getAllPatients);
+app.post("/all-patients", middleware.getAllPatients);
 
-app.post("/create-patient", createPatient);
+app.post("/create-patient", middleware.createPatient);
 
-app.put("/edit-patient", editPatient);
+app.put("/edit-patient", middleware.editPatient);
 
-app.post("/delete-patient", deletePatient);
+app.post("/delete-patient", middleware.deletePatient);
 
-app.post("/get-patient", getPatient);
+app.post("/get-patient", middleware.getPatient);
 
-app.post("/save-session-score", saveSessionScore);
+app.post("/save-session-score", middleware.saveSessionScore);
 
-app.post("/get-sessions-scores", getSessionsScores);
+app.post("/get-sessions-scores", middleware.getSessionsScores);
 
-app.post("/save-current-session", saveCurrentSession);
+app.post("/save-current-session", middleware.saveCurrentSession);
 
-app.post("/clear-current-session", clearCurrentSession);
+app.post("/clear-current-session", middleware.clearCurrentSession);
 
-app.post("/get-current-session", getCurrentSession);
+app.post("/get-current-session", middleware.getCurrentSession);
 
 const server = http.createServer(app);
 const port = 5600;

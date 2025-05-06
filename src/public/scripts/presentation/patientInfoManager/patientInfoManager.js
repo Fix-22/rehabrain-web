@@ -18,6 +18,27 @@ export const generatePatientInfoManager = (model, pubsub) => {
                 patientId = id;
             });
         },
+        editPatient: async (newData) => {
+            if (newData && newData.name && newData.surname && newData.notes && email && password) {
+                newData.id = patientId;
+                const result = await model.editPatient(newData, email, password);
+
+                return result;
+            }
+            else {
+                return false;
+            }
+        },
+        deletePatient: async () => {
+            if (parseInt(patientId) && email && password) {
+                const result = await model.deletePatient(patientId, email, password);
+
+                return result;
+            }
+            else {
+                return false;
+            }
+        },
         getPatient: async () => {
             if (parseInt(patientId) && email && password) {
                 const result = await model.getPatient(patientId, email, password);

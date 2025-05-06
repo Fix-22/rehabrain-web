@@ -152,6 +152,11 @@ await currentSession.build("currentSession", "currentSessionSearchbar", false);
 currentSession.render();
 
 // patients
+const patientsSearchbarContainer = document.getElementById("patientsSearchbarContainer");
+const patientsSearchbar = generateSearchbar(patientsSearchbarContainer, pubsub);
+patientsSearchbar.build("patientsSearchbar", "Cerca attività");
+patientsSearchbar.render();
+
 const patientsListContainer = document.getElementById("patientsListContainer");
 const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
 await patientsList.build("patientsList");
