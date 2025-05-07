@@ -292,6 +292,21 @@ const generateDatabase = () => {
                 console.error("Database error: " + e);
             }
         },
+        deleteSessionScore: async (sessionId, patientId, email, password) => {
+            try {
+                const result = await executeStatement(`
+                    DELETE FROM SessionsScores
+                    WHERE ID = ? AND PatientID = (SELECT Patients.ID
+                                                  FROM Patients JOIN Users ON Patients.Caregiver = Users.Email
+                                                  WHERE Email = ? AND Password = ? AND Patients.ID = ?);
+                `, [sessionId, email, password, patientId]);
+                
+                return result.affectedRows;
+            }
+            catch (e) {
+                console.error("Database error: " + e);
+            }
+        },
         getSessionsScores: async (patientId, email, password) => {
             try {
                 const result = await executeStatement(`

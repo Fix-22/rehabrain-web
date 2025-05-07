@@ -260,6 +260,28 @@ export const generateMiddleware = () => {
                 console.error("Server error: " + e);
             }
         },
+        deleteSessionScore: async (sessionId, patientId, email, password) => {
+            try {
+                const response = await fetch("/delete-session-score", {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        sessionId: sessionId,
+                        patientId: patientId,
+                        email: email,
+                        password: password
+                    })
+                });
+                const result = await response.json();
+                
+                return result.result;
+            }
+            catch (e) {
+                console.error("Server error: " + e);
+            }
+        },
         getSessionsScores: async (patientId, email, password) => {
             try {
                 const response = await fetch("/get-sessions-scores", {

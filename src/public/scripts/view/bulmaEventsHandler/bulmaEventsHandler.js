@@ -50,7 +50,7 @@ export const generateBulmaEventsHandler = (pubsub) => {
             });
 
             // Add a click event on various child elements to close the parent modal
-            (document.querySelectorAll(".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .close, .modal-card-body .button") || []).forEach((close) => {
+            (document.querySelectorAll(".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .close") || []).forEach((close) => {
                 const target = close.closest(".modal");
 
                 close.addEventListener("click", () => {

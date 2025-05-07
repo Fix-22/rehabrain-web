@@ -234,6 +234,24 @@ const generateMiddleware = (business) => {
                 response.status(500).json({result: false});
             }
         },
+
+        deleteSessionScore: async (request, response) => {
+            try {
+                const loginData = request.body;
+                const result = await business.checkDeleteSessionScore(loginData);
+        
+                if (result) {
+                    response.json({result: true});
+                }
+                else {
+                    response.json({result: false});
+                }
+            }
+            catch (e) {
+                console.error("Error while deleting session: " + e);
+                response.status(500).json({result: false});
+            }
+        },
         
         getSessionsScores: async (request, response) => {
             try {

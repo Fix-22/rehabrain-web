@@ -187,3 +187,7 @@ bulmaEventsHandler.mapNavbar();
 bulmaEventsHandler.mapModals();
 
 window.addEventListener("popstate", bulmaEventsHandler.mapModals);
+
+document.getElementById("addPatientButton").onclick = () => {
+    pubsub.publish("addPatientButton-onclick");
+};

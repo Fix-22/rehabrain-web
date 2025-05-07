@@ -32,6 +32,10 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                     }
                 });
             });
+
+            pubsub.subscribe("addPatientButton-onclick", () => {
+                patientlInfoModal.render();
+            });
         },
         render: () => {
             let tableHtml = patient ? `<table class="table is-fullwidth">
@@ -44,7 +48,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
             
             sessionsScores.forEach(e => {
                 const date = new Date(e.playdate);
-                tableHtml += "<tr><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td><td>" + e.score + '</td><td><button type="button" class="button is-danger" id="' + e.id + 'Delete"><span class="icon"><i class="fa-solid fa-trash-can"></i></span></button></tr>';
+                tableHtml += "<tr><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td><td>" + e.score + '</td><td><button type="button" class="button is-danger deleteSessionScore" id="' + e.id + 'Delete"><span class="icon"><i class="fa-solid fa-trash-can"></i></span></button></tr>';
             });
             tableHtml += patient ? "</tbody></table>" : "";
 
@@ -132,7 +136,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                     patient = null;
                 }
                 else {
-                    patientlInfoModal.displayError("Eliminazione account fallita, i dati sono errati.");
+                    patientlInfoModal.displayError("Eliminazione paziente fallita, i dati sono errati.");
                     patientlInfoModal.displaySuccess("");
                 }
             };
@@ -161,7 +165,20 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                 }
             };
 
-    
+            document.querySelectorAll(".deleteSessionScore").forEach(e => {
+                e.onclick = async () => {
+                    const result = await presenter.deleteSessionScore(parseInt(e.id.replace("Delete", "")));
+                    
+                    if (result) {
+                        sessionsScores = await presenter.getSessionsScores();
+                        patientlInfoModal.render();
+                    }
+                    else {
+                        patientlInfoModal.displayError("Impossibile eliminare la sessione.");
+                        patientlInfoModal.displaySuccess("");
+                    }
+                };
+            });
         },
         displayError: (error) => {
             const errorDisplayer = document.getElementById(id + "Error");

@@ -320,6 +320,31 @@ const generateBusiness = (database, cipher, mailer) => {
                 return false;
             }
         },
+        checkDeleteSessionScore: async (loginData) => {
+            if (loginData && Object.keys(loginData).length === 4) {
+                if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.sessionId) && parseInt(loginData.patientId)) {
+                    loginData.email = String(loginData.email);
+                    loginData.password = cipher.hashPassword(String(loginData.password));
+                    loginData.sessionId = 0 ? isNaN(parseInt(loginData.sessionId)) : parseInt(loginData.sessionId);
+                    loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
+                    
+                    const result = await database.deleteSessionScore(loginData.sessionId, loginData.patientId, loginData.email, loginData.password);
+
+                    if (result === 1) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        },
         checkGetSessionsScores: async (loginData) => {
             if (loginData && Object.keys(loginData).length === 3) {
                 if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.patientId)) {

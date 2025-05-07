@@ -88,6 +88,16 @@ export const generatePatientInfoManager = (model, pubsub) => {
             else {
                 return [];
             }
+        },
+        deleteSessionScore: async (sessionId) => {
+            if (parseInt(sessionId) && parseInt(patientId) && email && password) {
+                const result = await model.deleteSessionScore(sessionId, patientId, email, password);
+
+                return result;
+            }
+            else {
+                return false;
+            }
         }
     };
 

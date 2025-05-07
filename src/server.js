@@ -63,6 +63,8 @@ app.post("/get-patient", middleware.getPatient);
 
 app.post("/save-session-score", middleware.saveSessionScore);
 
+app.post("/delete-session-score", middleware.deleteSessionScore);
+
 app.post("/get-sessions-scores", middleware.getSessionsScores);
 
 app.post("/save-current-session", middleware.saveCurrentSession);
