@@ -1,4 +1,4 @@
-export const generatePatientInfoManager = (model, pubsub) => {
+export const generatePatientInfoManager = (middleware, pubsub) => {
     let patientId, email, password;
 
     const patientInfoManager = {
@@ -20,7 +20,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         createPatient: async (patientData) => {
             if (patientData && patientData.name && patientData.surname && patientData.notes !== null && patientData.notes !== undefined && email && password) {
-                const result = await model.createPatient(patientData, email, password);
+                const result = await middleware.createPatient(patientData, email, password);
 
                 return result;
             }
@@ -31,7 +31,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         editPatient: async (newData) => {
             if (newData && newData.name && newData.surname && newData.notes && email && password) {
                 newData.id = patientId;
-                const result = await model.editPatient(newData, email, password);
+                const result = await middleware.editPatient(newData, email, password);
 
                 return result;
             }
@@ -41,7 +41,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         deletePatient: async () => {
             if (parseInt(patientId) && email && password) {
-                const result = await model.deletePatient(patientId, email, password);
+                const result = await middleware.deletePatient(patientId, email, password);
 
                 return result;
             }
@@ -51,7 +51,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         getPatient: async () => {
             if (parseInt(patientId) && email && password) {
-                const result = await model.getPatient(patientId, email, password);
+                const result = await middleware.getPatient(patientId, email, password);
 
                 if (result.length === 1 && result[0]) {
                     Object.keys(result[0]).forEach(k => {
@@ -68,7 +68,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         getSessionsScores: async () => {
             if (parseInt(patientId) && email && password) {
-                const result = await model.getSessionsScores(patientId, email, password);
+                const result = await middleware.getSessionsScores(patientId, email, password);
 
                 if (result) {
                     result.forEach(dict => {
@@ -91,7 +91,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         saveSessionScore: async (sessionData) => {
             if (parseInt(sessionData.patientId) && sessionData.playDate && parseInt(sessionData.score) && email && password) {
-                const result = await model.saveCurrentSession(sessionData, email, password);
+                const result = await middleware.saveCurrentSession(sessionData, email, password);
 
                 return result;
             }
@@ -101,7 +101,7 @@ export const generatePatientInfoManager = (model, pubsub) => {
         },
         deleteSessionScore: async (sessionId) => {
             if (parseInt(sessionId) && parseInt(patientId) && email && password) {
-                const result = await model.deleteSessionScore(sessionId, patientId, email, password);
+                const result = await middleware.deleteSessionScore(sessionId, patientId, email, password);
 
                 return result;
             }

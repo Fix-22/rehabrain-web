@@ -135,7 +135,6 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
 
             document.getElementById(id + "Start").onclick = () => {
                 pubsub.publish(id + "Start-onclick", session);
-                console.log(session)
                 
                 if (!presenter.checkStartSession(session)) {
                     currentSession.displayError("Impossibile avviare la sessione, i dati inseriti sotto non sono validi.");

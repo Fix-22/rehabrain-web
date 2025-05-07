@@ -1,4 +1,4 @@
-export const generatePatientsManager = (model, pubsub) => {
+export const generatePatientsManager = (middleware, pubsub) => {
     let email, password, patients;
 
     const patientsManager = {
@@ -16,7 +16,7 @@ export const generatePatientsManager = (model, pubsub) => {
         },
         checkGetAllPatients: async () => {
             if (email && password) {
-                const result = await model.getAllPatients(email, password);
+                const result = await middleware.getAllPatients(email, password);
                 
                 if (result) {
                     result.forEach(dict => {

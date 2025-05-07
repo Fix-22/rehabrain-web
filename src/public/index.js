@@ -20,28 +20,41 @@ import { generatePatientInfoModal } from "/scripts/view/patientInfoModal/patient
 import { generatePatientInfoManager } from "/scripts/presentation/patientInfoManager/patientInfoManager.js";
 import { generateButton } from "/scripts/view/button/button.js";
 import { generatePatientCreationModal } from "/scripts/view/patientCreationModal/patientCreationModal.js";
+import { generateSessionLogic } from "/scripts/business/sessionLogic/sessionLogic.js";
+import { generateWordToObjectLogic } from "/scripts/business/wordToObjectLogic/wordToObjectLogic.js";
 
 const pubsub = generatePubSub();
 
 generateNavigator(document.getElementById("pages"), pubsub);
 
-// MODEL (middleware che prende i dati dal model decentrato)
+// MIDDLEWARE
 const middleware = generateMiddleware();
 
-// PRESENTERS
+// BUSINESS
+const sessionLogic = generateSessionLogic(pubsub);
+
+const wordToObjectLogic = generateWordToObjectLogic(pubsub);
+wordToObjectLogic.build({name: "prova1", id: "activity-word-to-object"});
+
+// PRESENTATION
 const activitiesManager = generateActivitiesManager(middleware);
-const sessionManager = generateSessionManager(middleware, pubsub);
+
+const sessionManager = generateSessionManager(middleware, sessionLogic, pubsub);
 await sessionManager.build();
+
 const authenticator = generateAuthenticator(middleware, pubsub);
 authenticator.build();
+
 const patientsManager = generatePatientsManager(middleware, pubsub);
 patientsManager.build();
+
 const usersManager = generateUsersManager(middleware, pubsub);
 usersManager.build();
+
 const patientInfoManager = generatePatientInfoManager(middleware, pubsub);
 patientInfoManager.build();
 
-// VIEWS
+// VIEW
 
 const matchPage = () => {
     const url = new URL(document.location.href);

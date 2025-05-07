@@ -1,4 +1,4 @@
-export const generateAuthenticator = (model, pubsub) => {
+export const generateAuthenticator = (middleware, pubsub) => {
     const authenticator = {
         build: () => {
             pubsub.subscribe("usersManager-logout-success", () => {
@@ -7,7 +7,7 @@ export const generateAuthenticator = (model, pubsub) => {
         },
         login: async (email, password) => {
             if (email && password && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                const result = await model.login(email, password);
+                const result = await middleware.login(email, password);
 
                 if (result) {
                     pubsub.publish("authenticator-login-success", {email: email, password: password});
@@ -22,7 +22,7 @@ export const generateAuthenticator = (model, pubsub) => {
         },
         register: async (name, surname, email) => {
             if (name && surname && email && email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                const result = await model.register({name: name, surname: surname, email: email});
+                const result = await middleware.register({name: name, surname: surname, email: email});
 
                 return result;
             }

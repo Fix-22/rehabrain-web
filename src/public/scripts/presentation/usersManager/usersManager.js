@@ -1,4 +1,4 @@
-export const generateUsersManager = (model, pubsub) => {
+export const generateUsersManager = (middleware, pubsub) => {
     let email, password;
     
     return {
@@ -21,7 +21,7 @@ export const generateUsersManager = (model, pubsub) => {
         },
         getAccount: async () => {
             if (email && password) {
-                const result = await model.getAccount(email, password);
+                const result = await middleware.getAccount(email, password);
                 
                 if (result.length === 1 && result[0]) {
                     Object.keys(result[0]).forEach(k => {
@@ -38,7 +38,7 @@ export const generateUsersManager = (model, pubsub) => {
         },
         editAccount: async (newName, newSurname) => {
             if (newName && newSurname && email && password) {
-                const result = model.editAccount({name: newName, surname: newSurname, email: email, password: password});
+                const result = middleware.editAccount({name: newName, surname: newSurname, email: email, password: password});
                 return result;
             }
             else {
@@ -47,7 +47,7 @@ export const generateUsersManager = (model, pubsub) => {
         },
         deleteAccount: async () => {
             if (email && password) {
-                const result = await model.deleteAccount(email, password);
+                const result = await middleware.deleteAccount(email, password);
 
                 if (result) {
                     

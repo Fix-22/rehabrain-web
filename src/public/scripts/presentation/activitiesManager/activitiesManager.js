@@ -1,7 +1,7 @@
-export const generateActivitiesManager = (model) => {
+export const generateActivitiesManager = (middleware) => {
     return {
         getActivities: async () => {
-            const result = await model.getActivities();
+            const result = await middleware.getActivities();
 
             result.forEach(dict => {
                 Object.keys(dict).forEach(k => {

@@ -1,4 +1,4 @@
-export const generateSessionManager = (model, pubsub) => {
+export const generateSessionManager = (middleware, business, pubsub) => {
     let patientId, email, password;
 
     return {
@@ -32,7 +32,7 @@ export const generateSessionManager = (model, pubsub) => {
                     return false;
                 }
                 else {
-                    return true;
+                    business.startSession(session);
                 }
             }
             return false;
@@ -51,19 +51,19 @@ export const generateSessionManager = (model, pubsub) => {
                     return false;
                 }
                 else {
-                    const result = await model.saveCurrentSession(session,  patientId, email, password);
+                    const result = await middleware.saveCurrentSession(session,  patientId, email, password);
                     return result;
                 }
             }
             return false;
         },
         checkClearCurrentSession: async () => {
-            const result = await model.clearCurrentSession(patientId, email, password);
+            const result = await middleware.clearCurrentSession(patientId, email, password);
             return result;
         },
         checkGetCurrentSession: async () => {
             if (parseInt(patientId) && email && password) {
-                const result = await model.getCurrentSession(patientId, email, password);
+                const result = await middleware.getCurrentSession(patientId, email, password);
 
                 if (result) {
                     result.forEach(dict => {
