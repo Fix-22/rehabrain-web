@@ -54,6 +54,7 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                                 </p>
                             </div>
                             <div class="notification is-danger is-hidden" id="$IDError"></div>
+                            <div class="notification is-success is-hidden" id="$IDSuccess"></div>
                         </div>`.replaceAll("$ID", id);
             parentElement.innerHTML = html;
 
@@ -66,14 +67,16 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                     const result = await presenter.register(name, surname, email);
 
                     if (result) {
-                        pubsub.publish("view-login-success", {email: email, password: password});
-                        location.href = "#home";
+                        registerForm.displayError("");
+                        registerForm.displaySuccess("La registrazione è andata a buon fine, controlla la tua email e fai il login.");
                     }
                     else {
+                        registerForm.displaySuccess("");
                         registerForm.displayError("Registrazione fallita, dati errati.");
                     }
                 }
                 else {
+                    registerForm.displaySuccess("");
                     registerForm.displayError("Registrazione impossibile, dati non inseriti correttamente.");
                 }
             };
@@ -88,6 +91,18 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
             else {
                 errorDisplayer.innerText = "";
                 errorDisplayer.classList.add("is-hidden");
+            }
+        },
+        displaySuccess: (message) => {
+            const successDisplayer = document.getElementById(id + "Success");
+
+            if (message) {
+                successDisplayer.innerText = message;
+                successDisplayer.classList.remove("is-hidden");
+            }
+            else {
+                successDisplayer.innerText = "";
+                successDisplayer.classList.add("is-hidden");
             }
         }
     };

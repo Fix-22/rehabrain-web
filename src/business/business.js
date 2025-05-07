@@ -36,7 +36,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     const result = await database.register(userData);
 
                     if (result === 1) {
-                        mailer.sendEmail(userData.email, "Benvenuto in RehaBrain", "Benvenuto su RehaBrain.", "<p>Benvenuto su RehaBrain.<br>Ecco la tua password: " + password + "</p>")
+                        mailer.sendEmail(userData.email, "Benvenuto in RehaBrain", "Benvenuto su RehaBrain.", "<p>Benvenuto su RehaBrain.<br>Ecco la tua password: " + password + "</p>");
 
                         return true;
                     }
@@ -86,6 +86,8 @@ const generateBusiness = (database, cipher, mailer) => {
                     const result = await database.deleteAccount(loginData.email, loginData.password);
 
                     if (result === 1) {
+                        mailer.sendEmail(loginData.email, "Eliminazione account RehaBrain", "Il tuo account RehaBrain è stato eliminato.", "<p>Il tuo account RehaBrain è stato eliminato.</p>");
+
                         return true;
                     }
                     else {

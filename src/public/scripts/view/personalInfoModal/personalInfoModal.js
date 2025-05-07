@@ -7,10 +7,13 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
 
             if (sessionStorage.getItem("credentials")) {
                 const user = await presenter.getAccount();
-                name = user.name;
-                surname = user.surname;
-                email = user.email;
-                personalInfoModal.render();
+
+                if (user) {
+                    name = user.name;
+                    surname = user.surname;
+                    email = user.email;
+                    personalInfoModal.render();
+                }
             }
 
             pubsub.subscribe("view-login-success", async credentials => {
@@ -107,6 +110,7 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                     name = null;
                     surname = null;
                     email = null;
+                    sessionStorage.removeItem("credentials");
                     pubsub.publish("view-logout-success");
                 }
                 else {

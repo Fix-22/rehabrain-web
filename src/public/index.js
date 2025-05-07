@@ -177,6 +177,7 @@ patientInfoModal.render();
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
 pubsub.subscribe("usersManager-logout-success", matchPage);
+pubsub.subscribe("view-logout-success", matchPage);
 window.addEventListener("popstate", matchPage);
 
 // gestione eventi Bulma
