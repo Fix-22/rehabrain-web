@@ -1,7 +1,7 @@
 export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
     let id, patient, sessionsScores;
 
-    const patientlInfoModal = {
+    const patientInfoModal = {
         build: (inputId) => {
             id = inputId;
             patient = null;
@@ -10,8 +10,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
             pubsub.subscribe("patientsList-onpatientselect", async id => {
                 patient = await presenter.getPatient();
                 sessionsScores = await presenter.getSessionsScores();
-                console.log(sessionsScores)
-                patientlInfoModal.render();
+                patientInfoModal.render();
 
                 const x = sessionsScores.map(e => {
                     const date = new Date(e.playdate);
@@ -31,10 +30,6 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                         }]
                     }
                 });
-            });
-
-            pubsub.subscribe("addPatientButton-onclick", () => {
-                patientlInfoModal.render();
             });
         },
         render: () => {
@@ -134,10 +129,14 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                 
                 if (result) {
                     patient = null;
+                    patientInfoModal.displayError("");
+                    patientInfoModal.displaySuccess("Paziente elminiato.");
+                    patientInfoModal.render();
+                    pubsub.publish("view-patient-ondelete");
                 }
                 else {
-                    patientlInfoModal.displayError("Eliminazione paziente fallita, i dati sono errati.");
-                    patientlInfoModal.displaySuccess("");
+                    patientInfoModal.displayError("Eliminazione paziente fallita, i dati sono errati.");
+                    patientInfoModal.displaySuccess("");
                 }
             };
 
@@ -151,17 +150,17 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                     const result = await presenter.editPatient({name: name, surname: surname, age: age, notes: notes});
 
                     if (result) {
-                        patientlInfoModal.displayError("");
-                        patientlInfoModal.displaySuccess("Paziente aggiornato.");
+                        patientInfoModal.displayError("");
+                        patientInfoModal.displaySuccess("Paziente aggiornato.");
                     }
                     else {
-                        patientlInfoModal.displayError("Aggiornamento paziente fallito, i dati sono errati.");
-                        patientlInfoModal.displaySuccess("");
+                        patientInfoModal.displayError("Aggiornamento paziente fallito, i dati sono errati.");
+                        patientInfoModal.displaySuccess("");
                     }
                 }
                 else {
-                    patientlInfoModal.displayError("Impossibile aggiornare il paziente, i dati non sono validi.");
-                    patientlInfoModal.displaySuccess("");
+                    patientInfoModal.displayError("Impossibile aggiornare il paziente, i dati non sono validi.");
+                    patientInfoModal.displaySuccess("");
                 }
             };
 
@@ -171,11 +170,11 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                     
                     if (result) {
                         sessionsScores = await presenter.getSessionsScores();
-                        patientlInfoModal.render();
+                        patientInfoModal.render();
                     }
                     else {
-                        patientlInfoModal.displayError("Impossibile eliminare la sessione.");
-                        patientlInfoModal.displaySuccess("");
+                        patientInfoModal.displayError("Impossibile eliminare la sessione.");
+                        patientInfoModal.displaySuccess("");
                     }
                 };
             });
@@ -206,5 +205,5 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
         }
     };
 
-    return patientlInfoModal;
+    return patientInfoModal;
 };

@@ -29,7 +29,7 @@ const generateDatabase = () => {
         })
     };
 
-    return {
+    const database = {
         build: (databaseConfig) => {
             connection = mysql.createConnection(databaseConfig);
         },
@@ -369,7 +369,9 @@ const generateDatabase = () => {
                 console.error("Database error: " + e);
             }
         }
-    }
+    };
+
+    return database;
 }
 
 module.exports = generateDatabase;

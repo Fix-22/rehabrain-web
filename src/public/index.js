@@ -18,6 +18,8 @@ import { generateUsersManager } from "/scripts/presentation/usersManager/usersMa
 import { generateBulmaEventsHandler } from "/scripts/view/bulmaEventsHandler/bulmaEventsHandler.js";
 import { generatePatientInfoModal } from "/scripts/view/patientInfoModal/patientInfoModal.js";
 import { generatePatientInfoManager } from "/scripts/presentation/patientInfoManager/patientInfoManager.js";
+import { generateButton } from "/scripts/view/button/button.js";
+import { generatePatientCreationModal } from "/scripts/view/patientCreationModal/patientCreationModal.js";
 
 const pubsub = generatePubSub();
 
@@ -154,8 +156,13 @@ currentSession.render();
 // patients
 const patientsSearchbarContainer = document.getElementById("patientsSearchbarContainer");
 const patientsSearchbar = generateSearchbar(patientsSearchbarContainer, pubsub);
-patientsSearchbar.build("patientsSearchbar", "Cerca attività");
+patientsSearchbar.build("patientsSearchbar", "Cerca pazienti");
 patientsSearchbar.render();
+
+const addPatientButtonContainer = document.getElementById("addPatientButtonContainer");
+const addPatientButton = generateButton(addPatientButtonContainer, pubsub);
+addPatientButton.build("addPatientButton", ["button", "is-link", "js-modal-trigger"], "", '<i class="fa-solid fa-plus"></i>', "patientCreationModal");
+addPatientButton.render();
 
 const patientsListContainer = document.getElementById("patientsListContainer");
 const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
@@ -173,6 +180,11 @@ const patientInfoModal = generatePatientInfoModal(patientInfoManager, patientInf
 patientInfoModal.build("patientInfoModal");
 patientInfoModal.render();
 
+const patientCreationModalContainer = document.getElementById("patientCreationModalContainer");
+const patientCreationModal = generatePatientCreationModal(patientInfoManager, patientCreationModalContainer, pubsub); 
+patientCreationModal.build("patientCreationModal");
+patientCreationModal.render();
+
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
@@ -187,7 +199,3 @@ bulmaEventsHandler.mapNavbar();
 bulmaEventsHandler.mapModals();
 
 window.addEventListener("popstate", bulmaEventsHandler.mapModals);
-
-document.getElementById("addPatientButton").onclick = () => {
-    pubsub.publish("addPatientButton-onclick");
-};

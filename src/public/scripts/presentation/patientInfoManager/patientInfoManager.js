@@ -18,6 +18,16 @@ export const generatePatientInfoManager = (model, pubsub) => {
                 patientId = id;
             });
         },
+        createPatient: async (patientData) => {
+            if (patientData && patientData.name && patientData.surname && patientData.notes !== null && patientData.notes !== undefined && email && password) {
+                const result = await model.createPatient(patientData, email, password);
+
+                return result;
+            }
+            else {
+                return false;
+            }
+        },
         editPatient: async (newData) => {
             if (newData && newData.name && newData.surname && newData.notes && email && password) {
                 newData.id = patientId;
