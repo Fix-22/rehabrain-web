@@ -22,6 +22,8 @@ import { generateButton } from "/scripts/view/button/button.js";
 import { generatePatientCreationModal } from "/scripts/view/patientCreationModal/patientCreationModal.js";
 import { generateSessionLogic } from "/scripts/business/sessionLogic/sessionLogic.js";
 import { generateWordToObjectLogic } from "/scripts/business/wordToObjectLogic/wordToObjectLogic.js";
+import { generateWordToObjectPresenter } from "/scripts/presentation/wordToObjectPresenter/wordToObjectPresenter.js";
+import { generateWordToObjectView } from "/scripts/view/wordToObjectView/wordToObjectView.js";
 
 const pubsub = generatePubSub();
 
@@ -37,6 +39,8 @@ const wordToObjectLogic = generateWordToObjectLogic(pubsub);
 wordToObjectLogic.build({name: "prova1", id: "activity-word-to-object"});
 
 // PRESENTATION
+const wordToObjectPresenter = generateWordToObjectPresenter(wordToObjectLogic, pubsub);
+
 const activitiesManager = generateActivitiesManager(middleware);
 
 const sessionManager = generateSessionManager(middleware, sessionLogic, pubsub);
@@ -181,6 +185,12 @@ const patientsListContainer = document.getElementById("patientsListContainer");
 const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
 await patientsList.build("patientsList");
 patientsList.render()
+
+// attività
+const activityContent = document.getElementById("activityContent");
+
+const wordToObjectView = generateWordToObjectView(wordToObjectPresenter, activityContent, pubsub);
+wordToObjectView.build();
 
 // modali
 const personalInfoModalContainer = document.getElementById("personalInfoModalContainer");

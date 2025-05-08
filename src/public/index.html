@@ -85,22 +85,40 @@
             <div class="columns is-centered" id="registerFormContainer"></div>
         </div>
 		<div class="page" id="activity-word-to-object">
-			<p class="title has-text-centered">PAROLA</p>
-			<div class="columns is-centered">
-				<div class="coulmn">
-					<div class="column">
-						<label class="radio">
-							<input type="radio" class="imageRadio" value="big" name="choice">
-							<img src="assets/images/apple.png" class="imageInRadio" alt="Option 1">
-						</label>
-						<label class="radio">
-							<input type="radio" class="imageRadio" value="biga" name="choice">
-							<img src="assets/images/apple.png" class="imageInRadio" alt="Option 2">
-						</label>
-						<label class="radio">
-							<input type="radio" class="imageRadio" value="biga" name="choice">
-							<img src="assets/images/apple.png" class="imageInRadio" alt="Option 2">
-						</label>
+			<div class="columns is-mobile is-centered">
+				<div class="column is-one-fifth">
+					<button type="button" class="button is-link">
+						<span class="icon">
+							<i class="fa-solid fa-arrow-left"></i>
+						</span>
+						<span>Indietro</span>
+					</button>
+				</div>
+				<div class="coulmn is-auto" id="activityContent"></div>
+				<div class="column is-one-fifth">
+					<div class="field">
+						<button type="button" class="button is-link" id="activityGoForward">
+							<span class="icon">
+								<i class="fa-solid fa-arrow-right"></i>
+							</span>
+							<span>Avanti</span>
+						</button>
+					</div>
+					<div class="field">
+						<button type="button" class="button is-warning" id="activitySolve">
+							<span class="icon">
+								<i class="fa-solid fa-lightbulb"></i>
+							</span>
+							<span>Risolvi</span>
+						</button>
+					</div>
+					<div class="field">
+						<button type="button" class="button is-primary" id="activityRestart">
+							<span class="icon">
+								<i class="fa-solid fa-rotate-right"></i>
+							</span>
+							<span>Ricomincia</span>
+						</button>
 					</div>
 				</div>
 			</div>

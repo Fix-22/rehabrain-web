@@ -18,6 +18,11 @@
 }
 
 [type=radio]:checked + img {
-    outline: 4px solid rgba(0,209,178,1.0);
+    outline: 4px solid red;
+    border-radius: 20%;
+}
+
+[type=radio]:checked.correct + img {
+    outline: 4px solid green;
     border-radius: 20%;
 }
