@@ -137,11 +137,25 @@ const generateBusiness = (database, cipher, mailer) => {
         },
         checkGetContents: async (inputData) => {
             if (inputData && Object.keys(inputData).length === 2) {
-                if (String(inputData.category) && String(inputData.difficulty)) {
-                    inputData.category = String(inputData.category);
+                if (parseInt(inputData.number) && String(inputData.difficulty)) {
+                    inputData.number = !isNaN(parseInt(inputData.number)) ? parseInt(inputData.number) : 0;
                     inputData.difficulty = String(inputData.difficulty);
 
-                    const result = await database.getContents(inputData.category, inputData.difficulty);
+                    const contents = await database.getContents(inputData.difficulty);
+
+                    const result = [];
+                    const used = [];
+
+                    for (let i = 0; i < inputData.number; i++) {
+                        let idx = Math.floor(Math.random() * contents.length);
+
+                        while (used.findIndex(e => e === idx) >= 0) {
+                            idx = Math.floor(Math.random() * contents.length);
+                        }
+
+                        result.push(contents[idx]);
+                        used.push(idx);
+                    }
 
                     if (result.length > 0) {
                         return result;

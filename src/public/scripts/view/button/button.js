@@ -1,20 +1,30 @@
 export const generateButton = (parentElement, pubsub) => {
-    let id, classList, text, icon, dataTarget;
+    let config;
 
     const button = {
-        build: (inputId, inputClassList, inputText, inputIcon, inputDataTarget) => {
-            id = inputId;
-            classList = inputClassList;
-            text = inputText;
-            icon = inputIcon;
-            dataTarget = inputDataTarget;
+        build: (inputConfig) => {
+            config = inputConfig;
+
+            if (config.subscribedEvents) {
+                Object.keys(config.subscribedEvents).forEach(k => {
+                    pubsub.subscribe(k, config.subscribedEvents[k]);
+                });
+            }
         },
         render: () => {
-            parentElement.innerHTML = '<button id="' + id + '" class="' + classList.join(" ") + '"' + (dataTarget ? ' data-target="' + dataTarget + '" ' : "") + '>' + (icon ? '<span class="icon">' + icon + '</span>' : "") + (text ? '<span>' + text + '</span>' : "") + "</button>";
+            parentElement.innerHTML = '<button id="' + config.id + '" class="' + config.classList.join(" ") + '"' + (config.dataTarget ? ' data-target="' + config.dataTarget + '" ' : "") + (config.disabled ? " disabled" : "") + '>' + (config.icon ? '<span class="icon">' + config.icon + '</span>' : "") + (config.text ? '<span>' + config.text + '</span>' : "") + "</button>";
             
-            document.getElementById(id).onclick = () => {
-                pubsub.publish(id + "-onclick");
+            document.getElementById(config.id).onclick = () => {
+                pubsub.publish(config.id + "-onclick");
             }
+        },
+        disable: () => {
+            config.disabled = true;
+            button.render();
+        },
+        enable: () => {
+            config.disabled = false;
+            button.render();
         }
     };
 

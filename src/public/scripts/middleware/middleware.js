@@ -114,7 +114,7 @@ export const generateMiddleware = () => {
         },
 
         // contents
-        getContents: async (category, difficulty) => {
+        getContents: async (number, difficulty) => {
             try {
                 const response = await fetch("/contents", {
                     headers: {
@@ -122,7 +122,7 @@ export const generateMiddleware = () => {
                     },
                     method: "POST",
                     body: JSON.stringify({
-                        category: category,
+                        number: number,
                         difficulty: difficulty
                     })
                 });

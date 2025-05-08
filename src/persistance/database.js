@@ -192,14 +192,14 @@ const generateDatabase = () => {
                 console.error("Database error: " + e);
             }
         },
-        getContents: async (category, difficulty) => {
+        getContents: async (difficulty) => {
             try {
                 const result = await executeStatement(`
                     SELECT *
                     FROM Contents
-                    WHERE CategoryName = ? AND Difficulty = ?;
-                `, [category, difficulty]);
-                
+                    WHERE Difficulty = ?;
+                `, [difficulty]);
+
                 return result;
             }
             catch (e) {

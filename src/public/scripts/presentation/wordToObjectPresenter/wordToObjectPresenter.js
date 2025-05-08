@@ -3,15 +3,6 @@ export const generateWordToObjectPresenter = (business, pubsub) => {
         build: () => {
 
         },
-        getId: () => {
-            return business.getId();
-        },
-        getWord: () => {
-            return business.getWord();
-        },
-        getObjectsList: () => {
-            return business.getObjectsList();
-        },
         checkCorrectSelection: (id) => {
             if (id) {
                 return business.checkCorrectSelection(id);
@@ -21,7 +12,22 @@ export const generateWordToObjectPresenter = (business, pubsub) => {
             }
         },
         solve: () => {
-
+            business.solve();
+        },
+        restart: async () => {
+            await business.restart();
+        },
+        getId: () => {
+            return business.getId();
+        },
+        getWord: () => {
+            return business.getWord();
+        },
+        getObjectsList: () => {
+            return business.getObjectsList();
+        },
+        isStarted: () => {
+            return business.isStarted();
         }
     };
 

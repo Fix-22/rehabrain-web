@@ -35,7 +35,7 @@ const middleware = generateMiddleware();
 // BUSINESS
 const sessionLogic = generateSessionLogic(pubsub);
 
-const wordToObjectLogic = generateWordToObjectLogic(pubsub);
+const wordToObjectLogic = generateWordToObjectLogic(middleware, pubsub);
 wordToObjectLogic.build({name: "prova1", id: "activity-word-to-object"});
 
 // PRESENTATION
@@ -178,7 +178,7 @@ patientsSearchbar.render();
 
 const addPatientButtonContainer = document.getElementById("addPatientButtonContainer");
 const addPatientButton = generateButton(addPatientButtonContainer, pubsub);
-addPatientButton.build("addPatientButton", ["button", "is-link", "js-modal-trigger"], "", '<i class="fa-solid fa-plus"></i>', "patientCreationModal");
+addPatientButton.build({id: "addPatientButton", classList: ["button", "is-link", "js-modal-trigger"], text: "", icon: '<i class="fa-solid fa-plus"></i>', dataTarget: "patientCreationModal"});
 addPatientButton.render();
 
 const patientsListContainer = document.getElementById("patientsListContainer");
@@ -188,6 +188,21 @@ patientsList.render()
 
 // attività
 const activityContent = document.getElementById("activityContent");
+
+const activityGoForwardContainer = document.getElementById("activityGoForwardContainer");
+const activityGoForward = generateButton(activityGoForwardContainer, pubsub);
+activityGoForward.build({id: "activityGoForward", classList: ["button", "is-link"], text: "Avanti", icon: '<i class="fa-solid fa-arrow-right"></i>', disabled: true, subscribedEvents: {"view-activity-started": activityGoForward.disable, "view-activity-ended": activityGoForward.enable}});
+activityGoForward.render();
+
+const activitySolveContainer = document.getElementById("activitySolveContainer");
+const activitySolve = generateButton(activitySolveContainer, pubsub);
+activitySolve.build({id: "activitySolve", classList: ["button", "is-warning"], text: "Risolvi", icon: '<i class="fa-solid fa-lightbulb"></i>', disabled: true, subscribedEvents: {"view-activity-started": activitySolve.enable, "view-activity-ended": activitySolve.disable}});
+activitySolve.render();
+
+const activityRestartContainer = document.getElementById("activityRestartContainer");
+const activityRestart = generateButton(activityRestartContainer, pubsub);
+activityRestart.build({id: "activityRestart", classList: ["button", "is-primary"], text: "Riavvia", icon: '<i class="fa-solid fa-rotate-right"></i>', disabled: true, subscribedEvents: {"view-activity-started": activityRestart.enable}});
+activityRestart.render();
 
 const wordToObjectView = generateWordToObjectView(wordToObjectPresenter, activityContent, pubsub);
 wordToObjectView.build();
