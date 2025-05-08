@@ -1,5 +1,5 @@
 export const generateWordToObjectLogic = (middleware, pubsub) => {
-    let config, difficulty, word, objectsList, isStarted, currentScore;
+    let config, difficulty, word, objectsList, isStarted, maxMediumScore,currentScore;
 
     const wordToObjectLogic = {
         build: (inptuConfig) => {
@@ -7,10 +7,11 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
             isStarted = false;
 
             pubsub.subscribe(config.name + "-start", async (settings) => {
-                await wordToObjectLogic.start(settings.difficulty, settings.maxmediumscore);
+                maxMediumScore = settings.maxmediumscore;
+                await wordToObjectLogic.start(settings.difficulty, maxMediumScore);
                 isStarted = true;
                 
-                location.href = "#" + config.id;
+                location.href = "#session";
             });
         },
         start: async (inputDifficulty, inputCurrentScore) => {
@@ -74,14 +75,12 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
             }
         },
         solve: () => {
+            currentScore -= Math.floor(currentScore * 0.5);
             isStarted = false;
         },
         restart: async () => {
             isStarted = true;
-            await wordToObjectLogic.start(difficulty);
-        },
-        getId: () => {
-            return config.id;
+            await wordToObjectLogic.start(difficulty, maxMediumScore);
         },
         getWord: () => {
             return word;

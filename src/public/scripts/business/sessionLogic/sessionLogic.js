@@ -3,25 +3,40 @@ export const generateSessionLogic = (pubsub) => {
 
     const sessionLogic = {
         build: () => {
+            sessionScore = 0;
+
             pubsub.subscribe("update-session-score", (activityScore) => {
-                sessionScore += activityScore;
+                sessionScore += parseInt(activityScore);
             });
-            
+
             pubsub.subscribe("session-go-forward", () => {
                 sessionLogic.startActivity();
             });
         },
         startActivity: () => {
             if (session.length > 0) {
-                const activity = session.shift();
+                let activity;
+
+                if (session[0].times > 1) {
+                    session[0].times--;
+                    activity = session[0];
+                }
+                else {
+                    activity = session.shift();
+                }
+
                 pubsub.publish(activity.name + "-start", activity);
             }
             else {
-
+                pubsub.publish("session-finished", sessionScore);
+                console.log(sessionScore)
+                location.href = "#dashboard";
             }
         },
         startSession: (inputSession) => {
-            session = inputSession;
+            sessionScore = 0;
+            
+            session = structuredClone(inputSession); // permette di fare una deep copy dell'array, in questo modo non viene cancellata la sessione una volta completata
             sessionLogic.startActivity();
         }
     };

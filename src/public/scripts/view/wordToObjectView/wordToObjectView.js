@@ -7,7 +7,7 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
                 const url = new URL(document.location.href);
                 const pageName = url.hash.replace("#", "");
 
-                if (presenter.getId() === pageName) {
+                if (pageName === "session" && presenter.isStarted()) {
                     word = presenter.getWord();
                     objectsList = presenter.getObjectsList();
                     wordToObjectView.render();
@@ -15,8 +15,11 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
             });
 
             pubsub.subscribe("activityGoForward-onclick", async () => {
-                if (!presenter.isStarted()) {
-                    
+                const url = new URL(document.location.href);
+                const pageName = url.hash.replace("#", "");
+
+                if (pageName === "session" && !presenter.isStarted()) {
+                    presenter.goForward();
                 }
             });
 
@@ -24,7 +27,7 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
                 const url = new URL(document.location.href);
                 const pageName = url.hash.replace("#", "");
 
-                if (presenter.getId() === pageName) {
+                if (pageName === "session" && presenter.isStarted()) {
                     presenter.solve();
                     pubsub.publish("view-activity-ended");
                     
@@ -45,7 +48,7 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
                 const url = new URL(document.location.href);
                 const pageName = url.hash.replace("#", "");
 
-                if (presenter.getId() === pageName) {
+                if (pageName === "session") {
                     await presenter.restart();
                     word = presenter.getWord();
                     objectsList = presenter.getObjectsList();

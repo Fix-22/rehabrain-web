@@ -34,9 +34,10 @@ const middleware = generateMiddleware();
 
 // BUSINESS
 const sessionLogic = generateSessionLogic(pubsub);
+sessionLogic.build();
 
 const wordToObjectLogic = generateWordToObjectLogic(middleware, pubsub);
-wordToObjectLogic.build({name: "prova1", id: "activity-word-to-object"});
+wordToObjectLogic.build({name: "prova1"});
 
 // PRESENTATION
 const wordToObjectPresenter = generateWordToObjectPresenter(wordToObjectLogic, pubsub);
@@ -66,6 +67,7 @@ const matchPage = () => {
 
     switch (pageName) {
         case "":
+        case "session":
         case "home":
         case "register":
         case "login":

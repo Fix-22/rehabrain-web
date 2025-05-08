@@ -33,6 +33,7 @@ export const generateSessionManager = (middleware, business, pubsub) => {
                 }
                 else {
                     business.startSession(session);
+                    return true;
                 }
             }
             return false;

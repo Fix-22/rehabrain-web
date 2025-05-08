@@ -1,8 +1,5 @@
 export const generateWordToObjectPresenter = (business, pubsub) => {
     const wordToObjectPresent = {
-        build: () => {
-
-        },
         checkCorrectSelection: (id) => {
             if (id) {
                 return business.checkCorrectSelection(id);
@@ -11,14 +8,14 @@ export const generateWordToObjectPresenter = (business, pubsub) => {
                 return false;
             }
         },
+        goForward: () => {
+            business.goForward();
+        },
         solve: () => {
             business.solve();
         },
         restart: async () => {
             await business.restart();
-        },
-        getId: () => {
-            return business.getId();
         },
         getWord: () => {
             return business.getWord();
