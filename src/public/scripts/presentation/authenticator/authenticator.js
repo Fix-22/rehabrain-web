@@ -1,7 +1,7 @@
 export const generateAuthenticator = (middleware, pubsub) => {
     const authenticator = {
         build: () => {
-            pubsub.subscribe("usersManager-logout-success", () => {
+            pubsub.subscribe("usersPresenter-logout-success", () => {
                 sessionStorage.removeItem("credentials");
             }); 
         },

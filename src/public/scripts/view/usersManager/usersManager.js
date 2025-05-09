@@ -1,7 +1,7 @@
-export const generateUsersManager = (parentElement, pubsub) => {
+export const generateUsersPresenter = (parentElement, pubsub) => {
     let id;
 
-    const manager = {
+    const Presenter = {
         build: (inputId) => {
             id = inputId;
         },
@@ -100,7 +100,7 @@ export const generateUsersManager = (parentElement, pubsub) => {
             parentElement.innerHTML = html;
             
             document.getElementById(id + "SaveButton").onclick = () => {
-                pubsub.publish(id + "save-pressed", manager.getContent());
+                pubsub.publish(id + "save-pressed", Presenter.getContent());
             };
             document.getElementById(id + "BackButton").onclick = () => {
                 pubsub.publish(id + "-back-pressed");
@@ -132,5 +132,5 @@ export const generateUsersManager = (parentElement, pubsub) => {
         }
     };
     
-    return manager;
+    return Presenter;
 };

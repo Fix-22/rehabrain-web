@@ -86,7 +86,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                 patientInfoModal.render();
             });
 
-            pubsub.subscribe("patientInfoManager-session-saved", async () => {
+            pubsub.subscribe("patientInfoPresenter-session-saved", async () => {
                 patient = await presenter.getPatient();
                 sessionsScores = await presenter.getSessionsScores();
                 patientInfoModal.render();

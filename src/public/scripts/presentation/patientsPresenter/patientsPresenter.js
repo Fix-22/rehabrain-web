@@ -1,7 +1,7 @@
-export const generatePatientsManager = (middleware, pubsub) => {
+export const generatePatientsPresenter = (middleware, pubsub) => {
     let email, password, patients;
 
-    const patientsManager = {
+    const patientsPresenter = {
         build: () => {
             if (sessionStorage.getItem("credentials")) {
                 const credentials = JSON.parse(sessionStorage.getItem("credentials"));
@@ -39,10 +39,10 @@ export const generatePatientsManager = (middleware, pubsub) => {
         },
         selectPatient: (id) => {
             if (patients.find(e => e.id === id)) {
-                pubsub.publish("patientsManager-onpatientselect", id);
+                pubsub.publish("patientsPresenter-onpatientselect", id);
             }
         }
     };
 
-    return patientsManager;
+    return patientsPresenter;
 };

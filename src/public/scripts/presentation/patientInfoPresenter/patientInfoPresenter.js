@@ -1,7 +1,7 @@
-export const generatePatientInfoManager = (middleware, pubsub) => {
+export const generatePatientInfoPresenter = (middleware, pubsub) => {
     let patientId, email, password;
 
-    const patientInfoManager = {
+    const patientInfoPresenter = {
         build: () => {
             if (sessionStorage.getItem("credentials")) {
                 const credentials = JSON.parse(sessionStorage.getItem("credentials"));
@@ -14,12 +14,12 @@ export const generatePatientInfoManager = (middleware, pubsub) => {
                 password = credentials.password;
             });
 
-            pubsub.subscribe("patientsManager-onpatientselect", id => {
+            pubsub.subscribe("patientsPresenter-onpatientselect", id => {
                 patientId = id;
             });
 
             pubsub.subscribe("resultsPresenter-save-session-score", (sessionScore) => {
-                patientInfoManager.saveSessionScore(sessionScore)
+                patientInfoPresenter.saveSessionScore(sessionScore)
             });
         },
         createPatient: async (patientData) => {
@@ -101,7 +101,7 @@ export const generatePatientInfoManager = (middleware, pubsub) => {
                 };
                 const result = await middleware.saveSessionScore(sessionData, email, password);
                 
-                pubsub.publish("patientInfoManager-session-saved");
+                pubsub.publish("patientInfoPresenter-session-saved");
 
                 return result;
             }
@@ -121,5 +121,5 @@ export const generatePatientInfoManager = (middleware, pubsub) => {
         }
     };
 
-    return patientInfoManager;
+    return patientInfoPresenter;
 };

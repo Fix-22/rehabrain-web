@@ -1,4 +1,4 @@
-const generateBusiness = (database, cipher, mailer) => {
+const generateBusiness = (persistance, cipher, mailer) => {
     return {
         checkLogin: async (loginData) => {
             if (loginData && Object.keys(loginData).length === 2) {
@@ -6,7 +6,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.email = String(loginData.email);
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     
-                    const result = await database.login(loginData.email, loginData.password);
+                    const result = await persistance.login(loginData.email, loginData.password);
 
                     if (result.length === 1) {
                         return true;
@@ -33,7 +33,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     const password = cipher.generatePassword(15);
                     userData.password = cipher.hashPassword(password);
                     
-                    const result = await database.register(userData);
+                    const result = await persistance.register(userData);
 
                     if (result === 1) {
                         mailer.sendEmail(userData.email, "Benvenuto in RehaBrain", "Benvenuto su RehaBrain.", "<p>Benvenuto su RehaBrain.<br>Ecco la tua password: " + password + "</p>");
@@ -60,7 +60,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     personalData.name = String(personalData.name);
                     personalData.surname = String(personalData.surname);
                     
-                    const result = await database.editAccount(personalData);
+                    const result = await persistance.editAccount(personalData);
 
                     if (result === 1) {
                         return true;
@@ -83,7 +83,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.email = String(loginData.email);
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     
-                    const result = await database.deleteAccount(loginData.email, loginData.password);
+                    const result = await persistance.deleteAccount(loginData.email, loginData.password);
 
                     if (result === 1) {
                         mailer.sendEmail(loginData.email, "Eliminazione account RehaBrain", "Il tuo account RehaBrain è stato eliminato.", "<p>Il tuo account RehaBrain è stato eliminato.</p>");
@@ -108,7 +108,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.email = String(loginData.email);
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     
-                    const result = await database.getAccount(loginData.email, loginData.password);
+                    const result = await persistance.getAccount(loginData.email, loginData.password);
 
                     if (result) {
                         return result;
@@ -126,7 +126,7 @@ const generateBusiness = (database, cipher, mailer) => {
             }
         },
         getActivities: async () => {
-            const result = await database.getActivities();
+            const result = await persistance.getActivities();
 
             if (result) {
                 return result;
@@ -141,7 +141,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     inputData.number = !isNaN(parseInt(inputData.number)) ? parseInt(inputData.number) : 0;
                     inputData.difficulty = String(inputData.difficulty);
 
-                    const contents = await database.getContents(inputData.difficulty);
+                    const contents = await persistance.getContents(inputData.difficulty);
 
                     const result = [];
                     const used = [];
@@ -178,7 +178,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.email = String(loginData.email);
                     loginData.password = cipher.hashPassword(String(loginData.password));
                 
-                    const result = await database.getAllPatients(loginData.email, loginData.password);
+                    const result = await persistance.getAllPatients(loginData.email, loginData.password);
 
                     if (result.length > 0) {
                         return result;
@@ -206,7 +206,7 @@ const generateBusiness = (database, cipher, mailer) => {
                         inputData.patientData.age = 0 ? isNaN(parseInt(inputData.patientData.age)) : parseInt(inputData.patientData.age);
                         inputData.patientData.notes = String(inputData.patientData.notes);
                         
-                        const result = await database.createPatient(inputData.patientData, inputData.email, inputData.password);
+                        const result = await persistance.createPatient(inputData.patientData, inputData.email, inputData.password);
 
                         if (result === 1) {
                             return true;
@@ -239,7 +239,7 @@ const generateBusiness = (database, cipher, mailer) => {
                         inputData.patientData.age = 0 ? isNaN(parseInt(inputData.patientData.age)) : parseInt(inputData.patientData.age);
                         inputData.patientData.notes = String(inputData.patientData.notes);
 
-                        const result = await database.editPatient(inputData.patientData, inputData.email, inputData.password);
+                        const result = await persistance.editPatient(inputData.patientData, inputData.email, inputData.password);
 
                         if (result === 1) {
                             return true;
@@ -267,7 +267,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     inputData.email = String(inputData.email);
                     inputData.password = cipher.hashPassword(String(inputData.password));
                     
-                    const result = await database.deletePatient(inputData.patientId, inputData.email, inputData.password);
+                    const result = await persistance.deletePatient(inputData.patientId, inputData.email, inputData.password);
 
                     if (result === 1) {
                         return true;
@@ -291,7 +291,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     inputData.email = String(inputData.email);
                     inputData.password = cipher.hashPassword(String(inputData.password));
                 
-                    const result = await database.getPatient(inputData.patientId, inputData.email, inputData.password);
+                    const result = await persistance.getPatient(inputData.patientId, inputData.email, inputData.password);
 
                     if (result.length === 1) {
                         return result;
@@ -319,7 +319,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     const today = new Date();
                     loginData.sessionData.playDate = today.getFullYear() + "-" + (today.getMonth() + 1 ) + "-" + today.getDate();
 
-                    const result = await database.saveSessionScore(loginData.sessionData, loginData.email, loginData.password);
+                    const result = await persistance.saveSessionScore(loginData.sessionData, loginData.email, loginData.password);
 
                     if (result === 1) {
                         return true;
@@ -344,7 +344,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.sessionId = 0 ? isNaN(parseInt(loginData.sessionId)) : parseInt(loginData.sessionId);
                     loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
                     
-                    const result = await database.deleteSessionScore(loginData.sessionId, loginData.patientId, loginData.email, loginData.password);
+                    const result = await persistance.deleteSessionScore(loginData.sessionId, loginData.patientId, loginData.email, loginData.password);
 
                     if (result === 1) {
                         return true;
@@ -368,7 +368,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
                     
-                    const result = await database.getSessionsScores(loginData.patientId, loginData.email, loginData.password);
+                    const result = await persistance.getSessionsScores(loginData.patientId, loginData.email, loginData.password);
 
                     if (result) {
                         return result;
@@ -398,7 +398,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     });
 
                     loginData.session.forEach(async (e, i) => {
-                        const result = await database.saveCurrentSession(e, i, loginData.patientId, loginData.email, loginData.password);
+                        const result = await persistance.saveCurrentSession(e, i, loginData.patientId, loginData.email, loginData.password);
 
                         if (result !== 1) {
                             return false;
@@ -422,7 +422,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
                     
-                    await database.clearCurrentSession(loginData.patientId, loginData.email, loginData.password);
+                    await persistance.clearCurrentSession(loginData.patientId, loginData.email, loginData.password);
                     return true;
                 }
                 else {
@@ -440,7 +440,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
 
-                    const result = await database.getCurrentSession(loginData.patientId, loginData.email, loginData.password);
+                    const result = await persistance.getCurrentSession(loginData.patientId, loginData.email, loginData.password);
 
                     if (result) {
                         return result;

@@ -1,4 +1,4 @@
-export const generateActivitiesManager = (middleware) => {
+export const generateActivitiesPresenter = (middleware) => {
     return {
         getActivities: async () => {
             const result = await middleware.getActivities();

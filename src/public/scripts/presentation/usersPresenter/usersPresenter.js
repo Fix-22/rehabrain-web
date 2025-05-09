@@ -1,4 +1,4 @@
-export const generateUsersManager = (middleware, pubsub) => {
+export const generateUsersPresenter = (middleware, pubsub) => {
     let email, password;
     
     return {
@@ -17,7 +17,7 @@ export const generateUsersManager = (middleware, pubsub) => {
         logout: () => {
             email = null;
             password = null;
-            pubsub.publish("usersManager-logout-success");
+            pubsub.publish("usersPresenter-logout-success");
         },
         getAccount: async () => {
             if (email && password) {

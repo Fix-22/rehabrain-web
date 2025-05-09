@@ -43,10 +43,33 @@ body {
     outline: 4px solid #ffdd57;
     border-radius: 20%;
 }
-.vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
 
-  display: flex;
-  align-items: center;
+.cardClicked {
+    color: white !important ;
+    background-color: #4258ff;
+;
+}
+
+@media screen and (orientation: landscape) {
+    #rotateDeviceWarning {
+        display: none;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    #rotateDeviceWarning {
+        display: block;
+        width: 100%;
+        background-color: #ffdd57;
+        padding: 10px;
+        border: 2px solid #ffdd57;
+    }
+}
+
+@media (max-width: 768px) {
+  .buttons>.button>span:not(.icon) {
+    display: none !important;
+    font-size: 0 !important;
+    visibility: hidden !important;
+  }
 }

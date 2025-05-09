@@ -2,22 +2,22 @@ import { generatePubSub } from "/scripts/pubsub/pubsub.js";
 import { generateNavigator } from "/scripts/view/navigator/navigator.js";
 import { generateMiddleware } from "/scripts/middleware/middleware.js";
 import { generateActivitiesList } from "/scripts/view/activitiesList/activitiesList.js";
-import { generateActivitiesManager } from "/scripts/presentation/activitiesManager/activitiesManager.js";
+import { generateActivitiesPresenter } from "/scripts/presentation/activitiesPresenter/activitiesPresenter.js";
 import { generateSearchbar } from "/scripts/view/searchbar/searchbar.js";
 import { generateCurrentSession } from "/scripts/view/currentSession/currentSession.js";
-import { generateSessionManager } from "/scripts/presentation/sessionManager/sessionManager.js";
+import { generateSessionPresenter } from "/scripts/presentation/sessionPresenter/sessionPresenter.js";
 import { generateAuthenticator } from "/scripts/presentation/authenticator/authenticator.js";
 import { generateLoginForm } from "/scripts/view/loginForm/loginForm.js";
 import { generateRegisterForm } from "/scripts/view/registerForm/registerForm.js";
 import { generateNavbar } from "/scripts/view/navbar/navbar.js";
 import { generatePatientsList } from "/scripts/view/patientsList/patientsList.js";
-import { generatePatientsManager } from "/scripts/presentation/patientsManager/patientsManager.js";
+import { generatePatientsPresenter } from "/scripts/presentation/patientsPresenter/patientsPresenter.js";
 import { generateDashboard } from "/scripts/view/dashboard/dashboard.js";
 import { generatePersonalInfoModal } from "/scripts/view/personalInfoModal/personalInfoModal.js";
-import { generateUsersManager } from "/scripts/presentation/usersManager/usersManager.js";
+import { generateUsersPresenter } from "/scripts/presentation/usersPresenter/usersPresenter.js";
 import { generateBulmaEventsHandler } from "/scripts/view/bulmaEventsHandler/bulmaEventsHandler.js";
 import { generatePatientInfoModal } from "/scripts/view/patientInfoModal/patientInfoModal.js";
-import { generatePatientInfoManager } from "/scripts/presentation/patientInfoManager/patientInfoManager.js";
+import { generatePatientInfoPresenter } from "/scripts/presentation/patientInfoPresenter/patientInfoPresenter.js";
 import { generateButton } from "/scripts/view/button/button.js";
 import { generatePatientCreationModal } from "/scripts/view/patientCreationModal/patientCreationModal.js";
 import { generateSessionLogic } from "/scripts/business/sessionLogic/sessionLogic.js";
@@ -44,22 +44,22 @@ wordToObjectLogic.build({name: "Abbinamento oggetto-parola"});
 // PRESENTATION
 const wordToObjectPresenter = generateWordToObjectPresenter(wordToObjectLogic, pubsub);
 
-const activitiesManager = generateActivitiesManager(middleware);
+const activitiesPresenter = generateActivitiesPresenter(middleware);
 
-const sessionManager = generateSessionManager(middleware, sessionLogic, pubsub);
-await sessionManager.build();
+const sessionPresenter = generateSessionPresenter(middleware, sessionLogic, pubsub);
+await sessionPresenter.build();
 
 const authenticator = generateAuthenticator(middleware, pubsub);
 authenticator.build();
 
-const patientsManager = generatePatientsManager(middleware, pubsub);
-patientsManager.build();
+const patientsPresenter = generatePatientsPresenter(middleware, pubsub);
+patientsPresenter.build();
 
-const usersManager = generateUsersManager(middleware, pubsub);
-usersManager.build();
+const usersPresenter = generateUsersPresenter(middleware, pubsub);
+usersPresenter.build();
 
-const patientInfoManager = generatePatientInfoManager(middleware, pubsub);
-patientInfoManager.build();
+const patientInfoPresenter = generatePatientInfoPresenter(middleware, pubsub);
+patientInfoPresenter.build();
 
 const resultsPresenter = generateResultsPresenter(sessionLogic, pubsub);
 resultsPresenter.build();
@@ -136,7 +136,7 @@ const navbar = generateNavbar(navbarContainer, pubsub);
 matchPage();
 pubsub.subscribe("navbarButton-onclick", id => {
     if (id === "logoutButton") {
-        usersManager.logout();
+        usersPresenter.logout();
         pubsub.publish("view-logout-success");
     }
 });
@@ -163,7 +163,7 @@ activitiesSearchbar.build("activitiesSearchbar", "Cerca attività da aggiungere"
 activitiesSearchbar.render();
 
 const activitiesListContainer = document.getElementById("activtiesListContainer");
-const activitiesList = generateActivitiesList(activitiesManager, activitiesListContainer, pubsub);
+const activitiesList = generateActivitiesList(activitiesPresenter, activitiesListContainer, pubsub);
 await activitiesList.build("activitiesList", "activitiesSearchbar");
 activitiesList.render();
 
@@ -173,7 +173,7 @@ currentSessionSearchbar.build("currentSessionSearchbar", "Cerca attività");
 currentSessionSearchbar.render();
 
 const currentSessionContainer = document.getElementById("currentSessionContainer");
-const currentSession = generateCurrentSession(sessionManager, currentSessionContainer, pubsub);
+const currentSession = generateCurrentSession(sessionPresenter, currentSessionContainer, pubsub);
 await currentSession.build("currentSession", "currentSessionSearchbar", false);
 currentSession.render();
 
@@ -189,7 +189,7 @@ addPatientButton.build({id: "addPatientButton", classList: ["button", "is-link",
 addPatientButton.render();
 
 const patientsListContainer = document.getElementById("patientsListContainer");
-const patientsList = generatePatientsList(patientsManager, patientsListContainer, pubsub);
+const patientsList = generatePatientsList(patientsPresenter, patientsListContainer, pubsub);
 await patientsList.build("patientsList");
 patientsList.render()
 
@@ -221,24 +221,24 @@ results.build();
 
 // modali
 const personalInfoModalContainer = document.getElementById("personalInfoModalContainer");
-const personalInfoModal = generatePersonalInfoModal(usersManager, personalInfoModalContainer, pubsub); 
+const personalInfoModal = generatePersonalInfoModal(usersPresenter, personalInfoModalContainer, pubsub); 
 await personalInfoModal.build("personalInfoModal");
 personalInfoModal.render();
 
 const patientInfoModalContainer = document.getElementById("patientInfoModalContainer");
-const patientInfoModal = generatePatientInfoModal(patientInfoManager, patientInfoModalContainer, pubsub); 
+const patientInfoModal = generatePatientInfoModal(patientInfoPresenter, patientInfoModalContainer, pubsub); 
 patientInfoModal.build("patientInfoModal");
 patientInfoModal.render();
 
 const patientCreationModalContainer = document.getElementById("patientCreationModalContainer");
-const patientCreationModal = generatePatientCreationModal(patientInfoManager, patientCreationModalContainer, pubsub); 
+const patientCreationModal = generatePatientCreationModal(patientInfoPresenter, patientCreationModalContainer, pubsub); 
 patientCreationModal.build("patientCreationModal");
 patientCreationModal.render();
 
 // gestione testo footer
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
-pubsub.subscribe("usersManager-logout-success", matchPage);
+pubsub.subscribe("usersPresenter-logout-success", matchPage);
 pubsub.subscribe("view-logout-success", matchPage);
 window.addEventListener("popstate", matchPage);
 

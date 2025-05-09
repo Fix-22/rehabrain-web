@@ -83,12 +83,14 @@ export const generatePersonalInfoModal = (presenter, parentElement, pubsub) => {
                                 <footer class="modal-card-foot">
                                     <div class="buttons">
                                         <button type="button" class="button is-success" id="$IDSave">
+                                            <span></span>
                                             <span class="icon">
                                                 <i class="fa-solid fa-floppy-disk"></i>
                                             </span>
                                             <span>Salva</span>
                                         </button>
                                         <button type="button" class="button close" id="$IDClose">
+                                            <span></span>
                                             <span class="icon">
                                                 <i class="fa-solid fa-xmark"></i>
                                             </span>

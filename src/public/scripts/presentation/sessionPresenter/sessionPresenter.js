@@ -1,4 +1,4 @@
-export const generateSessionManager = (middleware, business, pubsub) => {
+export const generateSessionPresenter = (middleware, business, pubsub) => {
     let patientId, email, password;
 
     return {
@@ -14,7 +14,7 @@ export const generateSessionManager = (middleware, business, pubsub) => {
                 password = credentials.password;
             });
 
-            pubsub.subscribe("patientsManager-onpatientselect", inputPatienId => {
+            pubsub.subscribe("patientsPresenter-onpatientselect", inputPatienId => {
                 patientId = inputPatienId;
             });
         },
