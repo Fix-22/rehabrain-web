@@ -8,6 +8,7 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
         render: () => {
             const html = `<div class="column is-half content" id="$ID">
                             <h1>Registrati a RehaBrain</h1>
+                            <label class="label">Nome</label>
                             <div class="field">
                                 <p class="control has-icons-left">
                                 <input class="input" type="email" placeholder="Nome" id="$IDName">
@@ -16,6 +17,7 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                                 </span>
                                 </p>
                             </div>
+                            <label class="label">Cognome</label>
                             <div class="field">
                                 <p class="control has-icons-left">
                                 <input class="input" type="email" placeholder="Cognome" id="$IDSurname">
@@ -24,6 +26,7 @@ export const generateRegisterForm = (presenter, parentElement, pubsub) => {
                                 </span>
                                 </p>
                             </div>
+                            <label class="label">Email</label>
                             <div class="field">
                                 <p class="control has-icons-left">
                                 <input class="input" type="email" placeholder="Email" id="$IDEmail">

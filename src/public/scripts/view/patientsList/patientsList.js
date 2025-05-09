@@ -34,32 +34,32 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
             });
         },
         render: () => {
-            let html = `<table class="table is-fullwidth" id="$ID">
-                            <thead>
-                                <th>Anagrafica</th>
-                                <th>Informazioni</th>
-                            </thead>
-                            <tbody>`.replace("$ID", id);
+            let html = `<div class="container">
+                            `.replace("$ID", id);
             
             patients.forEach(e => {
-                html += '<tr class="patientElement" id="patient' + e.id + '"><td>' + e.name + " " + e.surname + '</td><td><button type="button" class="button is-light js-modal-trigger is-hidden" id="patient' + e.id + 'Info" data-target="patientInfoModal"><span class="icon"><i class="fa-solid fa-circle-info"></i></span></span></button></td></tr>';
+                    html += '<div class="card is-clickable is-shadowless patientElement has-text-link" id="patient' + e.id + '"><header class="card-header"><p class="card-header-title has-text-link" id="patient' + e.id + 'Name">' + e.name + " " + e.surname + '</p><button class="card-header-icon is-hidden js-modal-trigger" data-target="patientInfoModal" id="patient' + e.id + 'Info"><span class="icon"><i class="fas fa-circle-info"></i></span></button></header></div>';
             });
-            html += "</tbody></table>";
+            html += "</container>";
             parentElement.innerHTML = html;
 
             document.querySelectorAll(".patientElement").forEach((e, i) => {
                 e.onclick = () => {
                     document.querySelectorAll(".patientElement").forEach((e2, i2) => {
                         if (i === i2) {
-                            e2.classList.add("is-link");
-                            document.getElementById(e2.id + "Info").classList.remove("is-hidden")
+                            e2.classList.add("cardClicked");
+                            document.getElementById(e2.id + "Info").classList.remove("is-hidden");
+                            document.getElementById(e2.id + "Name").classList.remove("has-text-link");
+                            document.getElementById(e2.id + "Name").classList.add("has-text-light");
 
                             presenter.selectPatient(parseInt(e2.id.replace("patient", "")));
                             pubsub.publish("patientsList-onpatientselect", e2.id.replace("patient", ""));
                         }
                         else {
-                            e2.classList.remove("is-link");
+                            e2.classList.remove("cardClicked");
                             document.getElementById(e2.id + "Info").classList.add("is-hidden")
+                            document.getElementById(e2.id + "Name").classList.add("has-text-link");
+                            document.getElementById(e2.id + "Name").classList.remove("has-text-light");
                         }
                     });
                 };

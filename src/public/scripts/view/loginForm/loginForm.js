@@ -8,6 +8,7 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
         render: () => {
             const html = `<div class="column is-half content" id="$ID">
                             <h1>Entra nell'area personale</h1>
+                            <label class="label">Email</label>
                             <div class="field">
                                 <p class="control has-icons-left">
                                 <input class="input" type="email" placeholder="Email" id="$IDEmail">
@@ -16,12 +17,13 @@ export const generateLoginForm = (presenter, parentElement, pubsub) => {
                                 </span>
                                 </p>
                             </div>
+                            <label class="label">Password</label>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                <input class="input" type="password" placeholder="Password" id="$IDPassword">
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-lock"></i>
-                                </span>
+                                    <input class="input" type="password" placeholder="Password" id="$IDPassword">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
                                 </p>
                             </div>
                             <div class="field has-text-centered">

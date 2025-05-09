@@ -65,17 +65,20 @@ export const generateCurrentSession = (presenter, parentElement, pubsub) => {
         render: () => {
             let html =  (`<div class="buttons is-centered">
                             <button class="button is-link" id="$IDStart">
+                                <span></span>
                                 <span class="icon">
 									<i class="fa-solid fa-play"></i>
 								</span>
 								<span>Avvia</span>
                             </button>` + (isLogged ? `<button class="button is-primary" id="$IDSave">
+                                                            <span></span>
                                                             <span class="icon">
                                                                 <i class="fa-solid fa-floppy-disk"></i>
                                                             </span>
                                                             <span>Salva</span>
                                                         </button>
                                                         <button class="button is-danger" id="$IDClear">
+                                                            <span></span>
                                                             <span class="icon">
                                                                 <i class="fa-solid fa-eraser"></i>
                                                             </span>
