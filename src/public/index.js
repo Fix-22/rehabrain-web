@@ -193,7 +193,7 @@ const patientsList = generatePatientsList(patientsPresenter, patientsListContain
 await patientsList.build("patientsList");
 patientsList.render()
 
-// attività
+// session screen
 const activityContent = document.getElementById("activityContent");
 
 const activityGoForwardContainer = document.getElementById("activityGoForwardContainer");
@@ -214,12 +214,12 @@ activityRestart.render();
 const wordToObjectView = generateWordToObjectView(wordToObjectPresenter, activityContent, pubsub);
 wordToObjectView.build();
 
-// risultati
+// results
 const resultsContainer = document.getElementById("resultsContainer");
 const results = generateResults(resultsPresenter, resultsContainer, pubsub);
 results.build();
 
-// modali
+// modals
 const personalInfoModalContainer = document.getElementById("personalInfoModalContainer");
 const personalInfoModal = generatePersonalInfoModal(usersPresenter, personalInfoModalContainer, pubsub); 
 await personalInfoModal.build("personalInfoModal");
@@ -235,14 +235,14 @@ const patientCreationModal = generatePatientCreationModal(patientInfoPresenter, 
 patientCreationModal.build("patientCreationModal");
 patientCreationModal.render();
 
-// gestione testo footer
+// footer text management
 document.getElementById("footerText").innerHTML = '© ' + new Date().getFullYear() + ' Simone Cecire. Il codice sorgente è protetto da licenza <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>. I contenuti del sito sono protetti da licenza <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>.';
 
 pubsub.subscribe("usersPresenter-logout-success", matchPage);
 pubsub.subscribe("view-logout-success", matchPage);
 window.addEventListener("popstate", matchPage);
 
-// gestione eventi Bulma
+// Bulma's events handling
 const bulmaEventsHandler = generateBulmaEventsHandler(pubsub);
 bulmaEventsHandler.build();
 bulmaEventsHandler.mapNavbar();
