@@ -61,7 +61,7 @@ const generateDatabase = () => {
                         ID int primary key auto_increment,
                         Name varchar(100) not null,
                         Description text(2000) not null,
-                        MaxMediumScore int(4),
+                        MaxScore int(4),
                         Difficulty varchar(50),
                         foreign key (Difficulty) references Difficulties(Difficulty)
                     );    
@@ -358,7 +358,7 @@ const generateDatabase = () => {
         getCurrentSession: async (patientId, email, password) => {
             try {
                 const result = await executeStatement(`
-                    SELECT Activities.ID, Activities.Name, Activities.Description, Activities.MaxMediumScore, Activities.Difficulty, Times, Position
+                    SELECT Activities.ID, Activities.Name, Activities.Description, Activities.MaxScore, Activities.Difficulty, Times, Position
                     FROM CurrentSessions JOIN Activities ON CurrentSessions.ActivityID = Activities.ID JOIN Patients ON CurrentSessions.PatientID = Patients.ID
                     WHERE PatientID = ? AND Caregiver = (SELECT Email FROM Users WHERE Email = ? AND Password = ?);
                 `, [patientId, email, password]);

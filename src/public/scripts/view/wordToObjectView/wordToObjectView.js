@@ -20,6 +20,7 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
 
                 if (pageName === "session" && !presenter.isStarted()) {
                     presenter.goForward();
+                    pubsub.publish("view-activity-ended");
                 }
             });
 
@@ -29,7 +30,7 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
 
                 if (pageName === "session" && presenter.isStarted()) {
                     presenter.solve();
-                    pubsub.publish("view-activity-ended");
+                    pubsub.publish("view-activity-stopped");
                     
                     const correctAnswer = document.querySelector('input[name="wordToObjectButton"].correct');
                     correctAnswer.classList.add("corrected")
@@ -73,12 +74,12 @@ export const generateWordToObjectView = (presenter, parentElement, pubsub) => {
 
                 e.onclick = () => {
                     if (presenter.checkCorrectSelection(e.id.replace("Button", ""))) {
-                        pubsub.publish("view-activity-ended");
                         result.classList.remove("has-text-danger");
                         result.classList.add("has-text-success");
                         result.classList.remove("has-text-warning");
                         result.innerText = "Corretto";
                         document.querySelectorAll(".imageRadio").forEach(e => e.disabled = true);
+                        pubsub.publish("view-activity-stopped");
                     }
                     else {
                         result.classList.add("has-text-danger");

@@ -1,36 +1,99 @@
 export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
-    let id, patient, sessionsScores;
+    let id, patient, sessionsScores, isActive;
+
+    const drawChart = () => {
+        const x = sessionsScores.map(e => {
+                    const date = new Date(e.playdate);
+                    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                });
+        const y = sessionsScores.map(e => e.score);
+
+        new Chart("history", {
+            type: "line",
+            data: {
+                labels: x,
+                datasets: [{
+                    label: "Progresso",
+                    backgroundColor:"rgba(0,209,178,1.0)",
+                    borderColor: "rgba(0,0,255,0.1)",
+                    data: y
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Variazione del punteggio nel tempo',
+                        align: 'center',
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                        },
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Data sessione',
+                            color: 'black',
+                            font: {
+                                size: 14,
+                                weight: 'bold',
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 5,
+                                left: 0,
+                                right: 0,
+                            },
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            align: 'center',
+                            text: 'Punteggio',
+                            color: 'black',
+                            font: {
+                                size: 14,
+                                weight: 'bold',
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 5,
+                                left: 0,
+                                right: 0,
+                            },
+                        },
+                    },
+                }
+            }
+        });
+    }
 
     const patientInfoModal = {
         build: (inputId) => {
             id = inputId;
             patient = null;
             sessionsScores = [];
+            isActive = false;
 
             pubsub.subscribe("patientsList-onpatientselect", async id => {
                 patient = await presenter.getPatient();
                 sessionsScores = await presenter.getSessionsScores();
                 patientInfoModal.render();
-
-                const x = sessionsScores.map(e => {
-                    const date = new Date(e.playdate);
-                    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-                });
-                const y = sessionsScores.map(e => e.score);
-
-                new Chart("history", {
-                    type: "line",
-                    data: {
-                        labels: x,
-                        datasets: [{
-                            label: "Progresso",
-                            backgroundColor:"rgba(0,209,178,1.0)",
-                            borderColor: "rgba(0,0,255,0.1)",
-                            data: y
-                        }]
-                    }
-                });
             });
+
+            pubsub.subscribe("patientInfoManager-session-saved", async () => {
+                patient = await presenter.getPatient();
+                sessionsScores = await presenter.getSessionsScores();
+                patientInfoModal.render();
+            });
+
+            pubsub.subscribe(id + "-onopen", () =>  isActive = true);
+            pubsub.subscribe(id + "-onclose", () =>  isActive = false);
         },
         render: () => {
             let tableHtml = patient ? `<table class="table is-fullwidth">
@@ -47,7 +110,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
             });
             tableHtml += patient ? "</tbody></table>" : "";
 
-            let html = (`<div class="modal" id="$ID">
+            let html = (`<div class="modal` + (isActive ? " is-active" : "") + `" id="$ID">
                             <div class="modal-background close"></div>
                             <div class="modal-card">
                                 <header class="modal-card-head">
@@ -88,7 +151,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                                     </div>
                                     <div class="field has-text-centered">
                                         <p class="control">
-                                            <button type="button" class="button is-danger" id="$IDDeletePatient">
+                                            <button type="button" class="button is-danger deletePatient" id="$IDDeletePatient">
                                                 <span class="icon">
                                                     <i class="fa-solid fa-user-xmark"></i>
                                                 </span>
@@ -121,6 +184,7 @@ export const generatePatientInfoModal = (presenter, parentElement, pubsub) => {
                         </div>`).replaceAll("$ID", id).replace("$TABLE", tableHtml);
             
             parentElement.innerHTML = html;
+            drawChart();
 
             pubsub.publish("modal-render");
             

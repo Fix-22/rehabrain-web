@@ -42,7 +42,7 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
                             <tbody>`.replace("$ID", id);
             
             patients.forEach(e => {
-                html += '<tr class="patientElement" id="patient' + e.id + '"><td>' + e.name + " " + e.surname + '</td><td><button type="button" class="button is-light js-modal-trigger" id="patient' + e.id + 'Info" data-target="patientInfoModal"><span class="icon"><i class="fa-solid fa-circle-info"></i></span></span></button></td></tr>';
+                html += '<tr class="patientElement" id="patient' + e.id + '"><td>' + e.name + " " + e.surname + '</td><td><button type="button" class="button is-light js-modal-trigger is-hidden" id="patient' + e.id + 'Info" data-target="patientInfoModal"><span class="icon"><i class="fa-solid fa-circle-info"></i></span></span></button></td></tr>';
             });
             html += "</tbody></table>";
             parentElement.innerHTML = html;
@@ -52,12 +52,14 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
                     document.querySelectorAll(".patientElement").forEach((e2, i2) => {
                         if (i === i2) {
                             e2.classList.add("is-link");
+                            document.getElementById(e2.id + "Info").classList.remove("is-hidden")
 
                             presenter.selectPatient(parseInt(e2.id.replace("patient", "")));
                             pubsub.publish("patientsList-onpatientselect", e2.id.replace("patient", ""));
                         }
                         else {
                             e2.classList.remove("is-link");
+                            document.getElementById(e2.id + "Info").classList.add("is-hidden")
                         }
                     });
                 };
@@ -79,7 +81,7 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
             
             patients.forEach(e => {
                 if ((e.name.toLowerCase() + " " + e.surname.toLowerCase()).includes(search.toLowerCase())) {
-                    html += '<tr class="patientElement" id="patient' + e.id + '"><td>' + e.name + " " + e.surname + '</td><td><button type="button" class="button is-light js-modal-trigger" id="patient' + e.id + 'Info" data-target="patientInfoModal"><span class="icon"><i class="fa-solid fa-circle-info"></i></span></span></button></td></tr>';
+                    html += '<tr class="patientElement" id="patient' + e.id + '"><td>' + e.name + " " + e.surname + '</td><td><button type="button" class="button is-light js-modal-trigger is-hidden" id="patient' + e.id + 'Info" data-target="patientInfoModal"><span class="icon"><i class="fa-solid fa-circle-info"></i></span></span></button></td></tr>';
                 }
             });
             html += "</tbody></table>";
@@ -90,12 +92,14 @@ export const generatePatientsList = (presenter, parentElement, pubsub) => {
                     document.querySelectorAll(".patientElement").forEach((e2, i2) => {
                         if (i === i2) {
                             e2.classList.add("is-link");
+                            document.getElementById(e2.id + "Info").classList.remove("is-hidden")
 
                             presenter.selectPatient(parseInt(e2.id.replace("patient", "")));
                             pubsub.publish("patientsList-onpatientselect", e2.id.replace("patient", ""));
                         }
                         else {
                             e2.classList.remove("is-link");
+                            document.getElementById(e2.id + "Info").classList.add("is-hidden")
                         }
                     });
                 };

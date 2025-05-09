@@ -4,9 +4,6 @@ export const generateBulmaEventsHandler = (pubsub) => {
             pubsub.subscribe("modal-render", () => { // ogni volta che viene generata una modale viene rifatto il mapping per gestire i pulsanti per fare il toggole delle modali
                 bulmaEventsHandler.mapModals();
             });
-            pubsub.subscribe("modal-close", () => { // ogni volta che viene chiusa una modale viene rifatto il mapping per gestire i pulsanti per fare il toggole delle modali
-                bulmaEventsHandler.mapModals();
-            });
         },
         mapNavbar: () => {
             const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -46,15 +43,18 @@ export const generateBulmaEventsHandler = (pubsub) => {
                 
                 trigger.addEventListener("click", () => {
                     openModal(target);
+                    pubsub.publish(target.id + "-onopen");
                 });
             });
 
             // Add a click event on various child elements to close the parent modal
-            (document.querySelectorAll(".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .close") || []).forEach((close) => {
+            (document.querySelectorAll(".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .close, .deletePatient") || []).forEach((close) => {
                 const target = close.closest(".modal");
 
                 close.addEventListener("click", () => {
                     closeModal(target);
+                    bulmaEventsHandler.mapModals();
+                    pubsub.publish(target.id + "-onclose");
                 });
             });
 

@@ -310,13 +310,15 @@ const generateBusiness = (database, cipher, mailer) => {
         },
         checkSaveSessionScore: async (loginData) => {
             if (loginData && Object.keys(loginData).length === 3) {
-                if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.sessionData.patientId) && String(loginData.sessionData.playDate) && parseInt(loginData.sessionData.score)) {
+                if (String(loginData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) && String(loginData.password) && parseInt(loginData.sessionData.patientId) && parseInt(loginData.sessionData.score)) {
                     loginData.email = String(loginData.email);
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     loginData.sessionData.score = 0 ? isNaN(parseInt(loginData.sessionData.score)) : parseInt(loginData.sessionData.score);
-                    loginData.sessionData.playDate = String(loginData.sessionData.playDate);
                     loginData.sessionData.patientId = 0 ? isNaN(parseInt(loginData.sessionData.patientId)) : parseInt(loginData.sessionData.patientId);
                     
+                    const today = new Date();
+                    loginData.sessionData.playDate = today.getFullYear() + "-" + (today.getMonth() + 1 ) + "-" + today.getDate();
+
                     const result = await database.saveSessionScore(loginData.sessionData, loginData.email, loginData.password);
 
                     if (result === 1) {
@@ -390,7 +392,7 @@ const generateBusiness = (database, cipher, mailer) => {
                     loginData.password = cipher.hashPassword(String(loginData.password));
                     loginData.patientId = 0 ? isNaN(parseInt(loginData.patientId)) : parseInt(loginData.patientId);
                     loginData.session.forEach(e => {
-                        if (!e.name || !e.maxmediumscore || e.times < 1) {
+                        if (!e.name || !e.maxscore || e.times < 1) {
                             return false;
                         }
                     });

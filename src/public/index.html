@@ -1,138 +1,125 @@
 <!DOCTYPE html>
 <html lang="it" data-theme="light">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RehaBrain</title>
-    <link rel="stylesheet" href="/bulma/css/bulma.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>RehaBrain</title>
+	<link rel="stylesheet" href="/bulma/css/bulma.min.css">
 	<script defer src="assets/fontawesome/js/all.min.js"></script>
 	<script src="/chart.js/dist/chart.umd.js"></script>
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" type="image/x-icon" href="assets/icon.svg">
 </head>
+
 <body>
-    <nav class="navbar is-transparent">
-		<div class="navbar-brand">
-			<a class="navbar-item" href="#home">
-				<span class="icon is-large">
-					<i class="fa-solid fa-brain fa-2x has-text-link"></i>
-				</span>
-			</a>
-			<div class="navbar-burger js-burger" data-target="navbarCropped">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-
-		<div class="navbar-menu" id="navbarCropped">
-			<div class="navbar-start">
-				<a class="navbar-item title is-3" href="#home">RehaBrain</a>
-			</div>
-
-			<div class="navbar-end">
-				<div class="navbar-item">
-					<div class="field is-grouped" id="navbarContainer"></div>
+	<div id="app">
+		<nav class="navbar is-transparent">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="#home">
+					<span class="icon is-large">
+						<i class="fa-solid fa-brain fa-2x has-text-link"></i>
+					</span>
+				</a>
+				<div class="navbar-burger js-burger" data-target="navbarCropped">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
 				</div>
 			</div>
-		</div>
-	</nav>	
 
-    <section class="section" id="pages">
-		<div class="page" id="home">
-			<p class="title">RehaBrain</p>
-			<p class="subtitle">Software gratuito per la stimolazione cognitiva (CST)</p>
-			<p>RehaBrain nasce dall'idea di</p>
-		</div>
-		<div class="page" id="dashboard">
-			<div class="columns">
-				<div class="column is-one-quarter is-hidden" id="sidebar">
-					<p class="title">Pazienti</p>
-					<div class="columns">
-						<div class="column is-three-quarter mb-4" id="patientsSearchbarContainer"></div>
-						<div class="column is-one-quarter" id="addPatientButtonContainer"></div>
+			<div class="navbar-menu" id="navbarCropped">
+				<div class="navbar-start">
+					<a class="navbar-item title is-3" href="#home">RehaBrain</a>
+				</div>
+
+				<div class="navbar-end">
+					<div class="navbar-item">
+						<div class="field is-grouped" id="navbarContainer"></div>
 					</div>
-					<div class="container" id="patientsListContainer"></div>
 				</div>
-				<div class="column is-auto">
-					<div class="mb-4" id="info">
-						<p class="title">Dashboard</p>
-						<div class="block">
-							<p>La dashboard ti permette di inserire le attività da utilizzare in una sessione di stimolazione.<br>Puoi scegliere quante inserirne, in che ordine e a che livello di difficoltà mostrarle al paziente.</p>
-							<p>Registrandoti potrai salvare in maniera permanente le sessioni per ciascun paziente.</p>
+			</div>
+		</nav>
+
+		<section class="section" id="pages">
+			<div class="page" id="home">
+				<p class="title">RehaBrain</p>
+				<p class="subtitle">Software gratuito per la stimolazione cognitiva (CST)</p>
+				<p>RehaBrain nasce dall'idea di</p>
+			</div>
+			<div class="page" id="dashboard">
+				<div class="columns">
+					<div class="column is-one-quarter is-hidden" id="sidebar">
+						<p class="title">Pazienti</p>
+						<div class="columns">
+							<div class="column is-three-quarter mb-4" id="patientsSearchbarContainer"></div>
+							<div class="column is-one-quarter" id="addPatientButtonContainer"></div>
+						</div>
+						<div class="container" id="patientsListContainer"></div>
+					</div>
+					<div class="column is-auto">
+						<div class="mb-4" id="info">
+							<p class="title">Dashboard</p>
+							<div class="block">
+								<p>La dashboard ti permette di inserire le attività da utilizzare in una sessione di
+									stimolazione.<br>Puoi scegliere quante inserirne, in che ordine e a che livello di
+									difficoltà mostrarle al paziente.</p>
+								<p>Registrandoti potrai salvare in maniera permanente le sessioni per ciascun paziente.
+								</p>
+							</div>
+						</div>
+						<div class="columns" id="activities">
+							<div class="column is-auto">
+								<p class="title">Elenco attività</p>
+								<div class="container mb-4" id="activitiesSearchbarContainer"></div>
+								<div class="container" id="activtiesListContainer"></div>
+							</div>
+							<div class="column is-auto">
+								<p class="title">Sessione corrente</p>
+								<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
+								<div class="container" id="currentSessionContainer"></div>
+							</div>
 						</div>
 					</div>
-					<div class="columns" id="activities">
-						<div class="column is-auto">
-							<p class="title">Elenco attività</p>
-							<div class="container mb-4" id="activitiesSearchbarContainer"></div>
-							<div class="container" id="activtiesListContainer"></div>
-						</div>
-						<div class="column is-auto">
-							<p class="title">Sessione corrente</p>
-							<div class="container mb-4" id="currentSessionSearchbarContainer"></div>
-							<div class="container" id="currentSessionContainer"></div>
+				</div>
+			</div>
+			<div class="page" id="login">
+				<div class="columns is-centered" id="loginFormContainer"></div>
+			</div>
+			<div class="page" id="register">
+				<div class="columns is-centered" id="registerFormContainer"></div>
+			</div>
+			<div class="page" id="session">
+				<div class="columns is-mobile is-centered is-vcentered">
+					<div class="column has-text-centered">
+						<div class="container mb-5" id="activityContent"></div>
+						<div class="buttons is-centered">
+							<p class="control" id="activityGoForwardContainer"></p>
+							<p class="control" id="activitySolveContainer"></p>
+							<p class="control" id="activityRestartContainer"></p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-        <div class="page" id="login">
-            <div class="columns is-centered" id="loginFormContainer"></div>
-        </div>
-        <div class="page" id="register">
-            <div class="columns is-centered" id="registerFormContainer"></div>
-        </div>
-		<div class="page" id="session">
-			<div class="columns is-mobile is-centered is-vcentered">
-				<div class="column has-text-centered">
-					<div class="container mb-5" id="activityContent"></div>
-					<div class="buttons is-centered">
-						<p class="control" id="activityGoForwardContainer"></p>
-						<p class="control" id="activitySolveContainer"></p>
-						<p class="control" id="activityRestartContainer"></p>
-					</div>
-				</div>
+			<div class="page" id="results">
+				<p class="title">Risultati</p>
+				<div class="block" id="resultsContainer"></div>
 			</div>
-		</div>
-		<div class="page" id="results">
-			<p class="title">Risultati</p>
-			<div class="block" id="results">
-				<p>Il paziente ha realizzato <strong>231</strong> punti.</p>
-				<p>Desideri salvare la sessione?</p>
-				<div class="field is-grouped">
-					<p class="control">
-						<button class="button is-primary">
-							<span class="icon is-small">
-								<i class="fa-solid fa-floppy-disk"></i>
-							</span>
-							<span>Salva</span>
-						</button>
-					</p>
-					<p class="control">
-						<button class="button is-danger">
-							<span class="icon is-small">
-								<i class="fa-solid fa-trash-can"></i>
-							</span>
-							<span>Scarta</span>
-						</button>
-					</p>
-				</div>
+		</section>
+
+		<div id="personalInfoModalContainer"></div>
+		<div id="patientInfoModalContainer"></div>
+		<div id="patientCreationModalContainer"></div>
+
+		<footer class="footer mt-auto">
+			<div class="content has-text-centered">
+				<p id="footerText"></p>
 			</div>
-		</div>
-	</section>
+		</footer>
+	</div>
 
-	<div id="personalInfoModalContainer"></div>
-	<div id="patientInfoModalContainer"></div>
-	<div id="patientCreationModalContainer"></div>
-
-    <footer class="footer">
-		<div class="content has-text-centered">
-			<p id="footerText"></p>
-		</div>
-	</footer>
-    
 	<script type="module" src="index.js"></script>
 </body>
+
 </html>

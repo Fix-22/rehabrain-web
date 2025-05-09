@@ -1,5 +1,5 @@
 export const generateWordToObjectLogic = (middleware, pubsub) => {
-    let config, difficulty, word, objectsList, isStarted, maxMediumScore,currentScore;
+    let config, difficulty, word, objectsList, isStarted, maxScore, currentScore;
 
     const wordToObjectLogic = {
         build: (inptuConfig) => {
@@ -7,8 +7,8 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
             isStarted = false;
 
             pubsub.subscribe(config.name + "-start", async (settings) => {
-                maxMediumScore = settings.maxmediumscore;
-                await wordToObjectLogic.start(settings.difficulty, maxMediumScore);
+                maxScore = settings.maxscore;
+                await wordToObjectLogic.start(settings.difficulty, maxScore);
                 isStarted = true;
                 
                 location.href = "#session";
@@ -22,14 +22,12 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
 
             if (difficulty === "Low") {
                 n = 3;
-                currentScore -= Math.floor(currentScore * 0.25);
             }
             else if (difficulty === "Medium") {
                 n = 4;
             }
             else {
                 n = 5
-                currentScore += Math.floor(currentScore * 0.25);
             }
 
             const result = await middleware.getContents(n, difficulty);
@@ -57,6 +55,7 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
             if (name) {
                 if (name === word) {
                     isStarted = false;
+                    console.log(currentScore)
                     return true;
                 }
                 else {
@@ -80,7 +79,7 @@ export const generateWordToObjectLogic = (middleware, pubsub) => {
         },
         restart: async () => {
             isStarted = true;
-            await wordToObjectLogic.start(difficulty, maxMediumScore);
+            await wordToObjectLogic.start(difficulty, maxScore);
         },
         getWord: () => {
             return word;

@@ -17,6 +17,10 @@ export const generatePatientInfoManager = (middleware, pubsub) => {
             pubsub.subscribe("patientsManager-onpatientselect", id => {
                 patientId = id;
             });
+
+            pubsub.subscribe("resultsPresenter-save-session-score", (sessionScore) => {
+                patientInfoManager.saveSessionScore(sessionScore)
+            });
         },
         createPatient: async (patientData) => {
             if (patientData && patientData.name && patientData.surname && patientData.notes !== null && patientData.notes !== undefined && email && password) {
@@ -89,14 +93,20 @@ export const generatePatientInfoManager = (middleware, pubsub) => {
                 return [];
             }
         },
-        saveSessionScore: async (sessionData) => {
-            if (parseInt(sessionData.patientId) && sessionData.playDate && parseInt(sessionData.score) && email && password) {
-                const result = await middleware.saveCurrentSession(sessionData, email, password);
+        saveSessionScore: async (sessionScore) => {
+            if (parseInt(patientId) && parseInt(sessionScore) && email && password) {
+                const sessionData = {
+                    score: parseInt(sessionScore),
+                    patientId: parseInt(patientId)
+                };
+                const result = await middleware.saveSessionScore(sessionData, email, password);
+                
+                pubsub.publish("patientInfoManager-session-saved");
 
                 return result;
             }
             else {
-                return [];
+                return false;
             }
         },
         deleteSessionScore: async (sessionId) => {

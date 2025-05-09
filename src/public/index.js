@@ -24,6 +24,8 @@ import { generateSessionLogic } from "/scripts/business/sessionLogic/sessionLogi
 import { generateWordToObjectLogic } from "/scripts/business/wordToObjectLogic/wordToObjectLogic.js";
 import { generateWordToObjectPresenter } from "/scripts/presentation/wordToObjectPresenter/wordToObjectPresenter.js";
 import { generateWordToObjectView } from "/scripts/view/wordToObjectView/wordToObjectView.js";
+import { generateResultsPresenter } from "/scripts/presentation/resultsPresenter/resultsPresenter.js";
+import { generateResults } from "/scripts/view/results/results.js";
 
 const pubsub = generatePubSub();
 
@@ -37,7 +39,7 @@ const sessionLogic = generateSessionLogic(pubsub);
 sessionLogic.build();
 
 const wordToObjectLogic = generateWordToObjectLogic(middleware, pubsub);
-wordToObjectLogic.build({name: "prova1"});
+wordToObjectLogic.build({name: "Abbinamento oggetto-parola"});
 
 // PRESENTATION
 const wordToObjectPresenter = generateWordToObjectPresenter(wordToObjectLogic, pubsub);
@@ -58,6 +60,9 @@ usersManager.build();
 
 const patientInfoManager = generatePatientInfoManager(middleware, pubsub);
 patientInfoManager.build();
+
+const resultsPresenter = generateResultsPresenter(sessionLogic, pubsub);
+resultsPresenter.build();
 
 // VIEW
 
@@ -193,12 +198,12 @@ const activityContent = document.getElementById("activityContent");
 
 const activityGoForwardContainer = document.getElementById("activityGoForwardContainer");
 const activityGoForward = generateButton(activityGoForwardContainer, pubsub);
-activityGoForward.build({id: "activityGoForward", classList: ["button", "is-link"], text: "Avanti", icon: '<i class="fa-solid fa-arrow-right"></i>', disabled: true, subscribedEvents: {"view-activity-started": activityGoForward.disable, "view-activity-ended": activityGoForward.enable}});
+activityGoForward.build({id: "activityGoForward", classList: ["button", "is-link"], text: "Avanti", icon: '<i class="fa-solid fa-arrow-right"></i>', disabled: true, subscribedEvents: {"view-activity-started": activityGoForward.disable, "view-activity-stopped": activityGoForward.enable}});
 activityGoForward.render();
 
 const activitySolveContainer = document.getElementById("activitySolveContainer");
 const activitySolve = generateButton(activitySolveContainer, pubsub);
-activitySolve.build({id: "activitySolve", classList: ["button", "is-warning"], text: "Risolvi", icon: '<i class="fa-solid fa-lightbulb"></i>', disabled: true, subscribedEvents: {"view-activity-started": activitySolve.enable, "view-activity-ended": activitySolve.disable}});
+activitySolve.build({id: "activitySolve", classList: ["button", "is-warning"], text: "Risolvi", icon: '<i class="fa-solid fa-lightbulb"></i>', disabled: true, subscribedEvents: {"view-activity-started": activitySolve.enable, "view-activity-stopped": activitySolve.disable}});
 activitySolve.render();
 
 const activityRestartContainer = document.getElementById("activityRestartContainer");
@@ -208,6 +213,11 @@ activityRestart.render();
 
 const wordToObjectView = generateWordToObjectView(wordToObjectPresenter, activityContent, pubsub);
 wordToObjectView.build();
+
+// risultati
+const resultsContainer = document.getElementById("resultsContainer");
+const results = generateResults(resultsPresenter, resultsContainer, pubsub);
+results.build();
 
 // modali
 const personalInfoModalContainer = document.getElementById("personalInfoModalContainer");

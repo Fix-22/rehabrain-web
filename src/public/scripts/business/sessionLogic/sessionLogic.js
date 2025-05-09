@@ -1,5 +1,5 @@
 export const generateSessionLogic = (pubsub) => {
-    let session, sessionScore;
+    let session, sessionScore, isFinished;
 
     const sessionLogic = {
         build: () => {
@@ -28,16 +28,22 @@ export const generateSessionLogic = (pubsub) => {
                 pubsub.publish(activity.name + "-start", activity);
             }
             else {
+                isFinished = true;
                 pubsub.publish("session-finished", sessionScore);
-                console.log(sessionScore)
-                location.href = "#dashboard";
             }
         },
         startSession: (inputSession) => {
             sessionScore = 0;
+            isFinished = false;
             
             session = structuredClone(inputSession); // permette di fare una deep copy dell'array, in questo modo non viene cancellata la sessione una volta completata
             sessionLogic.startActivity();
+        },
+        isFinished: () => {
+            return isFinished;
+        },
+        getSessionScore: () => {
+            return sessionScore;
         }
     };
 

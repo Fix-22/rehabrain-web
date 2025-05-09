@@ -76,18 +76,22 @@ export const generatePatientCreationModal = (presenter, parentElement, pubsub) =
             pubsub.publish("modal-render");
 
             document.getElementById(id + "Save").onclick = async () => {
-                const name = document.getElementById(id + "Name").value;
-                const surname = document.getElementById(id + "Surname").value;
-                const age = document.getElementById(id + "Age").value;
-                const notes = document.getElementById(id + "Notes").value;
+                const name = document.getElementById(id + "Name");
+                const surname = document.getElementById(id + "Surname");
+                const age = document.getElementById(id + "Age");
+                const notes = document.getElementById(id + "Notes");
 
-                if (name && surname && age) {
-                    const result = await presenter.createPatient({name: name, surname: surname, age: age, notes: notes ? notes : ""});
+                if (name.value && surname.value && age.value) {
+                    const result = await presenter.createPatient({name: name.value, surname: surname.value, age: age.value, notes: notes.value ? notes.value : ""});
                     
                     if (result) {
                         patientCreationModal.displayError("");
                         patientCreationModal.displaySuccess("Paziente creato.");
                         pubsub.publish("view-patient-oncreate");
+                        name.value = "";
+                        surname.value = "";
+                        age.value = "";
+                        notes.value = "";
                     }
                     else {
                         patientCreationModal.displayError("Creazione paziente fallita, i dati sono errati.");
